@@ -1,4 +1,4 @@
-cloud-computing-assignments
-===========================
+# 云计算课程作业
 
-Repository for cloud computing course
+用于维护所有课程作业产物，包括：文档，代码。
+
