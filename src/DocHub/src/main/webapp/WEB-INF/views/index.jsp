@@ -8,6 +8,7 @@
 <body>
 <h2>Hello World!</h2>
 <form action="login.do" method="GET">
+	<input type="text" name="username" value="zhangsan">
 	<button>login</button>
 </form>
 
