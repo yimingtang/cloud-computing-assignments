@@ -43,12 +43,6 @@
   </bean>
 
   <!-- DAO 注入 -->
-  <bean id="userDAO"
-    class="cn.edu.nju.software.dochub.data.dao.UserDAO">
-    <property name="sessionFactory">
-      <ref bean="sessionFactory" />
-    </property>
-  </bean>
 
   <!-- service 注入 -->
   <bean id="loginService"
