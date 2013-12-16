@@ -43,6 +43,13 @@ local.properties
 # TeXlipse plugin
 .texlipse
 
+# MyEclipse
+*.classpath
+*.mymetadata
+*.project
+*.springBeans
+*.myhibernatedata
+
 
 # Covers JetBrains IDEs: IntelliJ, RubyMine, PhpStorm, AppCode
 
