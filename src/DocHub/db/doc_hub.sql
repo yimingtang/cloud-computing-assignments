@@ -51,8 +51,8 @@ CREATE TABLE IF NOT EXISTS `doc_hub`.`document` (
   `updated_at` DATETIME NULL,
   `document_type_id` INT UNSIGNED NOT NULL,
   `user_id` INT UNSIGNED NOT NULL,
-  `published` TINYINT(1) NOT NULL,
-  PRIMARY KEY (`id`, `document_type_id`, `user_id`),
+  `published` TINYINT(1) NOT NULL DEFAULT FALSE,
+  PRIMARY KEY (`id`),
   INDEX `fk_document_document_type1_idx` (`document_type_id` ASC),
   INDEX `fk_document_user1_idx` (`user_id` ASC),
   CONSTRAINT `fk_document_document_type1`
@@ -85,7 +85,7 @@ CREATE TABLE IF NOT EXISTS `doc_hub`.`document_property` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
   `value` VARCHAR(64) NULL,
   `document_property_type_id` INT UNSIGNED NOT NULL,
-  PRIMARY KEY (`id`, `document_property_type_id`),
+  PRIMARY KEY (`id`),
   INDEX `fk_document_property_document_property_type1_idx` (`document_property_type_id` ASC),
   CONSTRAINT `fk_document_property_document_property_type1`
     FOREIGN KEY (`document_property_type_id`)
@@ -112,9 +112,10 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `doc_hub`.`document_has_document_property` (
   `document_id` INT UNSIGNED NOT NULL,
   `document_property_id` INT UNSIGNED NOT NULL,
-  PRIMARY KEY (`document_id`, `document_property_id`),
+  `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
   INDEX `fk_document_has_document_property_document_property1_idx` (`document_property_id` ASC),
   INDEX `fk_document_has_document_property_document1_idx` (`document_id` ASC),
+  PRIMARY KEY (`id`),
   CONSTRAINT `fk_document_has_document_property_document1`
     FOREIGN KEY (`document_id`)
     REFERENCES `doc_hub`.`document` (`id`)
@@ -138,7 +139,7 @@ CREATE TABLE IF NOT EXISTS `doc_hub`.`tagging` (
   `tagged_by` INT UNSIGNED NOT NULL,
   `created_at` DATETIME NOT NULL,
   `updated_at` DATETIME NULL,
-  PRIMARY KEY (`id`, `document_id`, `tag_id`, `tagged_by`),
+  PRIMARY KEY (`id`),
   INDEX `fk_document_has_tag_tag1_idx` (`tag_id` ASC),
   INDEX `fk_document_has_tag_document1_idx` (`document_id` ASC),
   INDEX `fk_tagging_user1_idx` (`tagged_by` ASC),
@@ -172,7 +173,7 @@ CREATE TABLE IF NOT EXISTS `doc_hub`.`comment` (
   `created_at` DATETIME NOT NULL,
   `updated_at` DATETIME NULL,
   `published` TINYINT(1) NOT NULL DEFAULT FALSE,
-  PRIMARY KEY (`id`, `document_id`, `user_id`),
+  PRIMARY KEY (`id`),
   INDEX `fk_comment_document1_idx` (`document_id` ASC),
   INDEX `fk_comment_user1_idx` (`user_id` ASC),
   CONSTRAINT `fk_comment_document1`
@@ -206,7 +207,7 @@ CREATE TABLE IF NOT EXISTS `doc_hub`.`reference` (
   `destination` INT UNSIGNED NOT NULL,
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
   `reference_type_id` INT UNSIGNED NOT NULL,
-  PRIMARY KEY (`id`, `source`, `destination`, `reference_type_id`),
+  PRIMARY KEY (`id`),
   INDEX `fk_document_has_document_document2_idx` (`destination` ASC),
   INDEX `fk_document_has_document_document1_idx` (`source` ASC),
   INDEX `fk_reference_reference_type1_idx` (`reference_type_id` ASC),
@@ -240,7 +241,7 @@ CREATE TABLE IF NOT EXISTS `doc_hub`.`attachment` (
   `created_by` INT UNSIGNED NOT NULL,
   `created_at` DATETIME NOT NULL,
   `updated_at` DATETIME NULL,
-  PRIMARY KEY (`id`, `document_id`, `created_by`),
+  PRIMARY KEY (`id`),
   INDEX `fk_attachment_document1_idx` (`document_id` ASC),
   INDEX `fk_attachment_user1_idx` (`created_by` ASC),
   CONSTRAINT `fk_attachment_document1`
@@ -274,7 +275,7 @@ CREATE TABLE IF NOT EXISTS `doc_hub`.`comment_property` (
   `value` TEXT NULL,
   `comment_property_type_id` INT UNSIGNED NOT NULL,
   `comment_id` INT UNSIGNED NOT NULL,
-  PRIMARY KEY (`id`, `comment_property_type_id`, `comment_id`),
+  PRIMARY KEY (`id`),
   INDEX `fk_comment_property_comment_property_type1_idx` (`comment_property_type_id` ASC),
   INDEX `fk_comment_property_comment1_idx` (`comment_id` ASC),
   CONSTRAINT `fk_comment_property_comment_property_type1`
@@ -296,9 +297,10 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `doc_hub`.`document_type_has_document_property_type` (
   `document_type_id` INT UNSIGNED NOT NULL,
   `document_property_type_id` INT UNSIGNED NOT NULL,
-  PRIMARY KEY (`document_type_id`, `document_property_type_id`),
+  `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
   INDEX `fk_document_type_has_document_property_type_document_proper_idx` (`document_property_type_id` ASC),
   INDEX `fk_document_type_has_document_property_type_document_type1_idx` (`document_type_id` ASC),
+  PRIMARY KEY (`id`),
   CONSTRAINT `fk_document_type_has_document_property_type_document_type1`
     FOREIGN KEY (`document_type_id`)
     REFERENCES `doc_hub`.`document_type` (`id`)
@@ -316,12 +318,13 @@ ENGINE = InnoDB;
 -- Table `doc_hub`.`user_log`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `doc_hub`.`user_log` (
-  `user_id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `user_id` INT UNSIGNED NOT NULL,
   `name` VARCHAR(45) NOT NULL,
   `type` SMALLINT NOT NULL,
   `description` VARCHAR(45) NULL,
   `created_at` DATETIME NOT NULL,
-  PRIMARY KEY (`user_id`),
+  `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`id`),
   CONSTRAINT `fk_user_log_user1`
     FOREIGN KEY (`user_id`)
     REFERENCES `doc_hub`.`user` (`id`)
