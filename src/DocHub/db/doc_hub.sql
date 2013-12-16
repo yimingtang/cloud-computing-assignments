@@ -111,7 +111,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `doc_hub`.`document_has_document_property` (
   `document_id` INT UNSIGNED NOT NULL,
-  `document_property_id` INT NOT NULL,
+  `document_property_id` INT UNSIGNED NOT NULL,
   PRIMARY KEY (`document_id`, `document_property_id`),
   INDEX `fk_document_has_document_property_document_property1_idx` (`document_property_id` ASC),
   INDEX `fk_document_has_document_property_document1_idx` (`document_id` ASC),
@@ -171,7 +171,7 @@ CREATE TABLE IF NOT EXISTS `doc_hub`.`comment` (
   `user_id` INT UNSIGNED NOT NULL,
   `created_at` DATETIME NOT NULL,
   `updated_at` DATETIME NULL,
-  `published` TINYINT(1) NOT NULL DEFAULT NO,
+  `published` TINYINT(1) NOT NULL DEFAULT FALSE,
   PRIMARY KEY (`id`, `document_id`, `user_id`),
   INDEX `fk_comment_document1_idx` (`document_id` ASC),
   INDEX `fk_comment_user1_idx` (`user_id` ASC),
@@ -204,9 +204,9 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `doc_hub`.`reference` (
   `source` INT UNSIGNED NOT NULL,
   `destination` INT UNSIGNED NOT NULL,
-  `id` INT NOT NULL,
-  `reference_type_id` INT NOT NULL,
-  PRIMARY KEY (`source`, `destination`, `id`, `reference_type_id`),
+  `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `reference_type_id` INT UNSIGNED NOT NULL,
+  PRIMARY KEY (`id`, `source`, `destination`, `reference_type_id`),
   INDEX `fk_document_has_document_document2_idx` (`destination` ASC),
   INDEX `fk_document_has_document_document1_idx` (`source` ASC),
   INDEX `fk_reference_reference_type1_idx` (`reference_type_id` ASC),
@@ -272,8 +272,8 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `doc_hub`.`comment_property` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
   `value` TEXT NULL,
-  `comment_property_type_id` INT NOT NULL,
-  `comment_id` INT NOT NULL,
+  `comment_property_type_id` INT UNSIGNED NOT NULL,
+  `comment_id` INT UNSIGNED NOT NULL,
   PRIMARY KEY (`id`, `comment_property_type_id`, `comment_id`),
   INDEX `fk_comment_property_comment_property_type1_idx` (`comment_property_type_id` ASC),
   INDEX `fk_comment_property_comment1_idx` (`comment_id` ASC),
@@ -295,7 +295,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `doc_hub`.`document_type_has_document_property_type` (
   `document_type_id` INT UNSIGNED NOT NULL,
-  `document_property_type_id` INT NOT NULL,
+  `document_property_type_id` INT UNSIGNED NOT NULL,
   PRIMARY KEY (`document_type_id`, `document_property_type_id`),
   INDEX `fk_document_type_has_document_property_type_document_proper_idx` (`document_property_type_id` ASC),
   INDEX `fk_document_type_has_document_property_type_document_type1_idx` (`document_type_id` ASC),
