@@ -157,6 +157,7 @@
         </property>
     </bean>
 
+	
     <tx:annotation-driven transaction-manager="transactionManager"/>
     <bean id="transactionManager"
           class="org.springframework.orm.hibernate3.HibernateTransactionManager">

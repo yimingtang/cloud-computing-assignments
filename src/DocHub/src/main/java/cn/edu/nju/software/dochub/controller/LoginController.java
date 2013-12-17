@@ -17,13 +17,6 @@ public class LoginController {
 	@RequestMapping(value = "/login.do", method = RequestMethod.GET)
 	public String Login(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model){
-		String flag;
-		if(loginService.login(request.getParameter("username"))){
-			flag="µÇÂ½³É¹¦";
-		}else{
-			flag="µÇÂ¼Ê§°Ü";
-		}
-		model.addAttribute("flag",flag);
 		return "login";
 	}
 	
