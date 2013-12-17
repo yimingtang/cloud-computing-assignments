@@ -32,4 +32,8 @@ public class EncodingFilter implements Filter {
 		System.out.println(">>>>>>>>>>filter  "+encoding);
 	}
 
+	public String getEncoding() {
+		return encoding;
+	}
+
 }

@@ -1,5 +1,7 @@
 package cn.edu.nju.software.dochub.service;
 
+import java.util.ArrayList;
+
 import org.springframework.beans.factory.annotation.Autowired;
 
 import cn.edu.nju.software.dochub.data.*;
@@ -19,6 +21,7 @@ import cn.edu.nju.software.dochub.data.dao.TagDAO;
 import cn.edu.nju.software.dochub.data.dao.TaggingDAO;
 import cn.edu.nju.software.dochub.data.dao.UserDAO;
 import cn.edu.nju.software.dochub.data.dao.UserLogDAO;
+import cn.edu.nju.software.dochub.data.dataobject.User;
 
 public class LoginService {
 
@@ -39,13 +42,14 @@ public class LoginService {
 	DocumentHasDocumentPropertyDAO documentHasDocumentPropertyDAO;
 	DocumentPropertyDAO documentPropertyDAO;
 
-	public boolean login(String name) {
+	public User getUserByName(String name) {
+		User user= null;
+		ArrayList<User> userlist=(ArrayList<User>) userDAO.findByUsername(name);
+		if (userlist.size() > 0){
+			user = userlist.get(0);
+		}
 
-		System.out.println(userDAO);
-		if (userDAO.findByUsername(name).size() > 0)
-			return true;
-
-		return false;
+		return user;
 	}
 
 	public void setDocumentTypeDAO(DocumentTypeDAO documentTypeDAO) {

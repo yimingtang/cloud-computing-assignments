@@ -8,6 +8,33 @@
 	<link rel="stylesheet" href="resources/css/login.css">
 	<script src="resources/js/vendor/jquery-1.10.2.min.js"></script>
 	<script src="resources/js/vendor/bootstrap.min.js"></script>
+	<script>
+		function OnLogin(){
+			var username=$("[name='username']").val();
+			var password=$("[name='password']").val();
+			$.ajax({
+				url:"login.aj",
+				type:"POST",
+				dataType:"json",
+				data:{username:username,password:password},
+				success: function(data){
+					var flag=data.flag;
+					console.log(data.flag);
+					if(flag=="notexist"){
+						alert("用户不存在！");
+					}else if(flag=="wrong"){
+						alert("密码错误！");
+					}else if(flag=="success"){
+						alert("登录成功！");
+					}else{
+					}
+				},
+				error: function(data){
+					console.log("error");
+				}
+			});
+		}
+	</script>
 </head>
 <body>
 	<div class="header">
@@ -21,7 +48,7 @@
 			<div class="login-title">
 				<span>DocHub</span>
 			</div>
-			<form action="" class="login-form">
+			<div  class="login-form">
 				<span class="login-label">&nbsp;>>用户登录</span>
 				<div class="input-group">
 					<span class="glyphicon glyphicon-user input-group-addon"></span>
@@ -34,9 +61,9 @@
 				<div class="form-group login-bottom">
 					<input type="checkbox">
 					<span>记住我</span>
-					<button type="submit" class="btn btn-primary login-button" >登录</button>
+					<button type="submit" class="btn btn-primary login-button" onclick="OnLogin()">登录</button>
 				</div>
-			</form>
+			</div>
 		</div>
 	</div>
 	<div class="footer">

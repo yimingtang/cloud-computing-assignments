@@ -157,6 +157,7 @@
         </property>
     </bean>
 
+	<bean id="responseBuilder" class="cn.edu.nju.software.dochub.web.ResponseBuilder"></bean>
 	
     <tx:annotation-driven transaction-manager="transactionManager"/>
     <bean id="transactionManager"
