@@ -10,7 +10,7 @@
     class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
     <property name="locations">
       <list>
-        <value>/WEB-INF/jdbc.properties</value>
+        <value>WEB-INF/jdbc.properties</value>
       </list>
     </property>
   </bean>
@@ -35,20 +35,134 @@
     </property>
     <property name="annotatedClasses">
       <list>
+        <value>cn.edu.nju.software.dochub.data.dataobject.DocumentType</value>
+        <value>cn.edu.nju.software.dochub.data.dataobject.CommentProperty</value>
+        <value>cn.edu.nju.software.dochub.data.dataobject.Attachment</value>
+        <value>cn.edu.nju.software.dochub.data.dataobject.Comment</value>
         <value>
-          cn.edu.nju.software.dochub.data.dataobject.User
+        	cn.edu.nju.software.dochub.data.dataobject.DocumentTypeHasDocumentPropertyType
         </value>
-      </list>
+        <value>cn.edu.nju.software.dochub.data.dataobject.UserLog</value>
+        <value>
+        	cn.edu.nju.software.dochub.data.dataobject.DocumentPropertyType
+        </value>
+        <value>cn.edu.nju.software.dochub.data.dataobject.User</value>
+        <value>cn.edu.nju.software.dochub.data.dataobject.Tag</value>
+        <value>cn.edu.nju.software.dochub.data.dataobject.Reference</value>
+        <value>cn.edu.nju.software.dochub.data.dataobject.ReferenceType</value>
+        <value>cn.edu.nju.software.dochub.data.dataobject.Document</value>
+        <value>
+        	cn.edu.nju.software.dochub.data.dataobject.CommentPropertyType
+        </value>
+        <value>cn.edu.nju.software.dochub.data.dataobject.Tagging</value>
+        <value>
+        	cn.edu.nju.software.dochub.data.dataobject.DocumentHasDocumentProperty
+        </value>
+        <value>cn.edu.nju.software.dochub.data.dataobject.DocumentProperty</value></list>
     </property>
   </bean>
 
-  <!-- DAO 注入 -->
+
 
   <!-- service 注入 -->
   <bean id="loginService"
     class="cn.edu.nju.software.dochub.service.LoginService"></bean>
 
-
+  <!-- DAO 注入 -->
+  <bean id="documentTypeDAO"
+  	class="cn.edu.nju.software.dochub.data.dao.DocumentTypeDAO">
+  	<property name="sessionFactory">
+  		<ref bean="sessionFactory" />
+  	</property>
+  </bean>
+  <bean id="commentPropertyDAO"
+  	class="cn.edu.nju.software.dochub.data.dao.CommentPropertyDAO">
+  	<property name="sessionFactory">
+  		<ref bean="sessionFactory" />
+  	</property>
+  </bean>
+  <bean id="attachmentDAO"
+  	class="cn.edu.nju.software.dochub.data.dao.AttachmentDAO">
+  	<property name="sessionFactory">
+  		<ref bean="sessionFactory" />
+  	</property>
+  </bean>
+  <bean id="commentDAO"
+  	class="cn.edu.nju.software.dochub.data.dao.CommentDAO">
+  	<property name="sessionFactory">
+  		<ref bean="sessionFactory" />
+  	</property>
+  </bean>
+  <bean id="documentTypeHasDocumentPropertyTypeDAO"
+  	class="cn.edu.nju.software.dochub.data.dao.DocumentTypeHasDocumentPropertyTypeDAO">
+  	<property name="sessionFactory">
+  		<ref bean="sessionFactory" />
+  	</property>
+  </bean>
+  <bean id="userLogDAO"
+  	class="cn.edu.nju.software.dochub.data.dao.UserLogDAO">
+  	<property name="sessionFactory">
+  		<ref bean="sessionFactory" />
+  	</property>
+  </bean>
+  <bean id="documentPropertyTypeDAO"
+  	class="cn.edu.nju.software.dochub.data.dao.DocumentPropertyTypeDAO">
+  	<property name="sessionFactory">
+  		<ref bean="sessionFactory" />
+  	</property>
+  </bean>
+  <bean id="userDAO" class="cn.edu.nju.software.dochub.data.dao.UserDAO">
+  	<property name="sessionFactory">
+  		<ref bean="sessionFactory" />
+  	</property>
+  </bean>
+  <bean id="tagDAO" class="cn.edu.nju.software.dochub.data.dao.TagDAO">
+  	<property name="sessionFactory">
+  		<ref bean="sessionFactory" />
+  	</property>
+  </bean>
+  <bean id="referenceDAO"
+  	class="cn.edu.nju.software.dochub.data.dao.ReferenceDAO">
+  	<property name="sessionFactory">
+  		<ref bean="sessionFactory" />
+  	</property>
+  </bean>
+  <bean id="referenceTypeDAO"
+  	class="cn.edu.nju.software.dochub.data.dao.ReferenceTypeDAO">
+  	<property name="sessionFactory">
+  		<ref bean="sessionFactory" />
+  	</property>
+  </bean>
+  <bean id="documentDAO"
+  	class="cn.edu.nju.software.dochub.data.dao.DocumentDAO">
+  	<property name="sessionFactory">
+  		<ref bean="sessionFactory" />
+  	</property>
+  </bean>
+  <bean id="commentPropertyTypeDAO"
+  	class="cn.edu.nju.software.dochub.data.dao.CommentPropertyTypeDAO">
+  	<property name="sessionFactory">
+  		<ref bean="sessionFactory" />
+  	</property>
+  </bean>
+  <bean id="taggingDAO"
+  	class="cn.edu.nju.software.dochub.data.dao.TaggingDAO">
+  	<property name="sessionFactory">
+  		<ref bean="sessionFactory" />
+  	</property>
+  </bean>
+  <bean id="documentHasDocumentPropertyDAO"
+  	class="cn.edu.nju.software.dochub.data.dao.DocumentHasDocumentPropertyDAO">
+  	<property name="sessionFactory">
+  		<ref bean="sessionFactory" />
+  	</property>
+  </bean>
+  <bean id="documentPropertyDAO"
+  	class="cn.edu.nju.software.dochub.data.dao.DocumentPropertyDAO">
+  	<property name="sessionFactory">
+  		<ref bean="sessionFactory" />
+  	</property>
+  </bean>
   <tx:annotation-driven transaction-manager="transactionManager" />
   <bean id="transactionManager"
     class="org.springframework.orm.hibernate3.HibernateTransactionManager">
