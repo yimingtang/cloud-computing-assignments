@@ -4,19 +4,27 @@
    Author's custom styles
    ========================================================================== */
 
+.search-area {
+  margin-bottom: 20px;
+}
 
+.list-header h3 {
+  margin-top: 0px;
+  margin-bottom: 5px;
+}
 
+.document-list-item h4 {
+  font-size: 1.1em;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
 
+.document-list-item p {
+  font-size: 0.9em;
+  margin-bottom: 5px;
+}
 
-
-
-
-
-
-
-
-
-
-
-
+.document-list-item .info {
+  color: #999;
+}
 
