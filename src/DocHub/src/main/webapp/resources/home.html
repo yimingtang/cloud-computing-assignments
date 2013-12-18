@@ -21,7 +21,7 @@
         <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
     <![endif]-->
 
-    <nav class="navbar navbar-default navbar-static-top" role="navigation">
+    <nav class="navbar navbar-inverse navbar-static-top" role="navigation">
       <div class="container">
         <div class="navbar-header">
           <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -80,13 +80,77 @@
                       <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                       <h4 class="modal-title" id="advanced-search">高级搜索</h4>
                     </div>
-                    <div class="modal-body">
 
-                    </div>
+                    <div class="modal-body">
+                      <form class="form-horizontal" role="form">
+                        <div class="form-group">
+                          <label for="btn-doctype" class="col-sm-2 control-label">文献类型</label>
+                          <div class="btn-group col-sm-10">
+                            <button type="button" class="btn btn-default">全部类型</button>
+                            <button type="button" id="btn-doctype" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                              <span class="caret"></span>
+                              <span class="sr-only">Toggle Dropdown</span>
+                            </button>
+                            <ul class="dropdown-menu" role="menu">
+                              <li><a href="#">所有分类</a></li>
+                              <li class="divider"></li>
+                              <li><a href="#">图书</a></li>
+                              <li><a href="#">图书章节</a></li>
+                              <li><a href="#">期刊</a></li>
+                              <li><a href="#">会议</a></li>
+                              <li><a href="#">学位论文</a></li>
+                              <li><a href="#">技术报告</a></li>
+                              <li><a href="#">在线资源</a></li>
+                            </ul>
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <label for="inputTitle" class="col-sm-2 control-label">标题</label>
+                          <div class="col-sm-10">
+                            <input type="text" class="form-control" id="inputTitle">
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <label for="inputAuthor" class="col-sm-2 control-label">作者</label>
+                          <div class="col-sm-10">
+                            <input type="text" class="form-control" id="inputAuthor">
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <label for="inputKeyword" class="col-sm-2 control-label">关键字</label>
+                          <div class="col-sm-10">
+                            <input type="text" class="form-control" id="inputKeyword">
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <label for="inputPublisher" class="col-sm-2 control-label">出版单位</label>
+                          <div class="col-sm-10">
+                            <input type="text" class="form-control" id="inputPublisher">
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <label for="inputDateFrom" class="col-sm-2 control-label">发表时间</label>
+                          <div class="col-sm-2">
+                            <input type="text" class="form-control" id="inputDateFrom" placeholder="起始">
+                          </div>
+                          <div class="col-sm-2">
+                            <input type="text" class="form-control" id="inputDateTo" placeholder="结束">
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <label for="inputTags" class="col-sm-2 control-label">标签</label>
+                          <div class="col-sm-10">
+                            <input type="text" class="form-control" id="inputTags" placeholder="标签之间以英文逗号(,)分开">
+                          </div>
+                        </div>
+
+                      </form>
+                    </div><!-- /.modal-body -->
+
                     <div class="modal-footer">
                       <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
                       <button type="button" class="btn btn-primary">搜索</button>
-                    </div>
+                    </div><!-- /.modal-footer -->
                   </div><!-- /.modal-content -->
                 </div><!-- /.modal-dialog -->
               </div><!-- /.modal -->
@@ -183,6 +247,21 @@
               <a href="#" class="list-group-item">评价过的文献</a>
               <a href="#" class="list-group-item"><span class="badge pull-right">3</span>草稿</a>
           </div><!-- /.list-group -->
+
+          <div class="panel panel-default">
+            <div class="panel-heading">热门标签</div>
+            <div class="list-group">
+              <a href="#" class="list-group-item">#云计算</a>
+              <a href="#" class="list-group-item">#分布式</a>
+              <a href="#" class="list-group-item">#大数据</a>
+              <a href="#" class="list-group-item">#扯淡</a>
+              <a href="#" class="list-group-item">#被过度炒作的概念</a>
+              <a href="#" class="list-group-item">#NoSQL</a>
+              <a href="#" class="list-group-item">#高大上</a>
+              <a href="#" class="list-group-item">#屌炸天</a>
+              <a href="#" class="list-group-item">#福利</a>
+            </div><!-- /.list-group -->
+          </div><!-- /.panel -->
 
         </div><!-- /.col right -->
       </div><!-- /.row -->
