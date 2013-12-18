@@ -41,10 +41,10 @@ public class LoginController {
 		responseBuilder.WriteJSONObject(response, json);
 	}
 	
-	@RequestMapping(value = "/index.html")
+	@RequestMapping(value = "/home.html")
 	public String LogInto(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model){
-		return "index";
+		return "home";
 	}
 	
 	public void setLoginService(LoginService loginService) {

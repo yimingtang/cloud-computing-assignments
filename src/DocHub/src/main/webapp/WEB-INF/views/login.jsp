@@ -50,7 +50,7 @@
 			<div class="login-title">
 				<span>DocHub</span>
 			</div>
-			<form action="index.html" method="post" id="dochub-lg-form" class="login-form">
+			<form action="home.html" method="post" id="dochub-lg-form" class="login-form">
 				<span class="login-label">&nbsp;>>用户登录</span>
 				<div class="input-group">
 					<span class="glyphicon glyphicon-user input-group-addon"></span>
