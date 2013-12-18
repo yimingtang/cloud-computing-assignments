@@ -8,9 +8,13 @@
   margin-bottom: 20px;
 }
 
-.list-header h3 {
-  margin-top: 0px;
-  margin-bottom: 5px;
+#main-content-container .panel-heading {
+  background-color: #fff;
+}
+
+#main-content-container .panel-heading h3 {
+  margin-top: 2px;
+  margin-bottom: 0;
 }
 
 .document-list-item h4 {
