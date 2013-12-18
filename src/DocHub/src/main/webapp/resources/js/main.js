@@ -2,8 +2,8 @@ var Toast = function(config){
     this.context = config.context==null?$('body'):config.context;//上下文  
     this.message = config.message;//显示内容  
     this.time = config.time==null?3000:config.time;//持续时间  
-    if(!config.left) config.left = '50%';
-    if(!config.top) config.top = '61.8%';
+    if(!config.left) config.left = '45%';//原来默认left:"50%"
+    if(!config.top) config.top = '40%';//top:"61.8%"
     this.left = config.left;//距容器左边的距离  
     this.top = config.top;//距容器上方的距离  
     this.init();
