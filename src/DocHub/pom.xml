@@ -87,6 +87,7 @@
 		<artifactId>jta</artifactId>
 	<version>1.1</version>
 	</dependency>
+	<!-- json begin -->
 	<dependency>
 		<groupId>commons-logging</groupId>
 		<artifactId>commons-logging</artifactId>
@@ -118,6 +119,7 @@
 		<version>2.4</version>
 		<classifier>jdk15</classifier>
 	</dependency>
+	<!-- json end -->
   </dependencies>
 
   <build>
