@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import cn.edu.nju.software.dochub.data.dataobject.User;
 import cn.edu.nju.software.dochub.service.LoginService;
 import cn.edu.nju.software.dochub.web.ResponseBuilder;
+import cn.edu.nju.software.dochub.web.UserAccessContext;
 
 @Controller
 public class LoginController {
@@ -31,6 +32,8 @@ public class LoginController {
 			flag="notexist";
 		}else if(user.getPassword().equals(password)){
 			flag="success";
+			UserAccessContext userAccessContext = new UserAccessContext(user.getName(), user.getId(), user.getPermissionLevel());
+			request.getSession().setAttribute("userAccessContext", userAccessContext);
 		}
 		JSONObject json=new JSONObject();
 		json.put("flag", flag);
@@ -38,7 +41,7 @@ public class LoginController {
 		responseBuilder.WriteJSONObject(response, json);
 	}
 	
-	@RequestMapping(value = "/index.html",method = RequestMethod.GET)
+	@RequestMapping(value = "/index.html")
 	public String LogInto(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model){
 		return "index";

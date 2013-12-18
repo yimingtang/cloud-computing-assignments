@@ -23,7 +23,6 @@ public class EncodingFilter implements Filter {
 		arg0.setCharacterEncoding(encoding);
 		arg1.setCharacterEncoding(encoding);
 		arg2.doFilter(arg0, arg1);
-		System.out.println(">>>>>>>>>>filter  "+1);
 	}
 
 	public void init(FilterConfig arg0) throws ServletException {
