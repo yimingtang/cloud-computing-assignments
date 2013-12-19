@@ -110,13 +110,82 @@
                   </ul>
                   <div class="row">
                     <div class="col-sm-2">
-                      <button type="button" class="btn btn-default">发表短评</button>
-                    </div>
-                    <div class="col-sm-2">
-                      <button type="submit" class="btn btn-primary">发表长评</button>
+                      <button type="button" class="btn btn-primary" tabindex="-1" data-toggle="modal" data-target="#comment-form">发表评论</button>
                     </div>
                   </div>
                 </div>
+                <!-- Modal -->
+                <div class="modal fade" id="comment-form" tabindex="-1" role="dialog" aria-labelledby="comment-form" aria-hidden="true">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title" id="comment-form">发表评论</h4>
+                      </div>
+
+                      <div class="modal-body">
+                        <form class="form-horizontal" role="form">
+                          <div class="form-group">
+                            <label for="btn-comment-type" class="col-sm-2 control-label">评论类型</label>
+                            <div class="btn-group col-sm-10">
+                              <button type="button" class="btn btn-default">全部类型</button>
+                              <button type="button" id="btn-comment-type" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                                <span class="caret"></span>
+                                <span class="sr-only">Toggle Dropdown</span>
+                              </button>
+                              <ul class="dropdown-menu" role="menu">
+                                <li><a href="#">长评论</a></li>
+                                <li><a href="#">短评论</a></li>
+                              </ul>
+                            </div>
+                          </div>
+                          <div class="form-group">
+                            <label for="inputContent" class="col-sm-2 control-label">内容</label>
+                            <div class="col-sm-10">
+                              <textarea class="form-control" id="inputContent"></textarea>
+                            </div>
+                          </div>
+                          <div class="form-group">
+                            <label for="inputProblem" class="col-sm-2 control-label">要解决的问题</label>
+                            <div class="col-sm-10">
+                              <textarea class="form-control" id="inputProblem"></textarea>
+                            </div>
+                          </div>
+                          <div class="form-group">
+                            <label for="inputIdea" class="col-sm-2 control-label">主要思路</label>
+                            <div class="col-sm-10">
+                              <textarea class="form-control" id="inputIdea"></textarea>
+                            </div>
+                          </div>
+                          <div class="form-group">
+                            <label for="inputExperiment" class="col-sm-2 control-label">实验结果</label>
+                            <div class="col-sm-10">
+                              <textarea class="form-control" id="inputExperiment"></textarea>
+                            </div>
+                          </div>
+                          <div class="form-group">
+                            <label for="inputContribution" class="col-sm-2 control-label">贡献</label>
+                            <div class="col-sm-10">
+                              <textarea class="form-control" id="inputContribution"></textarea>
+                            </div>
+                          </div>
+                          <div class="form-group">
+                            <label for="inputImprovement" class="col-sm-2 control-label">改进</label>
+                            <div class="col-sm-10">
+                              <textarea class="form-control" id="inputImprovement"></textarea>
+                            </div>
+                          </div>
+                        </form>
+                      </div><!-- /.modal-body -->
+
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">放弃</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">存草稿</button>
+                        <button type="submit" class="btn btn-primary">发表</button>
+                      </div><!-- /.modal-footer -->
+                    </div><!-- /.modal-content -->
+                  </div><!-- /.modal-dialog -->
+                </div><!-- /.modal -->
               </div><!-- /.panel-body -->
             </div><!-- /.panel -->
           </div><!-- /#main-content-container -->

@@ -22,7 +22,7 @@
         var username=$("[name='username']").val();
         var password=$("[name='password']").val();
         $.ajax({
-          url:"login.aj",
+          url:"/login.aj",
           type:"POST",
           dataType:"json",
           data:{username:username,password:password},
