@@ -4,11 +4,11 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Document</title>
-	<link rel="stylesheet" href="resources/css/bootstrap.min.css">
-	<link rel="stylesheet" href="resources/css/login.css">
-	<script src="resources/js/vendor/jquery-1.10.2.min.js"></script>
-	<script src="resources/js/vendor/bootstrap.min.js"></script>
-	<script src="resources/js/main.js"></script>
+	<link rel="stylesheet" href="/resources/css/bootstrap.min.css">
+	<link rel="stylesheet" href="/resources/css/login.css">
+	<script src="/resources/js/vendor/jquery-1.10.2.min.js"></script>
+	<script src="/resources/js/vendor/bootstrap.min.js"></script>
+	<script src="/resources/js/main.js"></script>
 	<script>
 		function OnLogin(){
 			var username=$("[name='username']").val();
@@ -42,7 +42,7 @@
 	<div class="header">
 		<div class="logo-wrapper">
 			<div class="logo">
-				<img src="resources/images/login_logo.png"/>文献管理系统</div>
+				<img src="/resources/images/login_logo.png"/>文献管理系统</div>
 		</div>
 	</div>
 	<div class="content">
@@ -50,7 +50,7 @@
 			<div class="login-title">
 				<span>DocHub</span>
 			</div>
-			<form action="home.html" method="post" id="dochub-lg-form" class="login-form">
+			<form action="/document/index.html" method="post" id="dochub-lg-form" class="login-form">
 				<span class="login-label">&nbsp;>>用户登录</span>
 				<div class="input-group">
 					<span class="glyphicon glyphicon-user input-group-addon"></span>
@@ -69,7 +69,7 @@
 		</div>
 	</div>
 	<div class="footer">
-		 Copyright © 2013南京大学软件学院 
+		 Copyright © 2013南京大学软件学院
 	</div>
 </body>
 </html>
