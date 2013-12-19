@@ -24,6 +24,12 @@ public class LoginController {
     @RequestMapping(value = "/login.aj", method = RequestMethod.POST)
     public void Login(HttpServletRequest request,
                       HttpServletResponse response, ModelMap model) {
+        UserAccessContext userAccessContext = (UserAccessContext)request.getSession().getAttribute("userAccessContext");
+        if(userAccessContext!=null){
+        	userAccessContext =null;
+        	request.getSession().removeAttribute("userAccessContext");
+        }
+        
         String flag = "wrong";
         String username = request.getParameter("username");
         String password = request.getParameter("password");
@@ -32,7 +38,7 @@ public class LoginController {
             flag = "notexist";
         } else if (user.getPassword().equals(password)) {
             flag = "success";
-            UserAccessContext userAccessContext = new UserAccessContext(user.getName(), user.getId(), user.getPermissionLevel());
+            userAccessContext = new UserAccessContext(user.getName(), user.getId(), user.getPermissionLevel());
             request.getSession().setAttribute("userAccessContext", userAccessContext);
         }
         JSONObject json = new JSONObject();
