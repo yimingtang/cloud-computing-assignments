@@ -38,14 +38,14 @@
         <div class="collapse navbar-collapse">
           <ul class="nav navbar-nav">
             <li><a href="/document/index.html"><span class="glyphicon glyphicon-home"></span> 首页</a></li>
-            <li><a href="/stat/index.html"><span class="glyphicon glyphicon-stats"></span> 统计</a></li>
+            <li class="active"><a href="/stat/index.html"><span class="glyphicon glyphicon-stats"></span> 统计</a></li>
             <li><a href="/admin/user/index.html"><span class="glyphicon glyphicon-wrench"></span> 管理</a></li>
             <li><a href="#about"><span class="glyphicon glyphicon-question-sign"></span> 帮助</a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
             <li><a href="#profile"><span class="glyphicon glyphicon-user"></span> 小明</a></li>
             <li><a href="/document/create.html"><span class="glyphicon glyphicon-plus"></span> 文献录入</a></li>
-            <li class="active"><a href="/settings/index.html"><span class="glyphicon glyphicon-cog"></span> 账号设置</a></li>
+            <li><a href="/settings/index.html"><span class="glyphicon glyphicon-cog"></span> 账号设置</a></li>
             <li><a href="#logout"><span class="glyphicon glyphicon-log-out"></span> 登出</a></li>
           </ul>
         </div><!-- /.nav-collapse -->
@@ -58,58 +58,94 @@
         <div class="col-xs-12 col-md-9">
           <nav>
             <ol class="breadcrumb">
-              <li><a href="/document/index.html"><span class="glyphicon glyphicon-home"></span> 首页</a></li>
-              <li class="active">账号设置</li>
+              <li><a href="#"><span class="glyphicon glyphicon-home"></span> 首页</a></li>
+              <li class="active">统计</li>
             </ol><!-- /.breadcrumb -->
           </nav>
 
           <div id="main-content-container">
-
             <div class="panel panel-default">
               <div class="panel-heading">
-                <h3>账号设置</h3>
+                <h3>统计</h3>
               </div><!-- /.panel-heading -->
-
               <div class="panel-body">
-                <form class="form-horizontal" id="account-setting" role="form">
-                  <div class="form-group">
-                    <label class="col-sm-2 control-label">用户名</label>
-                    <div class="col-sm-3">
-                      <p class="form-control-static">email@example.com</p>
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <label for="inputOldPassword" class="col-sm-2 control-label">旧密码</label>
-                    <div class="col-sm-3">
-                      <input type="password" class="form-control" id="inputOldPassword">
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <label for="inputNewPassword1" class="col-sm-2 control-label">新密码</label>
-                    <div class="col-sm-3">
-                      <input type="password" class="form-control" id="inputNewPassword1">
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <label for="inputNewPassword2" class="col-sm-2 control-label">确认新密码</label>
-                    <div class="col-sm-3">
-                      <input type="password" class="form-control" id="inputNewPassword2">
-                    </div>
-                  </div>
-
-                  <hr>
-
-                  <div class="form-group">
-                    <div class="col-sm-offset-2 col-sm-1">
-                      <button type="button" class="btn btn-default">取消</button>
-                    </div>
-                    <div class="col-sm-1">
-                      <button type="submit" class="btn btn-primary">保存</button>
-                    </div>
-                  </div>
-                </form>
-              </div><!-- /.panel-body -->
+                <table class="table table-hover">
+                  <thead>
+                    <tr>
+                      <th>#</th>
+                      <th>用户名</th>
+                      <th>文献数</th>
+                      <th>评论数</th>
+                      <th>附件数</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>1</td>
+                      <td>小黄毛</td>
+                      <td>21</td>
+                      <td>3</td>
+                      <td>33</td>
+                    </tr>
+                    <tr>
+                      <td>2</td>
+                      <td>MM</td>
+                      <td>21</td>
+                      <td>11</td>
+                      <td>9</td>
+                    </tr>
+                    <tr>
+                      <td>3</td>
+                      <td>胖子</td>
+                      <td>21</td>
+                      <td>32</td>
+                      <td>33</td>
+                    </tr>
+                    <tr>
+                      <td>4</td>
+                      <td>炸弹人</td>
+                      <td>21</td>
+                      <td>3</td>
+                      <td>93</td>
+                    </tr>
+                    <tr>
+                      <td>5</td>
+                      <td>皮卡</td>
+                      <td>21</td>
+                      <td>3</td>
+                      <td>13</td>
+                    </tr>
+                    <tr>
+                      <td>6</td>
+                      <td>天使</td>
+                      <td>21</td>
+                      <td>3</td>
+                      <td>13</td>
+                    </tr>
+                    <tr>
+                      <td>7</td>
+                      <td>野猪骑士</td>
+                      <td>89</td>
+                      <td>11</td>
+                      <td>13</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
             </div><!-- /.panel -->
+
+            <ul class="pagination">
+              <li class="disabled"><a href="#">&laquo;</a></li>
+              <li class="active"><a href="#">1<span class="sr-only">(current)</span></a></li>
+              <li><a href="#">2</a></li>
+              <li><a href="#">3</a></li>
+              <li><a href="#">4</a></li>
+              <li><a href="#">5</a></li>
+              <li><a href="#">6</a></li>
+              <li><a href="#">7</a></li>
+              <li><a href="#">&raquo;</a></li>
+            </ul><!-- /.pagination -->
+
           </div><!-- /#main-content-container -->
         </div><!-- /.col left -->
 

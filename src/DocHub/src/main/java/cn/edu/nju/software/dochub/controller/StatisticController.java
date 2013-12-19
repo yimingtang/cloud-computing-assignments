@@ -12,18 +12,12 @@ import javax.servlet.http.HttpServletResponse;
  */
 
 @Controller
-@RequestMapping("/admin/user")
-public class UserController {
+@RequestMapping("/stat")
+public class StatisticController {
 
     @RequestMapping(value = "/index.html")
     public String index(HttpServletRequest request,
                         HttpServletResponse response, ModelMap model) {
-        return "admin_user";
-    }
-
-    @RequestMapping(value = "/create.html")
-    public String users(HttpServletRequest request,
-                        HttpServletResponse response, ModelMap model) {
-        return "admin_user";
+        return "stat";
     }
 }
