@@ -14,15 +14,4 @@ import javax.servlet.http.HttpServletResponse;
 @Controller
 public class TagController {
 
-    @RequestMapping(value = "/tag/index.html")
-    public String index(HttpServletRequest request,
-                        HttpServletResponse response, ModelMap model) {
-        return "admin_tag";
-    }
-
-    @RequestMapping(value = "/admin/tag/index.html")
-    public String all(HttpServletRequest request,
-                        HttpServletResponse response, ModelMap model) {
-        return "admin_tag";
-    }
 }

@@ -13,10 +13,10 @@
     <meta name="info" content="">
     <meta name="viewport" content="width=device-width">
 
-    <link rel="stylesheet" href="/resources/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/resources/css/main.css">
+    <link rel="stylesheet" href="../resources/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../resources/css/main.css">
 
-    <script src="/resources/js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
+    <script src="../resources/js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
   </head>
   <body>
     <!--[if lt IE 7]>
@@ -38,14 +38,14 @@
         <div class="collapse navbar-collapse">
           <ul class="nav navbar-nav">
             <li class="active"><a href="#"><span class="glyphicon glyphicon-home"></span> 首页</a></li>
-            <li><a href="/stat/index.html"><span class="glyphicon glyphicon-stats"></span> 统计</a></li>
-            <li><a href="/admin/user/index.html"><span class="glyphicon glyphicon-wrench"></span> 管理</a></li>
+            <li><a href="../statistics/index.html"><span class="glyphicon glyphicon-stats"></span> 统计</a></li>
+            <li><a href="../admin/user.html"><span class="glyphicon glyphicon-wrench"></span> 管理</a></li>
             <li><a href="#about"><span class="glyphicon glyphicon-question-sign"></span> 帮助</a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
             <li><a href="#profile"><span class="glyphicon glyphicon-user"></span> 小明</a></li>
-            <li><a href="/document/create.html"><span class="glyphicon glyphicon-plus"></span> 文献录入</a></li>
-            <li><a href="/settings/index.html"><span class="glyphicon glyphicon-cog"></span> 账号设置</a></li>
+            <li><a href="../document/create.html"><span class="glyphicon glyphicon-plus"></span> 文献录入</a></li>
+            <li><a href="../settings/index.html"><span class="glyphicon glyphicon-cog"></span> 账号设置</a></li>
             <li><a href="#logout"><span class="glyphicon glyphicon-log-out"></span> 登出</a></li>
           </ul>
         </div><!-- /.nav-collapse -->
@@ -184,37 +184,37 @@
 
               <ul class="list-group document-list">
                 <li class="list-group-item document-list-item">
-                  <h4><a href="/document/show.html">云计算给图书馆管理带来挑战 [J]</a></h4>
+                  <h4><a href="../document/show.html">云计算给图书馆管理带来挑战 [J]</a></h4>
                   <p class="info">胡小菁， 范并思 - 大学图书馆学报, 2009</p>
                   <p>摘要: 与云计算相关的网络技术或服务, 已经应用到了图书馆中. 云计算将给图书馆带来巨大好处, 也将给图书馆管理带来挑战. 图书馆面临的管理方面的挑战包括: 可替代性问题, 标准问题, 数据安全和保密问题, 知识产权问题. 为应对这些挑战, 图书馆学理论界应当研究: 云计算的 ...</p>
                 </li>
                 <li class="list-group-item document-list-item">
-                  <h4><a href="/document/show.html">云计算: 系统实例与研究现状幸</a></h4>
+                  <h4><a href="../document/show.html">云计算: 系统实例与研究现状幸</a></h4>
                   <p class="info">陈康， 郑纬民 - Journal of Software, 2009</p>
                   <p>摘要: 针对云计算这样一个范畴综述了当前云计算所采用的技术, 剖析其背后的技术含义以及当前云计算参与企业所采用的云计算实现方案. 云计算包含两个方面的含义:一方面是底层构建的云计算平台基础设施, 是用来构造上层应用程序的基础; 另外一方面是 ...</p>
                 </li>
                 <li class="list-group-item document-list-item">
-                  <h4><a href="/document/show.html">云计算及其关键技术</a></h4>
+                  <h4><a href="../document/show.html">云计算及其关键技术</a></h4>
                   <p class="info">陈全， 邓倩妮 - 计算机应用, 2009</p>
                   <p>摘要: 云计算是一种新兴的计算模型, 它是在网格计算的基础上发展而来的o 介绍了云计算的发展历史和应用场景, 比较了现有的云计算的定义并给出了新的定义, 以谷歌的云计算技术为例, 总结了云计算的关键技术: 数据</p>
                 </li>
                 <li class="list-group-item document-list-item">
-                  <h4><a href="/document/show.html">云计算与信息资源共享管理 [J]</a></h4>
+                  <h4><a href="../document/show.html">云计算与信息资源共享管理 [J]</a></h4>
                   <p class="info">钱文静， 邓仲华 - 图书与情报, 2009</p>
                   <p>摘要: 云计算自从被提出以来, 飞速发展, 目前已经有了一些可用的云计算服务. 云计算受广泛的推崇, 是因为它可利用最小化的客户端实现复杂高效的处理和存储的特点, 这给我们带来巨大的发挥空间. 若将云计算网络推广到信息资源共享管理中, 无疑会极大的 ...</p>
                 </li>
                 <li class="list-group-item document-list-item">
-                  <h4><a href="/document/show.html">云计算技术在图书馆中的应用探讨 [J]</a></h4>
+                  <h4><a href="../document/show.html">云计算技术在图书馆中的应用探讨 [J]</a></h4>
                   <p class="info">李永先， 栾旭伦， 李森森 - 江西图书馆学刊, 2009</p>
                   <p>摘要: 云计算技术以其强大的功能已在我国的一些商业领域得到了初步的应用. 在不久的将来, 云计算技术也可能在图书馆中得到大规模的普及应用. 在介绍云计算概念, 概括云计算技术特点的基础上, 探计了云计算技术在图书馆中的应用. 结合云计算技术在企业 ...</p>
                 </li>
                 <li class="list-group-item document-list-item">
-                  <h4><a href="/document/show.html">云计算研究进展综述</a></h4>
+                  <h4><a href="../document/show.html">云计算研究进展综述</a></h4>
                   <p class="info">张建勋， 古志民， 郑超 - 计算机应用研究, 2010</p>
                   <p>摘要: 对现有的云计算系统进行分析和总结, 以期为下一步的研究指明方向. 采用文献分析方法简述了云计算的定义, 特点和基本结构, 介绍了实现云计算的各项相关技术的研究现状, 包括虚拟化技术, Web 服务技术, 编程模型, 对已有的几个较有代表性的云计算系统 ...</p>
                 </li>
                 <li class="list-group-item document-list-item">
-                  <h4><a href="/document/show.html">云计算研究现状综述</a></h4>
+                  <h4><a href="../document/show.html">云计算研究现状综述</a></h4>
                   <p class="info">李乔， 郑啸 - 计算机科学, 2011</p>
                   <p>摘要: 云计算能够给用户提供可靠的, 自定义的, 最大化资源利用的服务, 是一种崭新的分布式计算模式. 同时, 云计算和其他技术及理论的有机结合, 也是解决理论研究和实际应用的重要途径. 阐述了云计算的基本概念, 论述了云计算的优势和存在的问题, 比较了云计算不同于以往技术 ...</p>
                 </li>
@@ -277,12 +277,12 @@
     </div><!-- /.container -->
 
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-    <script>window.jQuery || document.write('<script src="/resources/js/vendor/jquery-1.10.2.min.js"><\/script>')</script>
+    <script>window.jQuery || document.write('<script src="../resources/js/vendor/jquery-1.10.2.min.js"><\/script>')</script>
 
-    <script src="/resources/js/vendor/bootstrap.min.js"></script>
+    <script src="../resources/js/vendor/bootstrap.min.js"></script>
 
-    <script src="/resources/js/plugins.js"></script>
-    <script src="/resources/js/main.js"></script>
+    <script src="../resources/js/plugins.js"></script>
+    <script src="../resources/js/main.js"></script>
 
     <script>
         var _gaq=[['_setAccount','UA-XXXXX-X'],['_trackPageview']];

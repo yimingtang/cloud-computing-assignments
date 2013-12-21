@@ -12,12 +12,12 @@ import javax.servlet.http.HttpServletResponse;
  */
 
 @Controller
-@RequestMapping("/stat")
+@RequestMapping("/statistics")
 public class StatisticController {
 
     @RequestMapping(value = "/index.html")
-    public String index(HttpServletRequest request,
+    public String Index(HttpServletRequest request,
                         HttpServletResponse response, ModelMap model) {
-        return "stat";
+        return "statistics/statistics";
     }
 }

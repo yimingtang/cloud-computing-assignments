@@ -12,18 +12,25 @@ import javax.servlet.http.HttpServletResponse;
  */
 
 @Controller
-@RequestMapping("/settings")
-public class SettingsController {
-
-    @RequestMapping(value = "/")
-    public String home(HttpServletRequest request,
-                        HttpServletResponse response, ModelMap model) {
-        return "settings";
-    }
+@RequestMapping("/admin")
+public class AdminController {
 
     @RequestMapping(value = "/index.html")
-    public String index(HttpServletRequest request,
+    public String Index(HttpServletRequest request,
                         HttpServletResponse response, ModelMap model) {
-        return "settings";
+        return "admin/user";
     }
+
+    @RequestMapping(value = "/tag.html")
+    public String Tag(HttpServletRequest request,
+                        HttpServletResponse response, ModelMap model) {
+        return "admin/tag";
+    }
+    
+    @RequestMapping(value = "/user.html")
+    public String User(HttpServletRequest request,
+                        HttpServletResponse response, ModelMap model) {
+        return "admin/user";
+    }
+ 
 }

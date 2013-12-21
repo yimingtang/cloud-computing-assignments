@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
 
 import cn.edu.nju.software.dochub.data.dataobject.User;
 import cn.edu.nju.software.dochub.service.LoginService;
@@ -48,15 +49,19 @@ public class LoginController {
     }
 
     @RequestMapping(value = "/login.html")
-    public String Show(HttpServletRequest request,
+    public ModelAndView Show(HttpServletRequest request,
                        HttpServletResponse response, ModelMap model) {
-        return "login";
+    	ModelAndView model1 =new ModelAndView("login");
+    	model1.addObject("name", "test");
+//    	request.setAttribute("name", "velocity_test");
+        return model1;
     }
     
     @RequestMapping(value = "/home/index.html")
-    public String Home(HttpServletRequest request,
+    public ModelAndView Home(HttpServletRequest request,
                        HttpServletResponse response, ModelMap model) {
-        return "home";
+    	
+        return model1;
     }
     
     public void setLoginService(LoginService loginService) {

@@ -12,18 +12,18 @@ import javax.servlet.http.HttpServletResponse;
  */
 
 @Controller
-@RequestMapping("/admin/user")
-public class UserController {
+@RequestMapping("/settings")
+public class UserSettingsController {
+
+    @RequestMapping(value = "/")
+    public String home(HttpServletRequest request,
+                        HttpServletResponse response, ModelMap model) {
+        return "settings/settings";
+    }
 
     @RequestMapping(value = "/index.html")
     public String index(HttpServletRequest request,
                         HttpServletResponse response, ModelMap model) {
-        return "admin_user";
-    }
-
-    @RequestMapping(value = "/create.html")
-    public String users(HttpServletRequest request,
-                        HttpServletResponse response, ModelMap model) {
-        return "admin_user";
+        return "settings/settings";
     }
 }

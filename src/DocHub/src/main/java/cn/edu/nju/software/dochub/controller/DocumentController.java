@@ -24,18 +24,18 @@ public class DocumentController {
     @RequestMapping(value = "/show.html")
     public String show(HttpServletRequest request,
                        HttpServletResponse response, ModelMap model) {
-        return "document";
+        return "document/view";
     }
 
     @RequestMapping(value = "/edit.html")
     public String edit(HttpServletRequest request,
                        HttpServletResponse response, ModelMap model) {
-        return "edit_document";
+        return "document/edit";
     }
 
     @RequestMapping(value = "/create.html")
     public String create(HttpServletRequest request,
                        HttpServletResponse response, ModelMap model) {
-        return "edit_document";
+        return "document/edit";
     }
 }
