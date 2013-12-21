@@ -62,7 +62,7 @@ public class DocumentProperty implements java.io.Serializable {
 		this.id = id;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "document_property_type_id", nullable = false)
 	public DocumentPropertyType getDocumentPropertyType() {
 		return this.documentPropertyType;
@@ -82,7 +82,7 @@ public class DocumentProperty implements java.io.Serializable {
 		this.value = value;
 	}
 
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "documentProperty")
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "documentProperty")
 	public Set<DocumentHasDocumentProperty> getDocumentHasDocumentProperties() {
 		return this.documentHasDocumentProperties;
 	}

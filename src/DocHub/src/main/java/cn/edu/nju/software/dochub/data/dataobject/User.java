@@ -169,7 +169,7 @@ public class User implements java.io.Serializable {
 		this.active = active;
 	}
 
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "user")
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "user")
 	public Set<UserLog> getUserLogs() {
 		return this.userLogs;
 	}
@@ -178,7 +178,7 @@ public class User implements java.io.Serializable {
 		this.userLogs = userLogs;
 	}
 
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "user")
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "user")
 	public Set<Comment> getComments() {
 		return this.comments;
 	}
@@ -187,7 +187,7 @@ public class User implements java.io.Serializable {
 		this.comments = comments;
 	}
 
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "user")
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "user")
 	public Set<Tagging> getTaggings() {
 		return this.taggings;
 	}
@@ -196,7 +196,7 @@ public class User implements java.io.Serializable {
 		this.taggings = taggings;
 	}
 
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "user")
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "user")
 	public Set<Document> getDocuments() {
 		return this.documents;
 	}
@@ -205,7 +205,7 @@ public class User implements java.io.Serializable {
 		this.documents = documents;
 	}
 
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "user")
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "user")
 	public Set<Attachment> getAttachments() {
 		return this.attachments;
 	}

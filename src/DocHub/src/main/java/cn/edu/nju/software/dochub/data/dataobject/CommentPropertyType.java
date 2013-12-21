@@ -66,7 +66,7 @@ public class CommentPropertyType implements java.io.Serializable {
 		this.name = name;
 	}
 
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "commentPropertyType")
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "commentPropertyType")
 	public Set<CommentProperty> getCommentProperties() {
 		return this.commentProperties;
 	}

@@ -70,7 +70,7 @@ public class DocumentType implements java.io.Serializable {
 		this.typeName = typeName;
 	}
 
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "documentType")
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "documentType")
 	public Set<Document> getDocuments() {
 		return this.documents;
 	}
@@ -79,7 +79,7 @@ public class DocumentType implements java.io.Serializable {
 		this.documents = documents;
 	}
 
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "documentType")
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "documentType")
 	public Set<DocumentTypeHasDocumentPropertyType> getDocumentTypeHasDocumentPropertyTypes() {
 		return this.documentTypeHasDocumentPropertyTypes;
 	}

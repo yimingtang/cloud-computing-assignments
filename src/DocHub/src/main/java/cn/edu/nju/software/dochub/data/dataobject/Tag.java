@@ -65,7 +65,7 @@ public class Tag implements java.io.Serializable {
 		this.name = name;
 	}
 
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "tag")
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "tag")
 	public Set<Tagging> getTaggings() {
 		return this.taggings;
 	}

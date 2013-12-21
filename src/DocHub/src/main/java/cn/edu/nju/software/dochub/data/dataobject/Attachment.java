@@ -70,7 +70,7 @@ public class Attachment implements java.io.Serializable {
 		this.id = id;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "created_by", nullable = false)
 	public User getUser() {
 		return this.user;
@@ -80,7 +80,7 @@ public class Attachment implements java.io.Serializable {
 		this.user = user;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "document_id", nullable = false)
 	public Document getDocument() {
 		return this.document;

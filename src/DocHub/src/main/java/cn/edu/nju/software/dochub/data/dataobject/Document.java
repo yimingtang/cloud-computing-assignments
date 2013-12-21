@@ -109,7 +109,7 @@ public class Document implements java.io.Serializable {
 		this.id = id;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "user_id", nullable = false)
 	public User getUser() {
 		return this.user;
@@ -119,7 +119,7 @@ public class Document implements java.io.Serializable {
 		this.user = user;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "document_type_id", nullable = false)
 	public DocumentType getDocumentType() {
 		return this.documentType;
@@ -229,7 +229,7 @@ public class Document implements java.io.Serializable {
 		this.published = published;
 	}
 
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "document")
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "document")
 	public Set<Tagging> getTaggings() {
 		return this.taggings;
 	}
@@ -238,7 +238,7 @@ public class Document implements java.io.Serializable {
 		this.taggings = taggings;
 	}
 
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "documentByDestination")
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "documentByDestination")
 	public Set<Reference> getReferencesForDestination() {
 		return this.referencesForDestination;
 	}
@@ -248,7 +248,7 @@ public class Document implements java.io.Serializable {
 		this.referencesForDestination = referencesForDestination;
 	}
 
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "documentBySource")
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "documentBySource")
 	public Set<Reference> getReferencesForSource() {
 		return this.referencesForSource;
 	}
@@ -257,7 +257,7 @@ public class Document implements java.io.Serializable {
 		this.referencesForSource = referencesForSource;
 	}
 
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "document")
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "document")
 	public Set<DocumentHasDocumentProperty> getDocumentHasDocumentProperties() {
 		return this.documentHasDocumentProperties;
 	}
@@ -267,7 +267,7 @@ public class Document implements java.io.Serializable {
 		this.documentHasDocumentProperties = documentHasDocumentProperties;
 	}
 
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "document")
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "document")
 	public Set<Attachment> getAttachments() {
 		return this.attachments;
 	}
@@ -276,7 +276,7 @@ public class Document implements java.io.Serializable {
 		this.attachments = attachments;
 	}
 
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "document")
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "document")
 	public Set<Comment> getComments() {
 		return this.comments;
 	}

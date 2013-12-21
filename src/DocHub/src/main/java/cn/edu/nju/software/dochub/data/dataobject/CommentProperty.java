@@ -58,7 +58,7 @@ public class CommentProperty implements java.io.Serializable {
 		this.id = id;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "comment_id", nullable = false)
 	public Comment getComment() {
 		return this.comment;
@@ -68,7 +68,7 @@ public class CommentProperty implements java.io.Serializable {
 		this.comment = comment;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "comment_property_type_id", nullable = false)
 	public CommentPropertyType getCommentPropertyType() {
 		return this.commentPropertyType;

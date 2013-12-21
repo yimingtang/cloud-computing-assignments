@@ -51,7 +51,7 @@ public class Reference implements java.io.Serializable {
 		this.id = id;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "reference_type_id", nullable = false)
 	public ReferenceType getReferenceType() {
 		return this.referenceType;
@@ -61,7 +61,7 @@ public class Reference implements java.io.Serializable {
 		this.referenceType = referenceType;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "source", nullable = false)
 	public Document getDocumentBySource() {
 		return this.documentBySource;
@@ -71,7 +71,7 @@ public class Reference implements java.io.Serializable {
 		this.documentBySource = documentBySource;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "destination", nullable = false)
 	public Document getDocumentByDestination() {
 		return this.documentByDestination;

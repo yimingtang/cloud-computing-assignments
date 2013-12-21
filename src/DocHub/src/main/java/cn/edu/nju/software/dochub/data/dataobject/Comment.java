@@ -75,7 +75,7 @@ public class Comment implements java.io.Serializable {
 		this.id = id;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "user_id", nullable = false)
 	public User getUser() {
 		return this.user;
@@ -85,7 +85,7 @@ public class Comment implements java.io.Serializable {
 		this.user = user;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "document_id", nullable = false)
 	public Document getDocument() {
 		return this.document;
@@ -140,7 +140,7 @@ public class Comment implements java.io.Serializable {
 		this.published = published;
 	}
 
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "comment")
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "comment")
 	public Set<CommentProperty> getCommentProperties() {
 		return this.commentProperties;
 	}

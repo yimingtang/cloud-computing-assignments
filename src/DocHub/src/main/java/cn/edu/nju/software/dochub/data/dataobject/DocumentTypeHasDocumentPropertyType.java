@@ -51,7 +51,7 @@ public class DocumentTypeHasDocumentPropertyType implements
 		this.id = id;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "document_type_id", nullable = false)
 	public DocumentType getDocumentType() {
 		return this.documentType;
@@ -61,7 +61,7 @@ public class DocumentTypeHasDocumentPropertyType implements
 		this.documentType = documentType;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "document_property_type_id", nullable = false)
 	public DocumentPropertyType getDocumentPropertyType() {
 		return this.documentPropertyType;

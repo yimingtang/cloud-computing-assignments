@@ -49,7 +49,7 @@ public class DocumentHasDocumentProperty implements java.io.Serializable {
 		this.id = id;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "document_property_id", nullable = false)
 	public DocumentProperty getDocumentProperty() {
 		return this.documentProperty;
@@ -59,7 +59,7 @@ public class DocumentHasDocumentProperty implements java.io.Serializable {
 		this.documentProperty = documentProperty;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "document_id", nullable = false)
 	public Document getDocument() {
 		return this.document;

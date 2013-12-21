@@ -63,7 +63,7 @@ public class Tagging implements java.io.Serializable {
 		this.id = id;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "tagged_by", nullable = false)
 	public User getUser() {
 		return this.user;
@@ -73,7 +73,7 @@ public class Tagging implements java.io.Serializable {
 		this.user = user;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "tag_id", nullable = false)
 	public Tag getTag() {
 		return this.tag;
@@ -83,7 +83,7 @@ public class Tagging implements java.io.Serializable {
 		this.tag = tag;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "document_id", nullable = false)
 	public Document getDocument() {
 		return this.document;

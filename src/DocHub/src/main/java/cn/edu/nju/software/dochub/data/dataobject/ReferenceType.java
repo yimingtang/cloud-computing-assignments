@@ -64,7 +64,7 @@ public class ReferenceType implements java.io.Serializable {
 		this.name = name;
 	}
 
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "referenceType")
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "referenceType")
 	public Set<Reference> getReferences() {
 		return this.references;
 	}
