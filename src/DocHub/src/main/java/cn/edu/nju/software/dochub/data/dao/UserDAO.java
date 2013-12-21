@@ -64,7 +64,7 @@ public class UserDAO extends HibernateDaoSupport {
 		log.debug("getting User instance with id: " + id);
 		try {
 			User instance = (User) getHibernateTemplate().get(
-					"cn.edu.nju.software.dochub.data.User", id);
+					"cn.edu.nju.software.dochub.data.dataobject.User", id);
 			return instance;
 		} catch (RuntimeException re) {
 			log.error("get failed", re);

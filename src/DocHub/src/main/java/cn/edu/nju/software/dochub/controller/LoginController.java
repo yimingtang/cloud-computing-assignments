@@ -47,6 +47,12 @@ public class LoginController {
         responseBuilder.WriteJSONObject(response, json);
     }
 
+    @RequestMapping(value = "/login.html")
+    public String show(HttpServletRequest request,
+                       HttpServletResponse response, ModelMap model) {
+        return "login";
+    }
+    
     public void setLoginService(LoginService loginService) {
         this.loginService = loginService;
         System.out.println(">>>>>>>>>>loginservice");

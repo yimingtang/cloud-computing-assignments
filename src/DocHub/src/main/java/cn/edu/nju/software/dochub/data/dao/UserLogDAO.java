@@ -59,7 +59,7 @@ public class UserLogDAO extends HibernateDaoSupport {
 		log.debug("getting UserLog instance with id: " + id);
 		try {
 			UserLog instance = (UserLog) getHibernateTemplate().get(
-					"cn.edu.nju.software.dochub.data.UserLog", id);
+					"cn.edu.nju.software.dochub.data.dataobject.UserLog", id);
 			return instance;
 		} catch (RuntimeException re) {
 			log.error("get failed", re);

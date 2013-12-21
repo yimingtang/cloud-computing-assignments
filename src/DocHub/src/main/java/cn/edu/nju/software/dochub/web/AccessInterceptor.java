@@ -26,10 +26,16 @@ public class AccessInterceptor implements HandlerInterceptor {
 		// TODO Auto-generated method stub
 		UserAccessContext userAccessContext = (UserAccessContext) request.getSession().getAttribute("userAccessContext");
 		String uri = request.getRequestURI();
-		boolean  loginaj =uri.contains("login.aj");
+		boolean loginaj =uri.contains("login.aj");
 		System.out.println(uri+" "+loginaj);
-		if(userAccessContext == null && !loginaj ){
-			request.getRequestDispatcher("/").forward(request, response);
+		if(userAccessContext == null && !loginaj){
+			if(uri.endsWith(".aj")){
+				//forbidden
+				response.sendError(403);
+				return false;
+			}
+			response.sendRedirect(request.getContextPath()+"/");
+//			request.getRequestDispatcher("/").forward(request, response);
 			return false;
 		}
 		return true;

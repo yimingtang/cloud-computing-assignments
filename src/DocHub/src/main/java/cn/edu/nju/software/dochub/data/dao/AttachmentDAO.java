@@ -59,8 +59,9 @@ public class AttachmentDAO extends HibernateDaoSupport {
 	public Attachment findById(java.lang.Integer id) {
 		log.debug("getting Attachment instance with id: " + id);
 		try {
-			Attachment instance = (Attachment) getHibernateTemplate().get(
-					"cn.edu.nju.software.dochub.data.Attachment", id);
+			Attachment instance = (Attachment) getHibernateTemplate()
+					.get("cn.edu.nju.software.dochub.data.dataobject.Attachment",
+							id);
 			return instance;
 		} catch (RuntimeException re) {
 			log.error("get failed", re);

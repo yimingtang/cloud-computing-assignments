@@ -57,7 +57,7 @@ public class TagDAO extends HibernateDaoSupport {
 		log.debug("getting Tag instance with id: " + id);
 		try {
 			Tag instance = (Tag) getHibernateTemplate().get(
-					"cn.edu.nju.software.dochub.data.Tag", id);
+					"cn.edu.nju.software.dochub.data.dataobject.Tag", id);
 			return instance;
 		} catch (RuntimeException re) {
 			log.error("get failed", re);

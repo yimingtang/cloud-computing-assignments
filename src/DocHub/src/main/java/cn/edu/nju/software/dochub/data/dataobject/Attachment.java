@@ -37,13 +37,12 @@ public class Attachment implements java.io.Serializable {
 
 	/** minimal constructor */
 	public Attachment(User user, Document document, String name, String url,
-			short type, Date createdAt) {
+			short type) {
 		this.user = user;
 		this.document = document;
 		this.name = name;
 		this.url = url;
 		this.type = type;
-		this.createdAt = createdAt;
 	}
 
 	/** full constructor */
@@ -118,7 +117,7 @@ public class Attachment implements java.io.Serializable {
 		this.type = type;
 	}
 
-	@Column(name = "created_at", nullable = false, length = 19)
+	@Column(name = "created_at", length = 19)
 	public Date getCreatedAt() {
 		return this.createdAt;
 	}

@@ -42,13 +42,10 @@ public class Comment implements java.io.Serializable {
 	}
 
 	/** minimal constructor */
-	public Comment(User user, Document document, String content,
-			Date createdAt, boolean published) {
+	public Comment(User user, Document document, String content) {
 		this.user = user;
 		this.document = document;
 		this.content = content;
-		this.createdAt = createdAt;
-		this.published = published;
 	}
 
 	/** full constructor */
@@ -116,7 +113,7 @@ public class Comment implements java.io.Serializable {
 		this.rank = rank;
 	}
 
-	@Column(name = "created_at", nullable = false, length = 19)
+	@Column(name = "created_at", length = 19)
 	public Date getCreatedAt() {
 		return this.createdAt;
 	}
@@ -134,7 +131,7 @@ public class Comment implements java.io.Serializable {
 		this.updatedAt = updatedAt;
 	}
 
-	@Column(name = "published", nullable = false)
+	@Column(name = "published")
 	public boolean getPublished() {
 		return this.published;
 	}

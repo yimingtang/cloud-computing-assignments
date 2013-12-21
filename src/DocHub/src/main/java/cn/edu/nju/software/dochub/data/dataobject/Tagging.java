@@ -34,11 +34,10 @@ public class Tagging implements java.io.Serializable {
 	}
 
 	/** minimal constructor */
-	public Tagging(User user, Tag tag, Document document, Date createdAt) {
+	public Tagging(User user, Tag tag, Document document) {
 		this.user = user;
 		this.tag = tag;
 		this.document = document;
-		this.createdAt = createdAt;
 	}
 
 	/** full constructor */
@@ -94,7 +93,7 @@ public class Tagging implements java.io.Serializable {
 		this.document = document;
 	}
 
-	@Column(name = "created_at", nullable = false, length = 19)
+	@Column(name = "created_at", length = 19)
 	public Date getCreatedAt() {
 		return this.createdAt;
 	}

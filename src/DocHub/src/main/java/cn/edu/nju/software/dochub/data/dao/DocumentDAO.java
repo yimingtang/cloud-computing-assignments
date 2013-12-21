@@ -66,7 +66,7 @@ public class DocumentDAO extends HibernateDaoSupport {
 		log.debug("getting Document instance with id: " + id);
 		try {
 			Document instance = (Document) getHibernateTemplate().get(
-					"cn.edu.nju.software.dochub.data.Document", id);
+					"cn.edu.nju.software.dochub.data.dataobject.Document", id);
 			return instance;
 		} catch (RuntimeException re) {
 			log.error("get failed", re);

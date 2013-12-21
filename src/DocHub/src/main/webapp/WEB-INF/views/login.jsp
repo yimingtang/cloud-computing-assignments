@@ -13,20 +13,21 @@
     <meta name="info" content="">
     <meta name="viewport" content="width=device-width">
 
-    <link rel="stylesheet" href="/resources/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/resources/css/main.css">
-    <link rel="stylesheet" href="/resources/css/login.css">
-    <script src="/resources/js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
+    <link rel="stylesheet" href="resources/css/bootstrap.min.css">
+    <link rel="stylesheet" href="resources/css/main.css">
+    <link rel="stylesheet" href="resources/css/login.css">
+    <script src="resources/js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
     <script>
       function OnLogin(){
         var username=$("[name='username']").val();
         var password=$("[name='password']").val();
         $.ajax({
-          url:"/login.aj",
+          url:"login.aj",
           type:"POST",
           dataType:"json",
           data:{username:username,password:password},
           success: function(data){
+          	
             var flag=data.flag;
             console.log(data.flag);
             if(flag=="notexist"){
@@ -40,7 +41,9 @@
             }
           },
           error: function(data){
-            console.log("error");
+            if(data.status==403){
+            	window.location.reload();
+            }
           }
         });
       }
@@ -55,7 +58,7 @@
         <div class="header">
           <div class="logo-wrapper">
             <div class="logo">
-              <img src="/resources/images/login_logo.png"/>文献管理系统</div>
+              <img src="resources/images/login_logo.png"/>文献管理系统</div>
           </div>
         </div>
       </div>
@@ -66,7 +69,7 @@
         <div class="login-title">
           <span>DocHub</span>
         </div>
-        <form action="/document/index.html" method="post" id="dochub-lg-form" class="login-form">
+        <form action="document/index.html" method="post" id="dochub-lg-form" class="login-form">
           <span class="login-label">&nbsp;>>用户登录</span>
           <div class="input-group">
             <span class="glyphicon glyphicon-user input-group-addon"></span>
@@ -90,12 +93,12 @@
     </div>
 
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-    <script>window.jQuery || document.write('<script src="/resources/js/vendor/jquery-1.10.2.min.js"><\/script>')</script>
+    <script>window.jQuery || document.write('<script src="resources/js/vendor/jquery-1.10.2.min.js"><\/script>')</script>
 
-    <script src="/resources/js/vendor/bootstrap.min.js"></script>
+    <script src="resources/js/vendor/bootstrap.min.js"></script>
 
-    <script src="/resources/js/plugins.js"></script>
-    <script src="/resources/js/main.js"></script>
+    <script src="resources/js/plugins.js"></script>
+    <script src="resources/js/main.js"></script>
 
     <script>
         var _gaq=[['_setAccount','UA-XXXXX-X'],['_trackPageview']];

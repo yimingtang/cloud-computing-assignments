@@ -59,7 +59,7 @@ public class DocumentTypeHasDocumentPropertyTypeDAO extends HibernateDaoSupport 
 				+ id);
 		try {
 			DocumentTypeHasDocumentPropertyType instance = (DocumentTypeHasDocumentPropertyType) getHibernateTemplate()
-					.get("cn.edu.nju.software.dochub.data.DocumentTypeHasDocumentPropertyType",
+					.get("cn.edu.nju.software.dochub.data.dataobject.DocumentTypeHasDocumentPropertyType",
 							id);
 			return instance;
 		} catch (RuntimeException re) {

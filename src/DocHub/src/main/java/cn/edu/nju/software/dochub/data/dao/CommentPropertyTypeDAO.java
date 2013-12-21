@@ -58,7 +58,7 @@ public class CommentPropertyTypeDAO extends HibernateDaoSupport {
 		log.debug("getting CommentPropertyType instance with id: " + id);
 		try {
 			CommentPropertyType instance = (CommentPropertyType) getHibernateTemplate()
-					.get("cn.edu.nju.software.dochub.data.CommentPropertyType",
+					.get("cn.edu.nju.software.dochub.data.dataobject.CommentPropertyType",
 							id);
 			return instance;
 		} catch (RuntimeException re) {

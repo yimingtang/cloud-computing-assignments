@@ -56,21 +56,14 @@ public class Document implements java.io.Serializable {
 
 	/** minimal constructor */
 	public Document(User user, DocumentType documentType, String title,
-			String author, Date year, String pages, String abstract_,
-			String keywords, String publisher, String url, Date createdAt,
-			boolean published) {
+			String author, String abstract_, String keywords, String publisher) {
 		this.user = user;
 		this.documentType = documentType;
 		this.title = title;
 		this.author = author;
-		this.year = year;
-		this.pages = pages;
 		this.abstract_ = abstract_;
 		this.keywords = keywords;
 		this.publisher = publisher;
-		this.url = url;
-		this.createdAt = createdAt;
-		this.published = published;
 	}
 
 	/** full constructor */
@@ -155,7 +148,7 @@ public class Document implements java.io.Serializable {
 	}
 
 	@Temporal(TemporalType.DATE)
-	@Column(name = "year", nullable = false, length = 0)
+	@Column(name = "year", length = 0)
 	public Date getYear() {
 		return this.year;
 	}
@@ -164,7 +157,7 @@ public class Document implements java.io.Serializable {
 		this.year = year;
 	}
 
-	@Column(name = "pages", nullable = false, length = 45)
+	@Column(name = "pages", length = 45)
 	public String getPages() {
 		return this.pages;
 	}
@@ -200,7 +193,7 @@ public class Document implements java.io.Serializable {
 		this.publisher = publisher;
 	}
 
-	@Column(name = "url", nullable = false, length = 256)
+	@Column(name = "url", length = 256)
 	public String getUrl() {
 		return this.url;
 	}
@@ -209,7 +202,7 @@ public class Document implements java.io.Serializable {
 		this.url = url;
 	}
 
-	@Column(name = "created_at", nullable = false, length = 19)
+	@Column(name = "created_at", length = 19)
 	public Date getCreatedAt() {
 		return this.createdAt;
 	}
@@ -227,7 +220,7 @@ public class Document implements java.io.Serializable {
 		this.updatedAt = updatedAt;
 	}
 
-	@Column(name = "published", nullable = false)
+	@Column(name = "published")
 	public boolean getPublished() {
 		return this.published;
 	}

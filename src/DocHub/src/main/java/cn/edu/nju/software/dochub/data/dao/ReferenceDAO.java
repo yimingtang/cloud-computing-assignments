@@ -57,7 +57,7 @@ public class ReferenceDAO extends HibernateDaoSupport {
 		log.debug("getting Reference instance with id: " + id);
 		try {
 			Reference instance = (Reference) getHibernateTemplate().get(
-					"cn.edu.nju.software.dochub.data.Reference", id);
+					"cn.edu.nju.software.dochub.data.dataobject.Reference", id);
 			return instance;
 		} catch (RuntimeException re) {
 			log.error("get failed", re);

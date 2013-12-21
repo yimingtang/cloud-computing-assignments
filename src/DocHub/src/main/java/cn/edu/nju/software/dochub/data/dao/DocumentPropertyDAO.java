@@ -58,7 +58,8 @@ public class DocumentPropertyDAO extends HibernateDaoSupport {
 		log.debug("getting DocumentProperty instance with id: " + id);
 		try {
 			DocumentProperty instance = (DocumentProperty) getHibernateTemplate()
-					.get("cn.edu.nju.software.dochub.data.DocumentProperty", id);
+					.get("cn.edu.nju.software.dochub.data.dataobject.DocumentProperty",
+							id);
 			return instance;
 		} catch (RuntimeException re) {
 			log.error("get failed", re);

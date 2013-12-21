@@ -46,15 +46,11 @@ public class User implements java.io.Serializable {
 	}
 
 	/** minimal constructor */
-	public User(String username, String password, String salt, String name,
-			short permissionLevel, Date createdAt, boolean active) {
+	public User(String username, String password, String salt, String name) {
 		this.username = username;
 		this.password = password;
 		this.salt = salt;
 		this.name = name;
-		this.permissionLevel = permissionLevel;
-		this.createdAt = createdAt;
-		this.active = active;
 	}
 
 	/** full constructor */
@@ -137,7 +133,7 @@ public class User implements java.io.Serializable {
 		this.email = email;
 	}
 
-	@Column(name = "permission_level", nullable = false)
+	@Column(name = "permission_level")
 	public short getPermissionLevel() {
 		return this.permissionLevel;
 	}
@@ -146,7 +142,7 @@ public class User implements java.io.Serializable {
 		this.permissionLevel = permissionLevel;
 	}
 
-	@Column(name = "created_at", nullable = false, length = 19)
+	@Column(name = "created_at", length = 19)
 	public Date getCreatedAt() {
 		return this.createdAt;
 	}
@@ -164,7 +160,7 @@ public class User implements java.io.Serializable {
 		this.updatedAt = updatedAt;
 	}
 
-	@Column(name = "active", nullable = false)
+	@Column(name = "active")
 	public boolean getActive() {
 		return this.active;
 	}

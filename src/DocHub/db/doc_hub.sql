@@ -2,12 +2,15 @@ SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
 
+DROP SCHEMA IF EXISTS `doc_hub` ;
 CREATE SCHEMA IF NOT EXISTS `doc_hub` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci ;
 USE `doc_hub` ;
 
 -- -----------------------------------------------------
 -- Table `doc_hub`.`user`
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS `doc_hub`.`user` ;
+
 CREATE TABLE IF NOT EXISTS `doc_hub`.`user` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
   `username` VARCHAR(32) NOT NULL,
@@ -15,10 +18,10 @@ CREATE TABLE IF NOT EXISTS `doc_hub`.`user` (
   `salt` VARCHAR(12) NOT NULL,
   `name` VARCHAR(45) NOT NULL,
   `email` VARCHAR(45) NULL,
-  `permission_level` TINYINT NOT NULL DEFAULT 1,
-  `created_at` DATETIME NOT NULL,
-  `updated_at` DATETIME NULL,
-  `active` TINYINT(1) NOT NULL DEFAULT TRUE,
+  `permission_level` TINYINT NULL DEFAULT 1,
+  `created_at` DATETIME NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` DATETIME NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `active` TINYINT(1) NULL DEFAULT 1,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `username_UNIQUE` (`username` ASC))
 ENGINE = InnoDB;
@@ -27,6 +30,8 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `doc_hub`.`document_type`
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS `doc_hub`.`document_type` ;
+
 CREATE TABLE IF NOT EXISTS `doc_hub`.`document_type` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
   `type_name` VARCHAR(45) NOT NULL,
@@ -37,21 +42,23 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `doc_hub`.`document`
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS `doc_hub`.`document` ;
+
 CREATE TABLE IF NOT EXISTS `doc_hub`.`document` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
   `title` VARCHAR(256) NOT NULL,
   `author` VARCHAR(256) NOT NULL,
-  `year` YEAR NOT NULL,
-  `pages` VARCHAR(45) NOT NULL,
+  `year` YEAR NULL,
+  `pages` VARCHAR(45) NULL,
   `abstract` TEXT NOT NULL,
   `keywords` VARCHAR(64) NOT NULL,
   `publisher` VARCHAR(128) NOT NULL,
-  `url` VARCHAR(256) NOT NULL,
-  `created_at` DATETIME NOT NULL,
-  `updated_at` DATETIME NULL,
+  `url` VARCHAR(256) NULL,
+  `created_at` DATETIME NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` DATETIME NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `document_type_id` INT UNSIGNED NOT NULL,
   `user_id` INT UNSIGNED NOT NULL,
-  `published` TINYINT(1) NOT NULL DEFAULT FALSE,
+  `published` TINYINT(1) NULL DEFAULT 1,
   PRIMARY KEY (`id`),
   INDEX `fk_document_document_type1_idx` (`document_type_id` ASC),
   INDEX `fk_document_user1_idx` (`user_id` ASC),
@@ -71,6 +78,8 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `doc_hub`.`document_property_type`
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS `doc_hub`.`document_property_type` ;
+
 CREATE TABLE IF NOT EXISTS `doc_hub`.`document_property_type` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45) NOT NULL,
@@ -81,6 +90,8 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `doc_hub`.`document_property`
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS `doc_hub`.`document_property` ;
+
 CREATE TABLE IF NOT EXISTS `doc_hub`.`document_property` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
   `value` VARCHAR(64) NULL,
@@ -98,6 +109,8 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `doc_hub`.`tag`
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS `doc_hub`.`tag` ;
+
 CREATE TABLE IF NOT EXISTS `doc_hub`.`tag` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45) NOT NULL,
@@ -109,6 +122,8 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `doc_hub`.`document_has_document_property`
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS `doc_hub`.`document_has_document_property` ;
+
 CREATE TABLE IF NOT EXISTS `doc_hub`.`document_has_document_property` (
   `document_id` INT UNSIGNED NOT NULL,
   `document_property_id` INT UNSIGNED NOT NULL,
@@ -132,13 +147,15 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `doc_hub`.`tagging`
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS `doc_hub`.`tagging` ;
+
 CREATE TABLE IF NOT EXISTS `doc_hub`.`tagging` (
   `document_id` INT UNSIGNED NOT NULL,
   `tag_id` INT UNSIGNED NOT NULL,
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
   `tagged_by` INT UNSIGNED NOT NULL,
-  `created_at` DATETIME NOT NULL,
-  `updated_at` DATETIME NULL,
+  `created_at` DATETIME NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` DATETIME NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   INDEX `fk_document_has_tag_tag1_idx` (`tag_id` ASC),
   INDEX `fk_document_has_tag_document1_idx` (`document_id` ASC),
@@ -164,15 +181,17 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `doc_hub`.`comment`
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS `doc_hub`.`comment` ;
+
 CREATE TABLE IF NOT EXISTS `doc_hub`.`comment` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
   `content` TEXT NOT NULL,
   `rank` TINYINT NULL,
   `document_id` INT UNSIGNED NOT NULL,
   `user_id` INT UNSIGNED NOT NULL,
-  `created_at` DATETIME NOT NULL,
-  `updated_at` DATETIME NULL,
-  `published` TINYINT(1) NOT NULL DEFAULT FALSE,
+  `created_at` DATETIME NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` DATETIME NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `published` TINYINT(1) NULL DEFAULT 1,
   PRIMARY KEY (`id`),
   INDEX `fk_comment_document1_idx` (`document_id` ASC),
   INDEX `fk_comment_user1_idx` (`user_id` ASC),
@@ -192,6 +211,8 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `doc_hub`.`reference_type`
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS `doc_hub`.`reference_type` ;
+
 CREATE TABLE IF NOT EXISTS `doc_hub`.`reference_type` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(64) NOT NULL,
@@ -202,6 +223,8 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `doc_hub`.`reference`
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS `doc_hub`.`reference` ;
+
 CREATE TABLE IF NOT EXISTS `doc_hub`.`reference` (
   `source` INT UNSIGNED NOT NULL,
   `destination` INT UNSIGNED NOT NULL,
@@ -232,6 +255,8 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `doc_hub`.`attachment`
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS `doc_hub`.`attachment` ;
+
 CREATE TABLE IF NOT EXISTS `doc_hub`.`attachment` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(128) NOT NULL,
@@ -239,8 +264,8 @@ CREATE TABLE IF NOT EXISTS `doc_hub`.`attachment` (
   `type` TINYINT NOT NULL,
   `document_id` INT UNSIGNED NOT NULL,
   `created_by` INT UNSIGNED NOT NULL,
-  `created_at` DATETIME NOT NULL,
-  `updated_at` DATETIME NULL,
+  `created_at` DATETIME NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` DATETIME NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   INDEX `fk_attachment_document1_idx` (`document_id` ASC),
   INDEX `fk_attachment_user1_idx` (`created_by` ASC),
@@ -260,6 +285,8 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `doc_hub`.`comment_property_type`
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS `doc_hub`.`comment_property_type` ;
+
 CREATE TABLE IF NOT EXISTS `doc_hub`.`comment_property_type` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45) NOT NULL,
@@ -270,6 +297,8 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `doc_hub`.`comment_property`
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS `doc_hub`.`comment_property` ;
+
 CREATE TABLE IF NOT EXISTS `doc_hub`.`comment_property` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
   `value` TEXT NULL,
@@ -294,6 +323,8 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `doc_hub`.`document_type_has_document_property_type`
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS `doc_hub`.`document_type_has_document_property_type` ;
+
 CREATE TABLE IF NOT EXISTS `doc_hub`.`document_type_has_document_property_type` (
   `document_type_id` INT UNSIGNED NOT NULL,
   `document_property_type_id` INT UNSIGNED NOT NULL,
@@ -317,12 +348,14 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `doc_hub`.`user_log`
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS `doc_hub`.`user_log` ;
+
 CREATE TABLE IF NOT EXISTS `doc_hub`.`user_log` (
   `user_id` INT UNSIGNED NOT NULL,
   `name` VARCHAR(45) NOT NULL,
   `type` SMALLINT NOT NULL,
   `description` VARCHAR(45) NULL,
-  `created_at` DATETIME NOT NULL,
+  `created_at` DATETIME NULL DEFAULT CURRENT_TIMESTAMP,
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
   PRIMARY KEY (`id`),
   CONSTRAINT `fk_user_log_user1`

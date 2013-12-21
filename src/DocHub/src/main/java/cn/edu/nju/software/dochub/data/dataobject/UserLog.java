@@ -34,11 +34,10 @@ public class UserLog implements java.io.Serializable {
 	}
 
 	/** minimal constructor */
-	public UserLog(User user, String name, short type, Date createdAt) {
+	public UserLog(User user, String name, short type) {
 		this.user = user;
 		this.name = name;
 		this.type = type;
-		this.createdAt = createdAt;
 	}
 
 	/** full constructor */
@@ -101,7 +100,7 @@ public class UserLog implements java.io.Serializable {
 		this.description = description;
 	}
 
-	@Column(name = "created_at", nullable = false, length = 19)
+	@Column(name = "created_at", length = 19)
 	public Date getCreatedAt() {
 		return this.createdAt;
 	}
