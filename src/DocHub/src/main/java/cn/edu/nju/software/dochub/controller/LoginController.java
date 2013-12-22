@@ -48,7 +48,7 @@ public class LoginController {
     }
 
     @RequestMapping(value = "/login.html")
-    public String Show(HttpServletRequest request,
+    public String LoginShow(HttpServletRequest request,
                        HttpServletResponse response, ModelMap model) {
         return "login";
     }
@@ -56,6 +56,7 @@ public class LoginController {
     @RequestMapping(value = "/home/index.html")
     public String Home(HttpServletRequest request,
                        HttpServletResponse response, ModelMap model) {
+    	model.put("name", "小明");
         return "home";
     }
     

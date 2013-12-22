@@ -1,5 +1,3 @@
-<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
-
 <!DOCTYPE html>
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
@@ -43,7 +41,7 @@
             <li><a href="#about"><span class="glyphicon glyphicon-question-sign"></span> 帮助</a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
-            <li><a href="#profile"><span class="glyphicon glyphicon-user"></span> 小明</a></li>
+            <li><a href="#profile"><span class="glyphicon glyphicon-user"></span>$name</a></li>
             <li><a href="../document/create.html"><span class="glyphicon glyphicon-plus"></span> 文献录入</a></li>
             <li><a href="../settings/index.html"><span class="glyphicon glyphicon-cog"></span> 账号设置</a></li>
             <li><a href="#logout"><span class="glyphicon glyphicon-log-out"></span> 登出</a></li>

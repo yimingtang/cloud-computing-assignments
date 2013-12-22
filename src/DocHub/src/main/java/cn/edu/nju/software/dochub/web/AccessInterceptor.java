@@ -27,14 +27,15 @@ public class AccessInterceptor implements HandlerInterceptor {
 		UserAccessContext userAccessContext = (UserAccessContext) request.getSession().getAttribute("userAccessContext");
 		String uri = request.getRequestURI();
 		boolean loginaj =uri.contains("login.aj");
+		boolean loginhtml=uri.contains("login.html");
 		System.out.println(uri+" "+loginaj);
-		if(userAccessContext == null && !loginaj){
+		if(userAccessContext == null && !loginaj && !loginhtml){
 			if(uri.endsWith(".aj")){
 				//forbidden
 				response.sendError(403);
 				return false;
 			}
-			response.sendRedirect(request.getContextPath()+"/");
+			response.sendRedirect(request.getContextPath()+"/login.html");
 //			request.getRequestDispatcher("/").forward(request, response);
 			return false;
 		}
