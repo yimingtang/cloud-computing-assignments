@@ -39,6 +39,6 @@ public class DocumentController {
     public String create(HttpServletRequest request,
                        HttpServletResponse response, ModelMap model) {
     	model.put("userAccessContext", (UserAccessContext)request.getSession().getAttribute("userAccessContext"));
-        return "document/edit";
+        return "document/create";
     }
 }

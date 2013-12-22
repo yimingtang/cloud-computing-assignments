@@ -1,6 +1,5 @@
 package cn.edu.nju.software.dochub.controller;
 
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -18,10 +17,10 @@ import cn.edu.nju.software.dochub.web.UserAccessContext;
 
 @Controller
 public class LoginController {
-    LoginService loginService;
-    ResponseBuilder responseBuilder;
+	LoginService loginService;
+	ResponseBuilder responseBuilder;
 
-    @RequestMapping(value = "/login.aj", method = RequestMethod.POST)
+	@RequestMapping(value = "/login.aj", method = RequestMethod.POST)
     public void Login(HttpServletRequest request,
                       HttpServletResponse response, ModelMap model) {
         UserAccessContext userAccessContext = (UserAccessContext)request.getSession().getAttribute("userAccessContext");
@@ -36,9 +35,11 @@ public class LoginController {
         User user = loginService.getUserByName(username);
         if (user == null) {
             flag = "notexist";
-        } else if (user.getPassword().equals(password)) {
+        } else if(!user.getActive()){
+        	flag="unactive";
+        }else if (user.getPassword().equals(password)) {
             flag = "success";
-            userAccessContext = new UserAccessContext(user.getName(), user.getName(),user.getId(), user.getPermissionLevel());
+            userAccessContext = new UserAccessContext(user.getUsername(), user.getName(),user.getId(), user.getPermissionLevel());
             request.getSession().setAttribute("userAccessContext", userAccessContext);
         }
         JSONObject json = new JSONObject();
@@ -47,26 +48,27 @@ public class LoginController {
         responseBuilder.WriteJSONObject(response, json);
     }
 
-    @RequestMapping(value = "/login.html")
-    public String LoginShow(HttpServletRequest request,
-                       HttpServletResponse response, ModelMap model) {
-        return "login";
-    }
-    
-    @RequestMapping(value = "/home/index.html")
-    public String Home(HttpServletRequest request,
-                       HttpServletResponse response, ModelMap model) {
-    	model.put("userAccessContext", (UserAccessContext)request.getSession().getAttribute("userAccessContext"));
-        return "home";
-    }
-    
-    public void setLoginService(LoginService loginService) {
-        this.loginService = loginService;
-        System.out.println(">>>>>>>>>>loginservice");
-    }
+	@RequestMapping(value = "/login.html")
+	public String LoginShow(HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) {
+		return "login";
+	}
 
-    public void setResponseBuilder(ResponseBuilder responseBuilder) {
-        this.responseBuilder = responseBuilder;
-        System.out.println(">>>>>>>>>>responseBuilder");
-    }
+	@RequestMapping(value = "/home/index.html")
+	public String Home(HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) {
+		model.put("userAccessContext", (UserAccessContext) request.getSession()
+				.getAttribute("userAccessContext"));
+		return "home";
+	}
+
+	public void setLoginService(LoginService loginService) {
+		this.loginService = loginService;
+		System.out.println(">>>>>>>>>>loginservice");
+	}
+
+	public void setResponseBuilder(ResponseBuilder responseBuilder) {
+		this.responseBuilder = responseBuilder;
+		System.out.println(">>>>>>>>>>responseBuilder");
+	}
 }

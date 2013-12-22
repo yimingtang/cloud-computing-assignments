@@ -32,6 +32,8 @@
             console.log(data.flag);
             if(flag=="notexist"){
               new Toast({message:"用户不存在！"}).show();
+            }else if(flag=="unactive"){
+              new Toast({message:"用户已被禁用，请联系管理员！"}).show();
             }else if(flag=="wrong"){
               new Toast({message:"密码错误！"}).show();
             }else if(flag=="success"){
