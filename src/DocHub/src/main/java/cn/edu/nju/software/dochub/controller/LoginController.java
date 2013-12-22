@@ -38,7 +38,7 @@ public class LoginController {
             flag = "notexist";
         } else if (user.getPassword().equals(password)) {
             flag = "success";
-            userAccessContext = new UserAccessContext(user.getName(), user.getId(), user.getPermissionLevel());
+            userAccessContext = new UserAccessContext(user.getName(), user.getName(),user.getId(), user.getPermissionLevel());
             request.getSession().setAttribute("userAccessContext", userAccessContext);
         }
         JSONObject json = new JSONObject();
@@ -56,7 +56,7 @@ public class LoginController {
     @RequestMapping(value = "/home/index.html")
     public String Home(HttpServletRequest request,
                        HttpServletResponse response, ModelMap model) {
-    	model.put("name", "小明");
+    	model.put("userAccessContext", (UserAccessContext)request.getSession().getAttribute("userAccessContext"));
         return "home";
     }
     
