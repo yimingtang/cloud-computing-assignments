@@ -11,13 +11,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import cn.edu.nju.software.dochub.data.dataobject.User;
-import cn.edu.nju.software.dochub.service.LoginService;
+import cn.edu.nju.software.dochub.service.UserService;
 import cn.edu.nju.software.dochub.web.ResponseBuilder;
 import cn.edu.nju.software.dochub.web.UserAccessContext;
 
 @Controller
 public class LoginController {
-	LoginService loginService;
+	UserService userService;
 	ResponseBuilder responseBuilder;
 
 	@RequestMapping(value = "/login.aj", method = RequestMethod.POST)
@@ -32,7 +32,7 @@ public class LoginController {
         String flag = "wrong";
         String username = request.getParameter("username");
         String password = request.getParameter("password");
-        User user = loginService.getUserByName(username);
+        User user = userService.getUserByUserName(username);
         if (user == null) {
             flag = "notexist";
         } else if(!user.getActive()){
@@ -62,13 +62,12 @@ public class LoginController {
 		return "home";
 	}
 
-	public void setLoginService(LoginService loginService) {
-		this.loginService = loginService;
-		System.out.println(">>>>>>>>>>loginservice");
-	}
-
 	public void setResponseBuilder(ResponseBuilder responseBuilder) {
 		this.responseBuilder = responseBuilder;
 		System.out.println(">>>>>>>>>>responseBuilder");
+	}
+
+	public void setUserService(UserService userService) {
+		this.userService = userService;
 	}
 }

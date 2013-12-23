@@ -1,10 +1,7 @@
 package cn.edu.nju.software.dochub.service;
 
-import java.util.ArrayList;
+import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
-
-import cn.edu.nju.software.dochub.data.*;
 import cn.edu.nju.software.dochub.data.dao.AttachmentDAO;
 import cn.edu.nju.software.dochub.data.dao.CommentDAO;
 import cn.edu.nju.software.dochub.data.dao.CommentPropertyDAO;
@@ -21,10 +18,10 @@ import cn.edu.nju.software.dochub.data.dao.TagDAO;
 import cn.edu.nju.software.dochub.data.dao.TaggingDAO;
 import cn.edu.nju.software.dochub.data.dao.UserDAO;
 import cn.edu.nju.software.dochub.data.dao.UserLogDAO;
-import cn.edu.nju.software.dochub.data.dataobject.User;
+import cn.edu.nju.software.dochub.data.dataobject.Document;
+import cn.edu.nju.software.dochub.data.dataobject.DocumentType;
 
-public class LoginService {
-
+public class DocumentService {
 	DocumentTypeDAO documentTypeDAO;
 	CommentPropertyDAO commentPropertyDAO;
 	AttachmentDAO attachmentDAO;
@@ -41,99 +38,74 @@ public class LoginService {
 	TaggingDAO taggingDAO;
 	DocumentHasDocumentPropertyDAO documentHasDocumentPropertyDAO;
 	DocumentPropertyDAO documentPropertyDAO;
-
-	public User getUserByName(String name) {
-		User user= null;
-		ArrayList<User> userlist=(ArrayList<User>) userDAO.findByUsername(name);
-		if (userlist.size() > 0){
-			user = userlist.get(0);
-		}
-
-		return user;
+	
+	public List<DocumentType> getAllDocumentType(){
+		return documentTypeDAO.findAll();
 	}
-
+	
+	public void addDocument(Document document){
+		documentDAO.save(document);
+	}
+	
+	public DocumentType findDocTypeByName(String name){
+		List<DocumentType> doclist=documentTypeDAO.findByTypeName(name);
+		if(doclist.size()>0){
+			return doclist.get(0);
+		}
+		return null;
+		
+	}
+	
 	public void setDocumentTypeDAO(DocumentTypeDAO documentTypeDAO) {
 		this.documentTypeDAO = documentTypeDAO;
-		System.out.println(">>>>>>>>>>>>documentTypeDAO");
 	}
-
 	public void setCommentPropertyDAO(CommentPropertyDAO commentPropertyDAO) {
 		this.commentPropertyDAO = commentPropertyDAO;
-		System.out.println(">>>>>>>>>>>>commentPropertyDAO");
 	}
-
 	public void setAttachmentDAO(AttachmentDAO attachmentDAO) {
 		this.attachmentDAO = attachmentDAO;
-		System.out.println(">>>>>>>>>>>>attachmentDAO");
 	}
-
 	public void setCommentDAO(CommentDAO commentDAO) {
 		this.commentDAO = commentDAO;
-		System.out.println(">>>>>>>>>>>>commentDAO");
 	}
-
 	public void setDocumentTypeHasDocumentPropertyTypeDAO(
 			DocumentTypeHasDocumentPropertyTypeDAO documentTypeHasDocumentPropertyTypeDAO) {
 		this.documentTypeHasDocumentPropertyTypeDAO = documentTypeHasDocumentPropertyTypeDAO;
-		System.out.println(">>>>>>>>>>>>documentTypeHasDocumentPropertyTypeDAO");
 	}
-
 	public void setUserLogDAO(UserLogDAO userLogDAO) {
 		this.userLogDAO = userLogDAO;
-		System.out.println(">>>>>>>>>>>>userLogDAO");
 	}
-
 	public void setDocumentPropertyTypeDAO(
 			DocumentPropertyTypeDAO documentPropertyTypeDAO) {
 		this.documentPropertyTypeDAO = documentPropertyTypeDAO;
-		System.out.println(">>>>>>>>>>>>documentPropertyTypeDAO");
 	}
-
 	public void setUserDAO(UserDAO userDAO) {
 		this.userDAO = userDAO;
-		System.out.println(">>>>>>>>>>>>userDAO");
 	}
-
 	public void setTagDAO(TagDAO tagDAO) {
 		this.tagDAO = tagDAO;
-		System.out.println(">>>>>>>>>>>>tagDAO");
 	}
-
 	public void setReferenceDAO(ReferenceDAO referenceDAO) {
 		this.referenceDAO = referenceDAO;
-		System.out.println(">>>>>>>>>>>>referenceDAO");
 	}
-
 	public void setReferenceTypeDAO(ReferenceTypeDAO referenceTypeDAO) {
 		this.referenceTypeDAO = referenceTypeDAO;
-		System.out.println(">>>>>>>>>>>>referenceTypeDAO");
 	}
-
 	public void setDocumentDAO(DocumentDAO documentDAO) {
 		this.documentDAO = documentDAO;
-		System.out.println(">>>>>>>>>>>>documentDAO");
 	}
-
 	public void setCommentPropertyTypeDAO(
 			CommentPropertyTypeDAO commentPropertyTypeDAO) {
 		this.commentPropertyTypeDAO = commentPropertyTypeDAO;
-		System.out.println(">>>>>>>>>>>>commentPropertyTypeDAO");
 	}
-
 	public void setTaggingDAO(TaggingDAO taggingDAO) {
 		this.taggingDAO = taggingDAO;
-		System.out.println(">>>>>>>>>>>>taggingDAO");
 	}
-
 	public void setDocumentHasDocumentPropertyDAO(
 			DocumentHasDocumentPropertyDAO documentHasDocumentPropertyDAO) {
 		this.documentHasDocumentPropertyDAO = documentHasDocumentPropertyDAO;
-		System.out.println(">>>>>>>>>>>>documentHasDocumentPropertyDAO");
 	}
-
 	public void setDocumentPropertyDAO(DocumentPropertyDAO documentPropertyDAO) {
 		this.documentPropertyDAO = documentPropertyDAO;
-		System.out.println(">>>>>>>>>>>>documentPropertyDAO");
 	}
-
 }

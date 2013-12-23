@@ -10,7 +10,10 @@ public class ResponseBuilder {
 	public void WriteJSONObject(HttpServletResponse response,JSONObject json){
 		response.setHeader("Content-Type", "application/json;charset= utf-8");
 		try {
-			response.getWriter().write(json.toString());
+			if(json!=null){
+				response.getWriter().write(json.toString());
+			}
+			response.getWriter().flush();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -58,9 +58,11 @@
 
 
     <!-- service 注入 -->
-    <bean id="loginService"
-          class="cn.edu.nju.software.dochub.service.LoginService"></bean>
-
+    <bean id="userService"
+          class="cn.edu.nju.software.dochub.service.UserService"></bean>
+	<bean id="documentService"
+          class="cn.edu.nju.software.dochub.service.DocumentService"></bean>
+          
     <!-- DAO 注入 -->
     <bean id="documentTypeDAO"
           class="cn.edu.nju.software.dochub.data.dao.DocumentTypeDAO">

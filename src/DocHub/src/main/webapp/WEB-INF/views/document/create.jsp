@@ -1,10 +1,51 @@
 #parse("./template/header.jsp")
+<script type="text/javascript">
+	var OnChooseDocumentType = function(node) {
+		$("#inputDocType").val(node.innerText);
+	}
+
+	function AddDocument() {
+		new Toast({message:"已提交,切勿重复提交!"}).show();
+		var inputDocType = $("#inputDocType").val();
+		var inputTitle = $("#inputTitle").val();
+		var inputAuthor = $("#inputAuthor").val();
+		var inputAbstract = $("#inputAbstract")[0].value;
+		console.log(inputAbstract);
+		var inputKeyword = $("#inputKeyword").val();
+		var inputPublisher = $("#inputPublisher").val();
+		var inputPublishedDate = $("#inputPublishedDate").val();
+		//var pages = $("#inputPublishedDate").val();
+		var inputTags = $("#inputTags").val();
+		$.ajax({
+			url : "createDocument.aj",
+			dataType : "json",
+			type : "post",
+			data : {
+				DocType : inputDocType,
+				Title : inputTitle,
+				Author : inputAuthor,
+				Abstract : inputAbstract,
+				Keyword : inputKeyword,
+				Publisher : inputPublisher,
+				Tags : inputTags
+			},
+			success : function(data) {
+				new Toast({message:"添加成功！"}).show();
+			},
+			error : function(data) {
+				new Toast({message:"添加失败"}).show();
+				if (data.status == 403) {
+					window.location.reload();
+				}
+			}
+		});
+	}
+</script>
 <div class="col-xs-12 col-md-9">
 	<nav>
 		<ol class="breadcrumb">
 			<li><a href="../document/index.html"><span
-					class="glyphicon glyphicon-home"></span> 首页</a>
-			</li>
+					class="glyphicon glyphicon-home"></span> 首页</a></li>
 			<li class="active">新的文献</li>
 		</ol>
 		<!-- /.breadcrumb -->
@@ -18,81 +59,76 @@
 			</div>
 			<!-- /.panel-heading -->
 
-			<div class="panel-body">
+			<div class="panel-body" id="panel-body">
 
 				<form class="form-horizontal" role="form">
 					<div class="form-group">
 						<label for="btn-doctype" class="col-sm-2 control-label">文献类型</label>
 						<div class="btn-group col-sm-10">
-							<button type="button" class="btn btn-default">未分类</button>
+							#set($defaultDocumentType =
+							$documentTypeList.get(0).getTypeName()) <input type="button"
+								id="inputDocType" class="btn btn-default"
+								value="$defaultDocumentType">
 							<button type="button" id="btn-doctype"
 								class="btn btn-default dropdown-toggle" data-toggle="dropdown">
 								<span class="caret"></span> <span class="sr-only">Toggle
 									Dropdown</span>
 							</button>
 							<ul class="dropdown-menu" role="menu">
-								<li><a href="#">未分类</a>
-								</li>
-								<li class="divider"></li>
-								<li><a href="#">图书</a>
-								</li>
-								<li><a href="#">图书章节</a>
-								</li>
-								<li><a href="#">期刊</a>
-								</li>
-								<li><a href="#">会议</a>
-								</li>
-								<li><a href="#">学位论文</a>
-								</li>
-								<li><a href="#">技术报告</a>
-								</li>
-								<li><a href="#">在线资源</a>
-								</li>
+								#foreach( $documentType in $documentTypeList)
+								<li><a href="#" onclick="OnChooseDocumentType(this)">$documentType.getTypeName()</a>
+								</li> #if($documentType.getId()==0)
+								<li class="divider"></li> #end #end
 							</ul>
 						</div>
 					</div>
 					<div class="form-group">
 						<label for="inputTitle" class="col-sm-2 control-label">标题</label>
 						<div class="col-sm-10">
-							<input type="text" class="form-control" id="inputTitle">
+							<input type="text" class="form-control" id="inputTitle"
+								placeholder="not null">
 						</div>
 					</div>
 					<div class="form-group">
 						<label for="inputAuthor" class="col-sm-2 control-label">作者</label>
 						<div class="col-sm-10">
-							<input type="text" class="form-control" id="inputAuthor">
+							<input type="text" class="form-control" id="inputAuthor"
+								placeholder="not null">
 						</div>
 					</div>
 					<div class="form-group">
 						<label for="inputAbstract" class="col-sm-2 control-label">摘要</label>
 						<div class="col-sm-10">
-							<textarea class="form-control" id="inputAbstract" row="4"></textarea>
+							<textarea class="form-control" id="inputAbstract" row="4"
+								placeholder="not null"></textarea>
 						</div>
 					</div>
 					<div class="form-group">
 						<label for="inputKeyword" class="col-sm-2 control-label">关键字</label>
 						<div class="col-sm-10">
-							<input type="text" class="form-control" id="inputKeyword">
+							<input type="text" class="form-control" id="inputKeyword"
+								placeholder="not null">
 						</div>
 					</div>
 					<div class="form-group">
 						<label for="inputPublisher" class="col-sm-2 control-label">出版单位</label>
 						<div class="col-sm-10">
 							<div class="input-group">
-								<input type="text" class="form-control">
+								<input type="text" class="form-control" id="inputPublisher"
+									placeholder="not null">
 								<div class="input-group-btn">
 									<button type="button" class="btn btn-default dropdown-toggle"
 										data-toggle="dropdown">
 										<span class="caret"></span>
 									</button>
-									<ul class="dropdown-menu pull-right">
+									<!-- <ul class="dropdown-menu pull-right">
 										<li><a href="#">软件学报</a>
 										</li>
 										<li><a href="#">计算机学报</a>
 										</li>
 										<li><a href="#">xxxx</a>
 										</li>
-									</ul>
+									</ul> -->
 								</div>
 								<!-- /btn-group -->
 							</div>
@@ -154,7 +190,7 @@
 							<button type="button" class="btn btn-default">取消</button>
 						</div>
 						<div class="col-sm-1">
-							<button type="submit" class="btn btn-primary">保存</button>
+							<button type="button" class="btn btn-primary" onclick=AddDocument()>保存</button>
 						</div>
 					</div>
 				</form>
@@ -166,5 +202,4 @@
 	<!-- /#main-content-container -->
 </div>
 <!-- /.col left -->
-#parse("./template/right.jsp")
-#parse("./template/footer.jsp")
+#parse("./template/right.jsp") #parse("./template/footer.jsp")
