@@ -5,16 +5,18 @@
 	}
 
 	function AddDocument() {
-		new Toast({message:"已提交,切勿重复提交!"}).show();
+		new Toast({
+			message : "已提交,切勿重复提交!"
+		}).show();
 		var inputDocType = $("#inputDocType").val();
 		var inputTitle = $("#inputTitle").val();
 		var inputAuthor = $("#inputAuthor").val();
 		var inputAbstract = $("#inputAbstract")[0].value;
-		console.log(inputAbstract);
 		var inputKeyword = $("#inputKeyword").val();
 		var inputPublisher = $("#inputPublisher").val();
 		var inputPublishedDate = $("#inputPublishedDate").val();
-		//var pages = $("#inputPublishedDate").val();
+		var inputPages = $("#inputPages").val();
+		var inputURL = $("#inputURL").val();
 		var inputTags = $("#inputTags").val();
 		$.ajax({
 			url : "createDocument.aj",
@@ -27,13 +29,20 @@
 				Abstract : inputAbstract,
 				Keyword : inputKeyword,
 				Publisher : inputPublisher,
+				PublishDate : inputPublishedDate,
+				Pages : inputPages,
+				URL : inputURL,
 				Tags : inputTags
 			},
 			success : function(data) {
-				new Toast({message:"添加成功！"}).show();
+				new Toast({
+					message : "添加成功！"
+				}).show();
 			},
 			error : function(data) {
-				new Toast({message:"添加失败"}).show();
+				new Toast({
+					message : "添加失败"
+				}).show();
 				if (data.status == 403) {
 					window.location.reload();
 				}
@@ -45,7 +54,8 @@
 	<nav>
 		<ol class="breadcrumb">
 			<li><a href="../document/index.html"><span
-					class="glyphicon glyphicon-home"></span> 首页</a></li>
+					class="glyphicon glyphicon-home"></span> 首页</a>
+			</li>
 			<li class="active">新的文献</li>
 		</ol>
 		<!-- /.breadcrumb -->
@@ -92,8 +102,7 @@
 					<div class="form-group">
 						<label for="inputAuthor" class="col-sm-2 control-label">作者</label>
 						<div class="col-sm-10">
-							<input type="text" class="form-control" id="inputAuthor"
-								placeholder="not null">
+							<input type="text" class="form-control" id="inputAuthor">
 						</div>
 					</div>
 					<div class="form-group">
@@ -114,8 +123,7 @@
 						<label for="inputPublisher" class="col-sm-2 control-label">出版单位</label>
 						<div class="col-sm-10">
 							<div class="input-group">
-								<input type="text" class="form-control" id="inputPublisher"
-									placeholder="not null">
+								<input type="text" class="form-control" id="inputPublisher">
 								<div class="input-group-btn">
 									<button type="button" class="btn btn-default dropdown-toggle"
 										data-toggle="dropdown">
@@ -139,18 +147,14 @@
 						<label for="inputPublishedDate" class="col-sm-2 control-label">发表年份</label>
 						<div class="col-sm-2">
 							<input type="text" class="form-control" id="inputPublishedDate"
-								placeholder="e.g. 2013">
+								placeholder="eg: 2013">
 						</div>
 					</div>
 					<div class="form-group">
 						<label for="inputPageFrom" class="col-sm-2 control-label">页码</label>
 						<div class="col-sm-2">
-							<input type="text" class="form-control" id="inputPageFrom"
-								placeholder="起始">
-						</div>
-						<div class="col-sm-2">
-							<input type="text" class="form-control" id="inputPageTo"
-								placeholder="结束">
+							<input type="text" class="form-control" id="inputPages"
+								placeholder="eg:3~7">
 						</div>
 					</div>
 					<div class="form-group">
@@ -190,7 +194,8 @@
 							<button type="button" class="btn btn-default">取消</button>
 						</div>
 						<div class="col-sm-1">
-							<button type="button" class="btn btn-primary" onclick=AddDocument()>保存</button>
+							<button type="button" class="btn btn-primary"
+								onclick=AddDocument()>添加</button>
 						</div>
 					</div>
 				</form>

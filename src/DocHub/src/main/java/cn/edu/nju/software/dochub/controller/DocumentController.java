@@ -1,5 +1,9 @@
 package cn.edu.nju.software.dochub.controller;
 
+
+import java.util.Calendar;
+import java.util.Date;
+
 import net.sf.json.JSONObject;
 
 import org.springframework.stereotype.Controller;
@@ -30,7 +34,7 @@ public class DocumentController {
     @RequestMapping(value = "/index.html")
     public String index(HttpServletRequest request,
                         HttpServletResponse response, ModelMap model) {
-        return "home";
+        return "redirect:/home/index.html";
     }
     
     @RequestMapping(value = "createDocument.aj")
@@ -38,14 +42,18 @@ public class DocumentController {
                         HttpServletResponse response, ModelMap model) {
     	Document document =new Document();
     	document.setDocumentType(documentService.findDocTypeByName((String) request.getParameter("DocType")));
-    	document.setTitle((String) request.getParameter("Title"));
-    	document.setAuthor((String) request.getParameter("Author"));
-    	document.setAbstract_((String) request.getParameter("Abstract"));
-    	document.setKeywords((String) request.getParameter("Keyword"));
-    	document.setPublisher((String) request.getParameter("Publisher"));
+    	document.setTitle(request.getParameter("Title"));
+    	document.setAuthor( request.getParameter("Author"));
+    	document.setAbstract_(request.getParameter("Abstract"));
+    	document.setKeywords( request.getParameter("Keyword"));
+    	document.setPublisher(request.getParameter("Publisher"));
+    	Calendar calendar = Calendar.getInstance();
+    	calendar.set(Calendar.YEAR, Integer.parseInt(request.getParameter("PublishDate")));
+    	document.setYear(calendar.getTime());
+    	document.setPages((String) request.getParameter("Pages"));
+    	document.setUrl((String) request.getParameter("URL"));
     	UserAccessContext uac=(UserAccessContext) request.getSession().getAttribute("userAccessContext");
     	document.setUser(userService.getUserById(uac.getUserId()));
-    	System.out.println((String) request.getParameter("Abstract"));
     	documentService.addDocument(document);
     	responseBuilder.WriteJSONObject(response, new JSONObject(true));
     }

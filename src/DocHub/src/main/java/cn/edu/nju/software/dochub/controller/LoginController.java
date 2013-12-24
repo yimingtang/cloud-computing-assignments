@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import cn.edu.nju.software.dochub.data.dataobject.User;
+import cn.edu.nju.software.dochub.service.DocumentService;
 import cn.edu.nju.software.dochub.service.UserService;
 import cn.edu.nju.software.dochub.web.ResponseBuilder;
 import cn.edu.nju.software.dochub.web.UserAccessContext;
@@ -19,6 +20,7 @@ import cn.edu.nju.software.dochub.web.UserAccessContext;
 public class LoginController {
 	UserService userService;
 	ResponseBuilder responseBuilder;
+	DocumentService documentService;
 
 	@RequestMapping(value = "/login.aj", method = RequestMethod.POST)
     public void Login(HttpServletRequest request,
@@ -59,6 +61,7 @@ public class LoginController {
 			HttpServletResponse response, ModelMap model) {
 		model.put("userAccessContext", (UserAccessContext) request.getSession()
 				.getAttribute("userAccessContext"));
+		model.put("allDocumentList", documentService.getAllDocument());
 		return "home";
 	}
 
@@ -69,5 +72,9 @@ public class LoginController {
 
 	public void setUserService(UserService userService) {
 		this.userService = userService;
+	}
+
+	public void setDocumentService(DocumentService documentService) {
+		this.documentService = documentService;
 	}
 }

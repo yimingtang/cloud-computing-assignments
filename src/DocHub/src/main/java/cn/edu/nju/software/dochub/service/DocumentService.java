@@ -53,8 +53,19 @@ public class DocumentService {
 			return doclist.get(0);
 		}
 		return null;
-		
 	}
+	
+	public List<Document> getAllDocument(){
+		return documentDAO.findAll();
+	}
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	public void setDocumentTypeDAO(DocumentTypeDAO documentTypeDAO) {
 		this.documentTypeDAO = documentTypeDAO;
