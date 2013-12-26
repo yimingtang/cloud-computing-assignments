@@ -55,12 +55,20 @@ public class DocumentService {
 		return null;
 	}
 	
+	
 	public List<Document> getAllDocument(){
 		return documentDAO.findAll();
 	}
 	
 	
+	public Document findDocumentById(int id){
+		Document doc=documentDAO.findById(id);
+		return doc;
+	}
 	
+	public void updateDocument(Document document){
+		documentDAO.merge(document);
+	}
 	
 	
 	
