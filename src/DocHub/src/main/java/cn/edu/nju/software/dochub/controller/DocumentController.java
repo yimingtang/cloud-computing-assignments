@@ -34,7 +34,7 @@ public class DocumentController {
     @RequestMapping(value = "/index.html")
     public String index(HttpServletRequest request,
                         HttpServletResponse response, ModelMap model) {
-        return "redirect:/home/index.html";
+        return "forward:/home/index.html";
     }
     
     @RequestMapping(value = "createDocument.aj")

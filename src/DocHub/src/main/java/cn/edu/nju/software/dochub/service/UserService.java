@@ -1,6 +1,7 @@
 package cn.edu.nju.software.dochub.service;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -56,6 +57,26 @@ public class UserService {
 		User user= userDAO.findById(id);
 		return user;
 	}
+	
+	
+	public List<User> getAllUser(){
+		return userDAO.findAll();
+	}
+	
+	public void updateUser(User user){
+		userDAO.merge(user);
+	}
+	
+	public void addUser(User user){
+		userDAO.save(user);
+	}
+	
+	
+	
+	
+	
+	
+	
 
 	public void setDocumentTypeDAO(DocumentTypeDAO documentTypeDAO) {
 		this.documentTypeDAO = documentTypeDAO;

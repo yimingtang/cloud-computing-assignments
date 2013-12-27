@@ -22,7 +22,7 @@ Toast.prototype = {
         //设置消息样式  
         var left = this.left == null ? this.context.width()/2-msgEntity.find('span').width()/2 : this.left;  
         var top = this.top == null ? '20px' : this.top;  
-        msgEntity.css({position:'fixed',top:top,'z-index':'99',left:left,'background-color':'black',color:'white','font-size':'18px',padding:'10px',margin:'10px'});  
+        msgEntity.css({position:'fixed',top:top,'z-index':'2000',left:left,'background-color':'black',color:'white','font-size':'18px',padding:'10px',margin:'10px'});  
         msgEntity.hide();  
     },  
     //显示动画  

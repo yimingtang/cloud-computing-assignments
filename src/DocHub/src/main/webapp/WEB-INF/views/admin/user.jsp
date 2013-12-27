@@ -1,167 +1,357 @@
-<!DOCTYPE html>
-<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
-<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
-<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>DocHub</title>
-    <meta name="description" content="DocHub is an online document management system.">
-    <meta name="info" content="">
-    <meta name="viewport" content="width=device-width">
+#parse("./template/header.jsp")
+<script type="text/javascript">
+	function onChoosePemissionlevel(node) {
+		$("#permissionlevel").val(node.innerText);
+	}
 
-    <link rel="stylesheet" href="../resources/css/bootstrap.min.css">
-    <link rel="stylesheet" href="../resources/css/main.css">
+	function onChooseActive(node) {
+		$("#state").val(node.innerText);
+	}
 
-    <script src="../resources/js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
-  </head>
-  <body>
-    <!--[if lt IE 7]>
-        <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
-    <![endif]-->
+	function addUser() {
+		var username = $("#username").val();
+		$.ajax({
+			url : "usernameExist.aj",
+			data : {
+				username : username
+			},
+			type : "post",
+			datatype : "json",
+			success : function(data) {
+				if (data.exist) {
+					new Toast({
+						message : "用户名已存在！"
+					}).show();
+				} else {
+					$("#adduser-form").submit();
+					js$('#addUserModal').modal('toggle');
+					$("#username").val("");
+					$("#name").val("");
+				}
+			},
+			error : function(data) {
+			}
+		});
 
-    <nav class="navbar navbar-inverse navbar-static-top" role="navigation">
-      <div class="container">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" href="#">DocHub</a>
-        </div><!-- /.navbar-header -->
+	}
 
-        <div class="collapse navbar-collapse">
-          <ul class="nav navbar-nav">
-            <li><a href="../document/index.html"><span class="glyphicon glyphicon-home"></span> 首页</a></li>
-            <li><a href="../statistics/index.html"><span class="glyphicon glyphicon-stats"></span> 统计</a></li>
-            <li class="active"><a href="../admin/index.html"><span class="glyphicon glyphicon-wrench"></span> 管理</a></li>
-            <li><a href="#about"><span class="glyphicon glyphicon-question-sign"></span> 帮助</a></li>
-          </ul>
-          <ul class="nav navbar-nav navbar-right">
-            <li><a href="#profile"><span class="glyphicon glyphicon-user"></span> 小强</a></li>
-            <li><a href="../document/create.html"><span class="glyphicon glyphicon-plus"></span> 文献录入</a></li>
-            <li><a href="../settings/index.html"><span class="glyphicon glyphicon-cog"></span> 账号设置</a></li>
-            <li><a href="#logout"><span class="glyphicon glyphicon-log-out"></span> 登出</a></li>
-          </ul>
-        </div><!-- /.nav-collapse -->
-      </div><!-- /.container -->
-    </nav><!-- /.navbar -->
+	function onEditPemissionlevel(node) {
+		$("#editpermissionlevel").val(node.innerText);
+	}
 
-    <!-- Main content goes here -->
-    <div class="container">
-      <div class="row">
-        <div class="col-xs-12 col-md-9">
-          <nav>
-            <ol class="breadcrumb">
-              <li><a href="../document/index.html"><span class="glyphicon glyphicon-home"></span> 首页</a></li>
-              <li><a href="../admin/user.html">管理</a></li>
-              <li class="active">用户管理</li>
-            </ol><!-- /.breadcrumb -->
-          </nav>
+	function onEditActive(node) {
+		$("#editstate").val(node.innerText);
+	}
 
-          <div id="main-content-container">
+	function onEditUser(userid) {
+		console.dir($("#userid"));
+		console.log(userid);
+		$.ajax({
+			url : "getUser.aj",
+			data : {
+				userid : userid
+			},
+			type : "post",
+			datatype : "json",
+			success : function(data) {
+				$("#edituserid").val(data.userid);
+				$("#editusername").val(data.username);
+				$("#editpassword").val(data.password);
+				$("#editname").val(data.name);
+				$("#editpermissionlevel").val(data.permissionlevel);
+				$("#editstate").val(data.state);
+			},
+			error : function(data) {
+			}
+		});
+	}
+	
+	function saveUser() {
+		var userid=$("#edituserid").val();
+		var username = $("#editusername").val();
+		$.ajax({
+			url : "editusernameExist.aj",
+			data : {
+				userid: userid,
+				username : username
+			},
+			type : "post",
+			datatype : "json",
+			success : function(data) {
+				if (data.exist) {
+					new Toast({
+						message : "用户名已存在！"
+					}).show();
+				} else {
+					$("#edituser-form").submit();
+					js$('#editUserModal').modal('toggle');
+					$("#edituserid").val("");
+					$("#editusername").val("");
+					$("#editpassword").val("");
+					$("#editusername").val("");
+				}
+			},
+			error : function(data) {
+			}
+		});
 
-            <div class="panel panel-default">
-              <div class="panel-heading">
-                <h3 class="pull-left">用户管理</h3>
-                <div class="pull-right">
-                  <button type="button" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-plus"></span> 添加用户</button>
-                </div>
-                <div class="clearfix"></div>
-              </div><!-- /.panel-heading -->
+	}
+</script>
+<div class="col-xs-12 col-md-9">
+	<nav>
+		<ol class="breadcrumb">
+			<li><a href="../document/index.html"><span
+					class="glyphicon glyphicon-home"></span> 首页</a>
+			</li>
+			<li><a href="../admin/user.html">管理</a>
+			</li>
+			<li class="active">用户管理</li>
+		</ol>
+		<!-- /.breadcrumb -->
+	</nav>
 
-              <div class="panel-body">
-                <table class="table table-hover">
-                  <thead>
-                    <tr>
-                      <th>#</th>
-                      <th>用户名</th>
-                      <th>身份</th>
-                      <th>状态</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td>1</td>
-                      <td>Mark</td>
-                      <td>普通用户</td>
-                      <td><button type="button" class="btn btn-danger btn-sm">停用</button></td>
-                    </tr>
-                    <tr>
-                      <td>2</td>
-                      <td>Man</td>
-                      <td>普通用户</td>
-                      <td><button type="button" class="btn btn-primary btn-sm">启用</button></td>
-                    </tr>
-                    <tr>
-                      <td>3</td>
-                      <td>Jack</td>
-                      <td>普通用户</td>
-                      <td><button type="button" class="btn btn-danger btn-sm">停用</button></td>
-                    </tr>
-                    <tr>
-                      <td>4</td>
-                      <td>Rouse</td>
-                      <td>普通用户</td>
-                      <td><button type="button" class="btn btn-danger btn-sm">停用</button></td>
-                    </tr>
-                    <tr>
-                      <td>5</td>
-                      <td>Tom</td>
-                      <td>普通用户</td>
-                      <td><button type="button" class="btn btn-danger btn-sm">停用</button></td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div><!-- /.panel-body -->
-            </div><!-- /.panel -->
-          </div><!-- /#main-content-container -->
-        </div><!-- /.col left -->
+	<div id="main-content-container">
 
-        <div class="col-xs-12 col-md-3">
-          <div class="panel panel-default">
-            <div class="panel-body">
-              <p>小强<small> (xiaoqiang)</small></p>
-              <p>管理员</p>
-            </div>
-          </div><!-- /.panel -->
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h3 class="pull-left">用户管理</h3>
+				<div class="pull-right">
+					<button type="button" class="btn btn-primary btn-sm"
+						data-toggle="modal" data-target="#addUserModal">
+						<span class="glyphicon glyphicon-plus"></span> 添加用户
+					</button>
+				</div>
+				<div class="clearfix"></div>
+			</div>
+			<!-- /.panel-heading -->
 
-          <div class="list-group">
-              <a href="../admin/user.html" class="list-group-item active">用户管理</a>
-              <a href="#" class="list-group-item">文献类型配置</a>
-              <a href="#" class="list-group-item">文献属性配置</a>
-              <a href="#" class="list-group-item">引用关系配置</a>
-              <a href="#" class="list-group-item">详情评价配置</a>
-              <a href="../admin/tag.html" class="list-group-item">标签配置</a>
-          </div><!-- /.list-group -->
+			<!-- .addUserModal -->
+			<div class="modal fade" id="addUserModal" tabindex="-1" role="dialog"
+				aria-labelledby="addUserModalLabel" aria-hidden="true">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal"
+								aria-hidden="true">&times;</button>
+							<h4 class="modal-title" id="addUserModalLabel">添加用户</h4>
+						</div>
+						<div class="modal-body">
+							<form action="addUser.html" method="post" class="form-horizontal"
+								id="adduser-form" role="form">
+								<div class="form-group">
+									<label for="username" class="col-sm-2 control-label">用户名</label>
+									<div class="col-sm-10">
+										<input type="text" class="form-control" id="username"
+											name="username" placeholder="用户名(not null)">
+									</div>
+								</div>
 
-        </div><!-- /.col right -->
-      </div><!-- /.row -->
+								<div class="form-group">
+									<label for="password" class="col-sm-2 control-label">密码</label>
+									<div class="col-sm-10">
+										<input type="text" class="form-control" id="password"
+											name="password" value="123456">
+									</div>
+								</div>
 
-      <hr>
+								<div class="form-group">
+									<label for="name" class="col-sm-2 control-label">昵称</label>
+									<div class="col-sm-10">
+										<input type="text" class="form-control" id="name" name="name"
+											placeholder="昵称(not null)">
+									</div>
+								</div>
 
-      <footer>
-        <p>&copy; DocHub 2013</p>
-      </footer>
+								<div class="form-group">
+									<label for="permissionlevel" class="col-sm-2 control-label">权限</label>
+									<div class="col-sm-10 btn-group">
+										<input type="text" name="permissionlevel" id="permissionlevel"
+											class="btn btn-default " value="普通用户">
+										<button type="button" class="btn btn-default dropdown-toggle"
+											data-toggle="dropdown">
+											<span class="caret"></span> <span class="sr-only">Toggle
+												Dropdown</span>
+										</button>
+										<ul class="dropdown-menu" role="menu">
+											<li><a href="javascript:void(0)"
+												onclick=onChoosePemissionlevel(this)>管理员</a>
+											</li>
+											<li><a href="javascript:void(0)"
+												onclick=onChoosePemissionlevel(this)>普通用户</a>
+											</li>
+										</ul>
+									</div>
+								</div>
 
-    </div><!-- /.container -->
+								<div class="form-group">
+									<label for="state" class="col-sm-2 control-label">状态</label>
+									<div class="col-sm-10 btn-group ">
+										<input type="text" name="state" id="state"
+											class="btn btn-default" value="active">
+										<button type="button" class="btn btn-default dropdown-toggle"
+											data-toggle="dropdown">
+											<span class="caret"></span> <span class="sr-only">Toggle
+												Dropdown</span>
+										</button>
+										<ul class="dropdown-menu" role="menu">
+											<li><a href="javascript:void(0)"
+												onclick=onChooseActive(this)>active</a>
+											</li>
+											<li><a href="javascript:void(0)"
+												onclick=onChooseActive(this)>unactive</a>
+											</li>
+										</ul>
+									</div>
+								</div>
 
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-    <script>window.jQuery || document.write('<script src="../resources/js/vendor/jquery-1.10.2.min.js"><\/script>')</script>
+								<div class="form-group modal-footer">
+									<button type="button" class="btn btn-default"
+										data-dismiss="modal">取消</button>
+									<button type="button" class="btn btn-primary"
+										onclick="addUser()">添加</button>
+								</div>
+							</form>
+						</div>
+					</div>
+					<!-- /.modal-content -->
+				</div>
+				<!-- /.modal-dialog -->
+			</div>
+			<!-- /.modal -->
+			<!-- /.addUserModal -->
+			<div class="panel-body">
+				<table class="table table-hover">
+					<thead>
+						<tr>
+							<th>#</th>
+							<th>用户名</th>
+							<th>昵称</th>
+							<th>身份</th>
+							<th>状态</th>
+							<th>编辑</th>
+						</tr>
+					</thead>
+					<tbody>
+						#foreach($user in $userList)
+						<tr>
+							<td>$user.getId()</td>
+							<td>$user.getUsername()</td>
+							<td>$user.getName()</td> #if($user.getPessionLevel()==0)
+							<td>管理员</td> #else
+							<td>普通用户</td> #end #if($user.getActive())
+							<td><label class="btn btn-success btn-sm">活动</label> #else
+							<td><label class="btn btn-danger btn-sm">停用</label> #end
+							<td><button type="button" class="btn btn-primary btn-sm"
+									data-toggle="modal" data-target="#editUserModal" onclick=onEditUser($user.getId())>
+									<span class="glyphicon glyphicon-plus"></span> 编辑
+								</button></td>
+						</tr>
+						#end
+					</tbody>
+				</table>
+			</div>
+			<!-- /.panel-body -->
+			<!-- .editUserModal -->
+			<div class="modal fade" id="editUserModal" tabindex="-1"
+				role="dialog" aria-labelledby="editUserModalLabel"
+				aria-hidden="true">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal"
+								aria-hidden="true">&times;</button>
+							<h4 class="modal-title" id="editUserModalLabel">编辑用户</h4>
+						</div>
+						<div class="modal-body">
+							<form action="editUser.html" method="post"
+								class="form-horizontal" id="edituser-form" role="form">
+								<input type="text" style="visibility:hidden" id="edituserid"
+											name="edituserid">
+								<div class="form-group">
+									<label for="editusername" class="col-sm-2 control-label">用户名</label>
+									<div class="col-sm-10">
+										<input type="text" class="form-control" id="editusername"
+											name="editusername">
+									</div>
+								</div>
 
-    <script src="../resources/js/vendor/bootstrap.min.js"></script>
+								<div class="form-group">
+									<label for="editpassword" class="col-sm-2 control-label">密码</label>
+									<div class="col-sm-10">
+										<input type="text" class="form-control" id="editpassword"
+											name="editpassword">
+									</div>
+								</div>
 
-    <script src="../resources/js/plugins.js"></script>
-    <script src="../resources/js/main.js"></script>
+								<div class="form-group">
+									<label for="editname" class="col-sm-2 control-label">昵称</label>
+									<div class="col-sm-10">
+										<input type="text" class="form-control" id="editname"
+											name="editname">
+									</div>
+								</div>
 
-    <script>
-        var _gaq=[['_setAccount','UA-XXXXX-X'],['_trackPageview']];
-        (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
-        g.src='//www.google-analytics.com/ga.js';
-        s.parentNode.insertBefore(g,s)}(document,'script'));
-    </script>
-  </body>
-</html>
+								<div class="form-group">
+									<label for="editpermissionlevel" class="col-sm-2 control-label">权限</label>
+									<div class="col-sm-10 btn-group">
+										<input type="text" name="editpermissionlevel"
+											id="editpermissionlevel" class="btn btn-default ">
+										<button type="button" class="btn btn-default dropdown-toggle"
+											data-toggle="dropdown">
+											<span class="caret"></span> <span class="sr-only">Toggle
+												Dropdown</span>
+										</button>
+										<ul class="dropdown-menu" role="menu">
+											<li><a href="javascript:void(0)"
+												onclick=onEditPemissionlevel(this)>管理员</a>
+											</li>
+											<li><a href="javascript:void(0)"
+												onclick=onEditPemissionlevel(this)>普通用户</a>
+											</li>
+										</ul>
+									</div>
+								</div>
+
+								<div class="form-group">
+									<label for="editstate" class="col-sm-2 control-label">状态</label>
+									<div class="col-sm-10 btn-group ">
+										<input type="text" name="editstate" id="editstate"
+											class="btn btn-default">
+										<button type="button" class="btn btn-default dropdown-toggle"
+											data-toggle="dropdown">
+											<span class="caret"></span> <span class="sr-only">Toggle
+												Dropdown</span>
+										</button>
+										<ul class="dropdown-menu" role="menu">
+											<li><a href="javascript:void(0)"
+												onclick=onEditActive(this)>active</a>
+											</li>
+											<li><a href="javascript:void(0)"
+												onclick=onEditActive(this)>unactive</a>
+											</li>
+										</ul>
+									</div>
+								</div>
+
+								<div class="form-group modal-footer">
+									<button type="button" class="btn btn-default"
+										data-dismiss="modal">取消</button>
+									<button type="button" class="btn btn-primary"
+										onclick="saveUser()">修改</button>
+								</div>
+							</form>
+						</div>
+					</div>
+					<!-- /.modal-content -->
+				</div>
+				<!-- /.modal-dialog -->
+			</div>
+			<!-- /.modal -->
+			<!-- /.editUserModal -->
+		</div>
+		<!-- /.panel -->
+	</div>
+	<!-- /#main-content-container -->
+</div>
+<!-- /.col left -->
+#parse("./template/right.jsp") #parse("./template/footer.jsp")
