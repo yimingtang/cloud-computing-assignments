@@ -1,9 +1,15 @@
 #parse("./template/header.jsp")
+<script type="text/javascript">
+	function OnChooseDocumentType(node) {
+		$("[name='searchdoctype']").val(node.innerText);
+	}
+</script>
 <div class="col-xs-12 col-md-9">
 	<nav>
 		<ol class="breadcrumb">
 			<li class="active"><a href="#"><span
-					class="glyphicon glyphicon-home"></span> 首页</a></li>
+					class="glyphicon glyphicon-home"></span> 首页</a>
+			</li>
 		</ol>
 		<!-- /.breadcrumb -->
 	</nav>
@@ -11,19 +17,21 @@
 	<div id="main-content-container">
 
 		<div class="search-area">
-			<div class="input-group">
-				<input type="text" class="form-control">
-				<div class="input-group-btn">
-					<button type="button" class="btn btn-default" tabindex="-1"
-						data-toggle="modal" data-target="#advanced-search">
-						<span class="caret"></span>
-					</button>
-					<button type="button" class="btn btn-default" tabindex="-1">
-						<span class="glyphicon glyphicon-search"></span> 搜索
-					</button>
+			<form action="../document/fuzzysearch.html" method="post" role="form">
+				<div class="input-group">
+					<input type="text" name="fuzzyword" class="form-control">
+					<div class="input-group-btn">
+						<button type="button" class="btn btn-default" tabindex="-1"
+							data-toggle="modal" data-target="#advanced-search">
+							<span class="caret"></span>
+						</button>
+						<button type="submit" class="btn btn-default" tabindex="-1">
+							<span class="glyphicon glyphicon-search"></span> 搜索
+						</button>
+					</div>
 				</div>
 				<!-- /.input-group-btn -->
-			</div>
+			</form>
 			<!-- /.input-group -->
 
 			<!-- Modal -->
@@ -38,11 +46,13 @@
 						</div>
 
 						<div class="modal-body">
-							<form class="form-horizontal" role="form">
+							<form action="../document/accuratesearch.html" method="post"
+								class="form-horizontal" role="form">
 								<div class="form-group">
 									<label for="btn-doctype" class="col-sm-2 control-label">文献类型</label>
 									<div class="btn-group col-sm-10">
-										<button type="button" class="btn btn-default">全部类型</button>
+										<input type="text" class="btn btn-default"
+											name="searchdoctype" value="全部类型">
 										<button type="button" id="btn-doctype"
 											class="btn btn-default dropdown-toggle"
 											data-toggle="dropdown">
@@ -50,52 +60,63 @@
 												Dropdown</span>
 										</button>
 										<ul class="dropdown-menu" role="menu">
-											<li><a href="#">所有分类</a></li>
-											<li class="divider"></li>
-											<li><a href="#">图书</a></li>
-											<li><a href="#">图书章节</a></li>
-											<li><a href="#">期刊</a></li>
-											<li><a href="#">会议</a></li>
-											<li><a href="#">学位论文</a></li>
-											<li><a href="#">技术报告</a></li>
-											<li><a href="#">在线资源</a></li>
-											<li><a href="#">未分类</a></li>
+											<li><a href="#">全部类型</a>
+											</li>
+											<li class="divider"></li> #foreach($docType in
+											$documentTypeList)
+											<li><a href="javascript:void(0)"
+												onclick="OnChooseDocumentType(this)">$docType.getTypeName()</a>
+											</li> #end
 										</ul>
 									</div>
 								</div>
 								<div class="form-group">
 									<label for="inputTitle" class="col-sm-2 control-label">标题</label>
 									<div class="col-sm-10">
-										<input type="text" class="form-control" id="inputTitle">
+										<input type="text" class="form-control" name="searchtitle">
 									</div>
 								</div>
 								<div class="form-group">
 									<label for="inputAuthor" class="col-sm-2 control-label">作者</label>
 									<div class="col-sm-10">
-										<input type="text" class="form-control" id="inputAuthor">
+										<input type="text" class="form-control" name="searchauthor">
 									</div>
 								</div>
+
+								<div class="form-group">
+									<label for="inputAbstract" class="col-sm-2 control-label">摘要</label>
+									<div class="col-sm-10">
+										<input type="text" class="form-control" name="searchabstract">
+									</div>
+								</div>
+
 								<div class="form-group">
 									<label for="inputKeyword" class="col-sm-2 control-label">关键字</label>
 									<div class="col-sm-10">
-										<input type="text" class="form-control" id="inputKeyword">
+										<input type="text" class="form-control" name="searchkeyword">
 									</div>
 								</div>
 								<div class="form-group">
 									<label for="inputPublisher" class="col-sm-2 control-label">出版单位</label>
 									<div class="col-sm-10">
-										<input type="text" class="form-control" id="inputPublisher">
+										<input type="text" class="form-control" name="searchpublisher">
+									</div>
+								</div>
+								<div class="form-group">
+									<label for="inputUrl" class="col-sm-2 control-label">URL</label>
+									<div class="col-sm-10">
+										<input type="text" class="form-control" name="searchurl">
 									</div>
 								</div>
 								<div class="form-group">
 									<label for="inputDateFrom" class="col-sm-2 control-label">发表时间</label>
 									<div class="col-sm-2">
-										<input type="text" class="form-control" id="inputDateFrom"
-											placeholder="起始">
+										<input type="text" class="form-control" name="searchdatefrom"
+											placeholder="1970">
 									</div>
 									<div class="col-sm-2">
-										<input type="text" class="form-control" id="inputDateTo"
-											placeholder="结束">
+										<input type="text" class="form-control" name="searchdateend"
+											placeholder="2013">
 									</div>
 								</div>
 								<div class="form-group">
@@ -105,16 +126,16 @@
 											placeholder="标签之间以英文逗号(,)分开">
 									</div>
 								</div>
-
+								<div class="modal-footer">
+									<button type="button" class="btn btn-default"
+										data-dismiss="modal">取消</button>
+									<button type="submit" class="btn btn-primary">搜索</button>
+								</div>
 							</form>
 						</div>
 						<!-- /.modal-body -->
 
-						<div class="modal-footer">
-							<button type="button" class="btn btn-default"
-								data-dismiss="modal">取消</button>
-							<button type="button" class="btn btn-primary">搜索</button>
-						</div>
+
 						<!-- /.modal-footer -->
 					</div>
 					<!-- /.modal-content -->
@@ -122,7 +143,6 @@
 				<!-- /.modal-dialog -->
 			</div>
 			<!-- /.modal -->
-
 		</div>
 		<!-- /.search-area -->
 
@@ -130,7 +150,7 @@
 			<div class="panel-heading">
 				<h3 class="pull-left">文献</h3>
 				<div class="pull-right">
-					<button type="button" class="btn btn-primary btn-sm">导入文献</button>
+					<a href="../document/create.html" class="btn btn-primary btn-sm" >导入文献</a>
 					<div class="btn-group btn-group-sm">
 						<button type="button" class="btn btn-default">按相关性排序</button>
 						<button type="button" class="btn btn-default dropdown-toggle"
@@ -150,16 +170,16 @@
 			<!-- /.panel-heading -->
 
 			<ul class="list-group document-list">
-			#foreach($document in $allDocumentList)
+				#foreach($document in $allDocumentList)
 				<li class="list-group-item document-list-item">
 					<h4>
 						<a href="../document/show.html?docId=$document.getId()">$document.getTitle()</a>
 					</h4>
-					<p class="info">$document.getAuthor() - $document.getPublisher(), $document.getYear()</p>
+					<p class="info">$document.getAuthor() -
+						$document.getPublisher(), $document.getYear()</p>
 					<p>$document.getAbstract_()</p>
-				</li>
-			#end
-			<!-- /.list-group document-list-->
+				</li> #end
+				<!-- /.list-group document-list-->
 		</div>
 		<!-- /.panel -->
 
@@ -181,5 +201,4 @@
 	<!-- /#main-content-container -->
 </div>
 <!-- /.col left -->
-#parse("./template/right.jsp")
-#parse("./template/footer.jsp")
+#parse("./template/right.jsp") #parse("./template/footer.jsp")

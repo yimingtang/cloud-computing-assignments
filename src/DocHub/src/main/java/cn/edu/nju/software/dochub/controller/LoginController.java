@@ -62,6 +62,7 @@ public class LoginController {
 		model.put("userAccessContext", (UserAccessContext) request.getSession()
 				.getAttribute("userAccessContext"));
 		model.put("allDocumentList", documentService.getAllDocument());
+		model.put("documentTypeList", documentService.getAllDocumentType());
 		return "home";
 	}
 

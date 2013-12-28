@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import cn.edu.nju.software.dochub.data.dao.DocumentTypeDAO;
 import cn.edu.nju.software.dochub.data.dataobject.Document;
 import cn.edu.nju.software.dochub.data.dataobject.DocumentType;
 import cn.edu.nju.software.dochub.service.DocumentService;
@@ -115,6 +116,75 @@ public class DocumentController {
     	model.put("documentTypeList", documentService.getAllDocumentType());
         return "document/create";
     }
+    
+    @RequestMapping(value = "/fuzzysearch.html")
+    public String fuzzysearch(HttpServletRequest request,
+                       HttpServletResponse response, ModelMap model) {
+    	String fuzzyword=request.getParameter("fuzzyword");
+    	if(fuzzyword==null || fuzzyword.equals("")){
+    		return "forward:/home/index.html";
+    	}
+    	model.put("userAccessContext", (UserAccessContext)request.getSession().getAttribute("userAccessContext"));
+    	model.put("allDocumentList", documentService.findDocByFuzzy(fuzzyword));
+    	model.put("documentTypeList", documentService.getAllDocumentType());
+        return "home";
+    }
+    
+    @RequestMapping(value = "/accuratesearch.html")
+    public String accutatesearch(HttpServletRequest request,
+                       HttpServletResponse response, ModelMap model) {
+    	String title=request.getParameter("searchtitle");
+    	String author=request.getParameter("searchauthor");
+    	String yearFromString=request.getParameter("searchdatefrom");
+    	String yearToString=request.getParameter("searchdateend");
+    	Date yearFrom=null;
+    	Date yearTo=null;
+    	Calendar calendar=Calendar.getInstance();
+    	if(yearFromString !=null && !yearFromString.equals("")){
+    		calendar.set(Calendar.YEAR, Integer.parseInt(yearFromString));
+    		calendar.set(Calendar.MONTH, 1);
+    		calendar.set(Calendar.DAY_OF_MONTH, 1);
+        	yearFrom = calendar.getTime();
+    	}
+    	
+    	if(yearToString !=null && !yearToString.equals("")){
+    		calendar.set(Calendar.YEAR, Integer.parseInt(yearToString));
+    		calendar.set(Calendar.MONTH, 12);
+    		calendar.set(Calendar.DAY_OF_MONTH, 31);
+        	yearTo = calendar.getTime();
+    	}
+    	
+    	
+    	String abstract_=request.getParameter("searchabstract");
+    	String keyword=request.getParameter("searchkeyword");
+    	String publisher=request.getParameter("searchpublisher");
+    	String url=request.getParameter("searchurl");
+    	String documenttypeString=request.getParameter("searchdoctype");
+    	DocumentType documenttype=documentService.findDocTypeByName(documenttypeString);
+    	
+    	model.put("userAccessContext", (UserAccessContext)request.getSession().getAttribute("userAccessContext"));
+    	model.put("allDocumentList", documentService.findDocByAccutate(title, author, yearFrom, yearTo, abstract_, keyword, publisher, url, documenttype));
+    	model.put("documentTypeList", documentService.getAllDocumentType());
+        return "home";
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 
 	public void setDocumentService(DocumentService documentService) {
 		this.documentService = documentService;

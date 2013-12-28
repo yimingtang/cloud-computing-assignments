@@ -1,15 +1,18 @@
 package cn.edu.nju.software.dochub.data.dao;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
 import org.hibernate.LockMode;
+import org.hibernate.Query;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
 import cn.edu.nju.software.dochub.data.dataobject.Document;
+import cn.edu.nju.software.dochub.data.dataobject.DocumentType;
 
 /**
  * A data access object (DAO) providing persistence and search support for
@@ -138,6 +141,118 @@ public class DocumentDAO extends HibernateDaoSupport {
 		try {
 			String queryString = "from Document";
 			return getHibernateTemplate().find(queryString);
+		} catch (RuntimeException re) {
+			log.error("find all failed", re);
+			throw re;
+		}
+	}
+
+	public List findLikeWord(String word) {
+		log.debug("finding some Document instances like word");
+		try {
+			String queryString = "from Document as d where lower(d.title) like lower('%"
+					+ word
+					+ "%') or lower(d.author) like lower('%"
+					+ word
+					+ "%') or lower(d.year) like lower('%"
+					+ word
+					+ "%') or lower(d.abstract_) like lower('%"
+					+ word
+					+ "%') or lower(d.keywords) like lower('%"
+					+ word
+					+ "%') or lower(d.url) like lower('%" + word + "%')";
+			return getHibernateTemplate().find(queryString);
+		} catch (RuntimeException re) {
+			log.error("find all failed", re);
+			throw re;
+		}
+	}
+
+	/**
+	 * 
+	 * @param title
+	 * @param author
+	 * @param yearFrom
+	 *            null or date
+	 * @param yearTo
+	 *            null or date
+	 * @param abstract_
+	 * @param keyword
+	 * @param publisher
+	 * @param url
+	 * @param documenttype
+	 *            -1 or (0......)
+	 * @return
+	 */
+	public List findLikeWords(String title, String author, Date yearFrom,
+			Date yearTo, String abstract_, String keyword, String publisher,
+			String url, DocumentType documenttype) {
+		log.debug("finding some Document instances like word");
+		try {
+			String querytitle = "";
+			if (title != null && !title.equals("")) {
+				querytitle = "lower(d.title) like lower('%" + title + "%')";
+			} else {
+				querytitle = "d.title like '%'";
+			}
+
+			String queryauthor = "";
+			if (author != null && !author.equals("")) {
+				queryauthor += " and lower(d.author) like lower('%" + author
+						+ "%')";
+			}
+
+			String queryyear = "";
+//			SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			if (yearFrom != null) {
+				queryyear = " and d.year >= :yearFrom";
+			}
+			if (yearTo != null) {
+				queryyear += " and d.year <= :yearTo";
+			}
+
+			String queryabstract_ = "";
+			if (abstract_ != null && !abstract_.equals("")) {
+				queryabstract_ += " and lower(d.abstract_) like lower('%"
+						+ abstract_ + "%')";
+			}
+
+			String querykeyword = "";
+			if (keyword != null && !keyword.equals("")) {
+				querykeyword += " and lower(d.keywords) like lower('%" + keyword
+						+ "%')";
+			}
+
+			String querypublisher = "";
+			if (publisher != null && !publisher.equals("")) {
+				querypublisher += " and lower(d.publisher) like lower('%"
+						+ publisher + "%')";
+			}
+
+			String queryurl = "";
+			if (url != null && !url.equals("")) {
+				queryurl += " and lower(d.url) like lower('%" + url + "%')";
+			}
+
+			String querydocumenttype = "";
+			if (documenttype != null) {
+				querydocumenttype += " and d.documentType.id = " + documenttype.getId();
+			}
+
+			String queryString = "from Document as d where " + querytitle
+					+ queryauthor + queryyear + queryabstract_ + querykeyword
+					+ querypublisher + queryurl + querydocumenttype;
+			
+			Query query = this.getSession().createQuery(queryString);
+			
+			if(queryString.contains("yearFrom")){
+				query.setDate("yearFrom", yearFrom);
+			}
+			if(queryString.contains("yearTo")){
+				query.setDate("yearTo", yearTo);
+			}
+			
+			return query.list();
 		} catch (RuntimeException re) {
 			log.error("find all failed", re);
 			throw re;

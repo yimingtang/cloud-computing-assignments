@@ -46,7 +46,7 @@
 
 			<div class="collapse navbar-collapse">
 				<ul class="nav navbar-nav">
-					<li class="active"><a href="../home/index.html"><span
+					<li><a href="../home/index.html"><span
 							class="glyphicon glyphicon-home"></span> 首页</a></li>
 					<li><a href="../statistics/index.html"><span
 							class="glyphicon glyphicon-stats"></span> 统计</a></li>
