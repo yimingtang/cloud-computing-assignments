@@ -1,11 +1,13 @@
 package cn.edu.nju.software.dochub.controller;
 
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-
+import java.util.List;
 import net.sf.json.JSONObject;
 
+import org.apache.velocity.tools.generic.DateTool;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,6 +16,7 @@ import cn.edu.nju.software.dochub.data.dao.DocumentTypeDAO;
 import cn.edu.nju.software.dochub.data.dataobject.Comment;
 import cn.edu.nju.software.dochub.data.dataobject.Document;
 import cn.edu.nju.software.dochub.data.dataobject.DocumentType;
+import cn.edu.nju.software.dochub.data.dataobject.User;
 import cn.edu.nju.software.dochub.service.CommentService;
 import cn.edu.nju.software.dochub.service.DocumentService;
 import cn.edu.nju.software.dochub.service.UserService;
@@ -46,6 +49,7 @@ public class DocumentController {
                         HttpServletResponse response, ModelMap model) {
     	Document document =new Document();
     	document.setDocumentType(documentService.findDocTypeByName((String) request.getParameter("DocType")));
+    	document.setCreatedAt(Calendar.getInstance().getTime());
     	document.setTitle(request.getParameter("Title"));
     	document.setAuthor( request.getParameter("Author"));
     	document.setAbstract_(request.getParameter("Abstract"));
@@ -72,6 +76,11 @@ public class DocumentController {
     	year.setTime(document.getYear());
     	model.put("year", year.get(Calendar.YEAR));
     	model.put("userAccessContext", (UserAccessContext)request.getSession().getAttribute("userAccessContext"));
+    	model.put("dateformat", new SimpleDateFormat("yyyy.MM.dd 'at' HH:mm:ss"));
+    	List<Comment> commentlist=commentService.findAllPublishedCommentByDocId(docid);
+    	System.out.println("docid:"+docid);
+    	System.out.println("commentsize:"+commentlist.size());
+    	model.put("commentList", commentlist);
         return "document/view";
     }
 
@@ -94,6 +103,7 @@ public class DocumentController {
                         HttpServletResponse response, ModelMap model) {
     	int docid=Integer.parseInt((String)request.getParameter("DocId"));
     	Document document = documentService.findDocumentById(docid);
+    	document.setUpdatedAt(Calendar.getInstance().getTime());
     	document.setDocumentType(documentService.findDocTypeByName((String) request.getParameter("DocType")));
     	document.setTitle(request.getParameter("Title"));
     	document.setAuthor( request.getParameter("Author"));
@@ -177,10 +187,36 @@ public class DocumentController {
     	int docid=Integer.parseInt(request.getParameter("simplecomment-docid"));
     	String content=request.getParameter("simplecomment-content");
     	Document document=documentService.findDocumentById(docid);
+    	User user=userService.getUserById(((UserAccessContext)request.getSession().getAttribute("userAccessContext")).getUserId());
     	
     	Comment comment =new Comment();
+    	comment.setCreatedAt(Calendar.getInstance().getTime());
+    	comment.setPublished(true);
+    	comment.setContent(content);
+    	comment.setDocument(document);
+    	comment.setUser(user);
     	
-        return "";
+    	commentService.addSimpleComment(comment);
+        return "redirect:/document/show.html?docId="+docid;
+    }
+    
+    
+    @RequestMapping(value = "/simpledraft.aj")
+    public void simpleDraft(HttpServletRequest request,
+                       HttpServletResponse response, ModelMap model) {
+    	int docid=Integer.parseInt(request.getParameter("docid"));
+    	String content=request.getParameter("content");
+    	Document document=documentService.findDocumentById(docid);
+    	User user=userService.getUserById(((UserAccessContext)request.getSession().getAttribute("userAccessContext")).getUserId());
+    	
+    	Comment comment =new Comment();
+    	comment.setCreatedAt(Calendar.getInstance().getTime());
+    	comment.setPublished(false);
+    	comment.setContent(content);
+    	comment.setDocument(document);
+    	comment.setUser(user);
+    	commentService.addSimpleComment(comment);
+    	responseBuilder.WriteJSONObject(response, new JSONObject(true));
     }
     
     

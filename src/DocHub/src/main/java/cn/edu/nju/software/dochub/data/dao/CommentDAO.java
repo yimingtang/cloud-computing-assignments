@@ -122,6 +122,17 @@ public class CommentDAO extends HibernateDaoSupport {
 			throw re;
 		}
 	}
+	
+	public List findAllPublishedByDocId(int docid) {
+		log.debug("finding all published Comment by document id instances");
+		try {
+			String queryString = "from Comment as c where c.published = 1 and c.document.id = "+docid;
+			return getHibernateTemplate().find(queryString);
+		} catch (RuntimeException re) {
+			log.error("find all failed", re);
+			throw re;
+		}
+	}
 
 	public Comment merge(Comment detachedInstance) {
 		log.debug("merging Comment instance");
@@ -161,4 +172,5 @@ public class CommentDAO extends HibernateDaoSupport {
 	public static CommentDAO getFromApplicationContext(ApplicationContext ctx) {
 		return (CommentDAO) ctx.getBean("CommentDAO");
 	}
+
 }

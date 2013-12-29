@@ -1,5 +1,7 @@
 package cn.edu.nju.software.dochub.service;
 
+import java.util.List;
+
 import cn.edu.nju.software.dochub.data.dao.AttachmentDAO;
 import cn.edu.nju.software.dochub.data.dao.CommentDAO;
 import cn.edu.nju.software.dochub.data.dao.CommentPropertyDAO;
@@ -16,6 +18,7 @@ import cn.edu.nju.software.dochub.data.dao.TagDAO;
 import cn.edu.nju.software.dochub.data.dao.TaggingDAO;
 import cn.edu.nju.software.dochub.data.dao.UserDAO;
 import cn.edu.nju.software.dochub.data.dao.UserLogDAO;
+import cn.edu.nju.software.dochub.data.dataobject.Comment;
 
 public class CommentService {
 	DocumentTypeDAO documentTypeDAO;
@@ -35,9 +38,17 @@ public class CommentService {
 	DocumentHasDocumentPropertyDAO documentHasDocumentPropertyDAO;
 	DocumentPropertyDAO documentPropertyDAO;
 	
+	public List<Comment> getAllComment(){
+		return commentDAO.findAll();
+	}
 	
+	public void addSimpleComment(Comment comment ){
+		commentDAO.save(comment);
+	}
 	
-	
+	public List<Comment> findAllPublishedCommentByDocId(int docid){
+		return commentDAO.findAllPublishedByDocId(docid);
+	}
 	
 	
 	

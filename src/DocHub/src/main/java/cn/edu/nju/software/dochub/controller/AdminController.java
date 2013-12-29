@@ -1,5 +1,7 @@
 package cn.edu.nju.software.dochub.controller;
 
+import java.util.Calendar;
+
 import cn.edu.nju.software.dochub.data.dataobject.User;
 
 import net.sf.json.JSONObject;
@@ -55,6 +57,7 @@ public class AdminController {
 		user.setUsername(request.getParameter("username"));
 		user.setPassword(request.getParameter("password"));
 		System.out.println(">>>>>>" + request.getParameter("password"));
+		user.setCreatedAt(Calendar.getInstance().getTime());
 		user.setSalt("123");
 		user.setName(request.getParameter("name"));
 		String level = request.getParameter("permissionlevel");
@@ -81,6 +84,7 @@ public class AdminController {
 			HttpServletResponse response, ModelMap model) {
 		User user = userService.getUserById(Integer.parseInt(request
 				.getParameter("edituserid")));
+		user.setUpdatedAt(Calendar.getInstance().getTime());
 		user.setUsername(request.getParameter("editusername"));
 		user.setPassword(request.getParameter("editpassword"));
 		user.setName(request.getParameter("editname"));
