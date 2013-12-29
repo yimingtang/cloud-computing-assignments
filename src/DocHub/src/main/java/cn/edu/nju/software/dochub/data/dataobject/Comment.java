@@ -27,6 +27,7 @@ public class Comment implements java.io.Serializable {
 	private Integer id;
 	private User user;
 	private Document document;
+	private Integer type;
 	private String content;
 	private short rank;
 	private Date createdAt;
@@ -49,11 +50,12 @@ public class Comment implements java.io.Serializable {
 	}
 
 	/** full constructor */
-	public Comment(User user, Document document, String content, short rank,
-			Date createdAt, Date updatedAt, boolean published,
+	public Comment(User user, Document document, Integer type, String content,
+			short rank, Date createdAt, Date updatedAt, boolean published,
 			Set<CommentProperty> commentProperties) {
 		this.user = user;
 		this.document = document;
+		this.type = type;
 		this.content = content;
 		this.rank = rank;
 		this.createdAt = createdAt;
@@ -93,6 +95,15 @@ public class Comment implements java.io.Serializable {
 
 	public void setDocument(Document document) {
 		this.document = document;
+	}
+
+	@Column(name = "type")
+	public Integer getType() {
+		return this.type;
+	}
+
+	public void setType(Integer type) {
+		this.type = type;
 	}
 
 	@Column(name = "content", nullable = false, length = 65535)

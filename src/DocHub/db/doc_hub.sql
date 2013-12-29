@@ -51,29 +51,36 @@ LOCK TABLES `attachment` WRITE;
 /*!40000 ALTER TABLE `attachment` ENABLE KEYS */;
 UNLOCK TABLES;
 
---
--- Table structure for table `comment`
---
+-- -----------------------------------------------------
+-- Table `doc_hub`.`comment`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `doc_hub`.`comment` ;
 
-DROP TABLE IF EXISTS `comment`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `comment` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `content` text NOT NULL,
-  `rank` tinyint(4) DEFAULT NULL,
-  `document_id` int(10) unsigned NOT NULL,
-  `user_id` int(10) unsigned NOT NULL,
-  `created_at` datetime DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `published` tinyint(1) DEFAULT '1',
+CREATE TABLE IF NOT EXISTS `doc_hub`.`comment` (
+  `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `type` INT NULL DEFAULT 0,
+  `content` TEXT NOT NULL,
+  `rank` TINYINT NULL,
+  `document_id` INT UNSIGNED NOT NULL,
+  `user_id` INT UNSIGNED NOT NULL,
+  `created_at` DATETIME NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` DATETIME NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `published` TINYINT(1) NULL DEFAULT 1,
   PRIMARY KEY (`id`),
-  KEY `fk_comment_document1_idx` (`document_id`),
-  KEY `fk_comment_user1_idx` (`user_id`),
-  CONSTRAINT `fk_comment_document1` FOREIGN KEY (`document_id`) REFERENCES `document` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_comment_user1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
+  INDEX `fk_comment_document1_idx` (`document_id` ASC),
+  INDEX `fk_comment_user1_idx` (`user_id` ASC),
+  CONSTRAINT `fk_comment_document1`
+    FOREIGN KEY (`document_id`)
+    REFERENCES `doc_hub`.`document` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_comment_user1`
+    FOREIGN KEY (`user_id`)
+    REFERENCES `doc_hub`.`user` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
 
 --
 -- Dumping data for table `comment`

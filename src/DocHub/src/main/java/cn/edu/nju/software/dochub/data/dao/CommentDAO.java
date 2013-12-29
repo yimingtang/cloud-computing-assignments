@@ -26,6 +26,7 @@ import cn.edu.nju.software.dochub.data.dataobject.Comment;
 public class CommentDAO extends HibernateDaoSupport {
 	private static final Logger log = LoggerFactory.getLogger(CommentDAO.class);
 	// property constants
+	public static final String TYPE = "type";
 	public static final String CONTENT = "content";
 	public static final String RANK = "rank";
 	public static final String PUBLISHED = "published";
@@ -93,6 +94,10 @@ public class CommentDAO extends HibernateDaoSupport {
 			log.error("find by property name failed", re);
 			throw re;
 		}
+	}
+
+	public List<Comment> findByType(Object type) {
+		return findByProperty(TYPE, type);
 	}
 
 	public List<Comment> findByContent(Object content) {
