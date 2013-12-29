@@ -15,7 +15,8 @@
 		<div class="panel panel-default">
 			<div class="panel-heading">
 				<h3 style="display:inline-block">文献</h3>
-				<a href ="edit.html?docId=$document.getId()" class="btn btn-primary" style="display:inline-block;float:right">编辑</a>
+				<a href="edit.html?docId=$document.getId()" class="btn btn-primary"
+					style="display:inline-block;float:right">编辑</a>
 			</div>
 			<!-- /.panel-heading -->
 
@@ -52,104 +53,124 @@
 					</ul>
 				</div>
 				<div class="document-info-section">
-					<h4>评价</h4>
-					<ul>
-						<li>评价1</li>
-						<li>评价2</li>
-						<li>评价3</li>
+					<h3>
+						<strong>评价</strong>
+					</h3>
+					#set($level=0)
+					<ul class="list-unstyled comment-list">
+						<li class="panel panel-default">
+							<div class="panel-heading">
+								<label class="comment-title">王菲(wangfei)<span> in
+										2013-10-9</span> </label> <label style="float:right"> #$level楼</label>
+							</div>
+							<div class="panel-body">
+								<p>Some default panel content here. Nulla vitae elit libero,
+									a pharetra augue. Aenean lacinia bibendum nulla sed
+									consectetur. Aenean eu leo quam. Pellentesque ornare sem
+									lacinia quam venenatis vestibulum. Nullam id dolor id nibh
+									ultricies vehicula ut id elit.</p>
+							</div>
+						</li>
+
+						<li class="panel panel-default">
+							<div class="panel-heading">
+								<label class="comment-title">王菲(wangfei)<span> in
+										2013-10-9</span> </label> <label style="float:right"> #$level楼</label>
+							</div>
+							<div class="panel-body">
+								<p>Some default panel content here. Nulla vitae elit libero,
+									a pharetra augue. Aenean lacinia bibendum nulla sed
+									consectetur. Aenean eu leo quam. Pellentesque ornare sem
+									lacinia quam venenatis vestibulum. Nullam id dolor id nibh
+									ultricies vehicula ut id elit.</p>
+							</div>
+						</li>
+						<li class="panel panel-default">
+							<div class="panel-heading">
+								<label class="comment-title">王菲(wangfei)<span> in
+										2013-10-9</span> </label> <label style="float:right"> #$level楼</label>
+							</div>
+							<div class="panel-body">
+								<p>Some default panel content here. Nulla vitae elit libero,
+									a pharetra augue. Aenean lacinia bibendum nulla sed
+									consectetur. Aenean eu leo quam. Pellentesque ornare sem
+									lacinia quam venenatis vestibulum. Nullam id dolor id nibh
+									ultricies vehicula ut id elit.</p>
+							</div>
+						</li>
 					</ul>
 					<div class="row">
 						<div class="col-sm-2">
-							<button type="button" class="btn btn-primary" tabindex="-1"
-								data-toggle="modal" data-target="#comment-form">发表评论</button>
+							<button type="button" class="btn btn-primary" >发表评论</button>
+						</div>
+						<!-- Nav tabs -->
+						<ul class="nav nav-tabs">
+							<li class="active"><a href="#simplecomment"
+								data-toggle="tab">简要评论</a></li>
+							<li><a href="#detailedcomment" data-toggle="tab">详细评论</a></li>
+						</ul>
+
+						<!-- Tab panes -->
+						<div class="tab-content">
+							<form action="simplecomment.html" method="post" role="form"
+								class="tab-pane active" id="simplecomment">
+								<div style="visibility:hidden"><input id="simplecomment-docid" value="$document.getId()"/></div>
+								<div class="form-group">
+									<textarea class="form-control" rows="3"
+										name="simplecomment-content"></textarea>
+								</div>
+								<div class="form-group comment-button">
+									<button type="button" class="btn btn-success">存为草稿</button>
+									<button type="submit" class="btn btn-primary">评价</button>
+								</div>
+							</form>
+							<form action="detailedcomment.html" method="post" role="form"
+								class="tab-pane form-horizontal" id="detailedcomment">
+								<div style="visibility:hidden"><input id="detailedcomment-docid" value="$document.getId()"/></div>
+								<div class="form-group">
+									<label for="inputContent" class="col-sm-2 control-label">内容</label>
+									<div class="col-sm-10">
+										<textarea class="form-control" id="inputContent"></textarea>
+									</div>
+								</div>
+								<div class="form-group">
+									<label for="inputProblem" class="col-sm-2 control-label">要解决的问题</label>
+									<div class="col-sm-10">
+										<textarea class="form-control" id="inputProblem"></textarea>
+									</div>
+								</div>
+								<div class="form-group">
+									<label for="inputIdea" class="col-sm-2 control-label">主要思路</label>
+									<div class="col-sm-10">
+										<textarea class="form-control" id="inputIdea"></textarea>
+									</div>
+								</div>
+								<div class="form-group">
+									<label for="inputExperiment" class="col-sm-2 control-label">实验结果</label>
+									<div class="col-sm-10">
+										<textarea class="form-control" id="inputExperiment"></textarea>
+									</div>
+								</div>
+								<div class="form-group">
+									<label for="inputContribution" class="col-sm-2 control-label">贡献</label>
+									<div class="col-sm-10">
+										<textarea class="form-control" id="inputContribution"></textarea>
+									</div>
+								</div>
+								<div class="form-group">
+									<label for="inputImprovement" class="col-sm-2 control-label">改进</label>
+									<div class="col-sm-10">
+										<textarea class="form-control" id="inputImprovement"></textarea>
+									</div>
+								</div>
+								<div class="form-group comment-button" style="margin-right: 0px">
+									<button type="button" class="btn btn-success">存草稿</button>
+									<button type="submit" class="btn btn-primary">发表</button>
+								</div>
+							</form>
 						</div>
 					</div>
 				</div>
-				<!-- Modal -->
-				<div class="modal fade" id="comment-form" tabindex="-1"
-					role="dialog" aria-labelledby="comment-form" aria-hidden="true">
-					<div class="modal-dialog">
-						<div class="modal-content">
-							<div class="modal-header">
-								<button type="button" class="close" data-dismiss="modal"
-									aria-hidden="true">&times;</button>
-								<h4 class="modal-title" id="comment-form">发表评论</h4>
-							</div>
-
-							<div class="modal-body">
-								<form class="form-horizontal" role="form">
-									<div class="form-group">
-										<label for="btn-comment-type" class="col-sm-2 control-label">评论类型</label>
-										<div class="btn-group col-sm-10">
-											<button type="button" class="btn btn-default">全部类型</button>
-											<button type="button" id="btn-comment-type"
-												class="btn btn-default dropdown-toggle"
-												data-toggle="dropdown">
-												<span class="caret"></span> <span class="sr-only">Toggle
-													Dropdown</span>
-											</button>
-											<ul class="dropdown-menu" role="menu">
-												<li><a href="#">长评论</a>
-												</li>
-												<li><a href="#">短评论</a>
-												</li>
-											</ul>
-										</div>
-									</div>
-									<div class="form-group">
-										<label for="inputContent" class="col-sm-2 control-label">内容</label>
-										<div class="col-sm-10">
-											<textarea class="form-control" id="inputContent"></textarea>
-										</div>
-									</div>
-									<div class="form-group">
-										<label for="inputProblem" class="col-sm-2 control-label">要解决的问题</label>
-										<div class="col-sm-10">
-											<textarea class="form-control" id="inputProblem"></textarea>
-										</div>
-									</div>
-									<div class="form-group">
-										<label for="inputIdea" class="col-sm-2 control-label">主要思路</label>
-										<div class="col-sm-10">
-											<textarea class="form-control" id="inputIdea"></textarea>
-										</div>
-									</div>
-									<div class="form-group">
-										<label for="inputExperiment" class="col-sm-2 control-label">实验结果</label>
-										<div class="col-sm-10">
-											<textarea class="form-control" id="inputExperiment"></textarea>
-										</div>
-									</div>
-									<div class="form-group">
-										<label for="inputContribution" class="col-sm-2 control-label">贡献</label>
-										<div class="col-sm-10">
-											<textarea class="form-control" id="inputContribution"></textarea>
-										</div>
-									</div>
-									<div class="form-group">
-										<label for="inputImprovement" class="col-sm-2 control-label">改进</label>
-										<div class="col-sm-10">
-											<textarea class="form-control" id="inputImprovement"></textarea>
-										</div>
-									</div>
-								</form>
-							</div>
-							<!-- /.modal-body -->
-
-							<div class="modal-footer">
-								<button type="button" class="btn btn-danger"
-									data-dismiss="modal">放弃</button>
-								<button type="button" class="btn btn-default"
-									data-dismiss="modal">存草稿</button>
-								<button type="submit" class="btn btn-primary">发表</button>
-							</div>
-							<!-- /.modal-footer -->
-						</div>
-						<!-- /.modal-content -->
-					</div>
-					<!-- /.modal-dialog -->
-				</div>
-				<!-- /.modal -->
 			</div>
 			<!-- /.panel-body -->
 		</div>
@@ -158,5 +179,4 @@
 	<!-- /#main-content-container -->
 </div>
 <!-- /.col left -->
-#parse("./template/right.jsp")
-#parse("./template/footer.jsp")
+#parse("./template/right.jsp") #parse("./template/footer.jsp")

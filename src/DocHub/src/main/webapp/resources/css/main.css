@@ -31,3 +31,21 @@
 .document-list-item .info {
   color: #999;
 }
+
+.comment-list li{
+	margin-bottom:0px;
+	border-radius: 0px;
+}
+
+.comment-title span{
+	font-size:0.7em;
+	font-weight: 300;
+}
+
+#simplecomment,#detailedcomment{
+	padding:20px 20px 0px 20px;
+}
+
+.comment-button{
+	text-align: right;
+}

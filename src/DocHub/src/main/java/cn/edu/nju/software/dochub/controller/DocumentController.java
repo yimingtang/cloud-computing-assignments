@@ -11,8 +11,10 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import cn.edu.nju.software.dochub.data.dao.DocumentTypeDAO;
+import cn.edu.nju.software.dochub.data.dataobject.Comment;
 import cn.edu.nju.software.dochub.data.dataobject.Document;
 import cn.edu.nju.software.dochub.data.dataobject.DocumentType;
+import cn.edu.nju.software.dochub.service.CommentService;
 import cn.edu.nju.software.dochub.service.DocumentService;
 import cn.edu.nju.software.dochub.service.UserService;
 import cn.edu.nju.software.dochub.web.ResponseBuilder;
@@ -32,6 +34,7 @@ public class DocumentController {
 	DocumentService documentService;
 	ResponseBuilder responseBuilder;
 	UserService userService;
+	CommentService commentService;
     @RequestMapping(value = "/index.html")
     public String index(HttpServletRequest request,
                         HttpServletResponse response, ModelMap model) {
@@ -168,7 +171,17 @@ public class DocumentController {
         return "home";
     }
     
-    
+    @RequestMapping(value = "/simplecomment.html")
+    public String simpleComment(HttpServletRequest request,
+                       HttpServletResponse response, ModelMap model) {
+    	int docid=Integer.parseInt(request.getParameter("simplecomment-docid"));
+    	String content=request.getParameter("simplecomment-content");
+    	Document document=documentService.findDocumentById(docid);
+    	
+    	Comment comment =new Comment();
+    	
+        return "";
+    }
     
     
     
@@ -196,5 +209,9 @@ public class DocumentController {
 
 	public void setUserService(UserService userService) {
 		this.userService = userService;
+	}
+
+	public void setCommentService(CommentService commentService) {
+		this.commentService = commentService;
 	}
 }
