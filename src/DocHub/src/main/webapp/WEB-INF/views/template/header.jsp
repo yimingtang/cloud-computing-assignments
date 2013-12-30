@@ -65,7 +65,7 @@
 							class="glyphicon glyphicon-plus"></span> 文献录入</a></li>
 					<li><a href="../settings/index.html"><span
 							class="glyphicon glyphicon-cog"></span> 账号设置</a></li>
-					<li><a href="#logout"><span
+					<li><a href="../logout.html"><span
 							class="glyphicon glyphicon-log-out"></span> 登出</a></li>
 				</ul>
 			</div>
