@@ -103,7 +103,7 @@
 			<li><a href="../document/index.html"><span
 					class="glyphicon glyphicon-home"></span> 首页</a>
 			</li>
-			<li><a href="../admin/user.html">管理</a>
+			<li><a href="../admin/index.html">管理</a>
 			</li>
 			<li class="active">用户管理</li>
 		</ol>

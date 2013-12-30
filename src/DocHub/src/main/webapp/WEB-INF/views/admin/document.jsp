@@ -32,9 +32,12 @@
 <div class="col-xs-12 col-md-9">
 	<nav>
 		<ol class="breadcrumb">
-			<li class="active"><a href="../home/index.html"><span
+			<li><a href="../document/index.html"><span
 					class="glyphicon glyphicon-home"></span> 首页</a>
 			</li>
+			<li><a href="../admin/index.html">管理</a>
+			</li>
+			<li class="active">文献管理</li>
 		</ol>
 		<!-- /.breadcrumb -->
 	</nav>

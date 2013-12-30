@@ -5,7 +5,9 @@
 			<li><a href="../document/index.html"><span
 					class="glyphicon glyphicon-home"></span> 首页</a>
 			</li>
-			<li class="active">管理</li>
+			<li><a href="../admin/index.html">管理</a>
+			</li>
+			<li class="active">详细评价内容管理</li>
 		</ol>
 		<!-- /.breadcrumb -->
 	</nav>
