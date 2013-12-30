@@ -150,7 +150,7 @@
 			<div class="panel-heading">
 				<h3 class="pull-left">文献</h3>
 				<div class="pull-right">
-					<a href="../document/create.html" class="btn btn-primary btn-sm" >导入文献</a>
+					<a href="../document/create.html" class="btn btn-primary btn-sm">导入文献</a>
 					<div class="btn-group btn-group-sm">
 						<button type="button" class="btn btn-default">按相关性排序</button>
 						<button type="button" class="btn btn-default dropdown-toggle"
@@ -169,17 +169,35 @@
 			</div>
 			<!-- /.panel-heading -->
 
-			<ul class="list-group document-list">
-				#foreach($document in $allDocumentList)
-				<li class="list-group-item document-list-item">
-					<h4>
-						<a href="../document/show.html?docId=$document.getId()">$document.getTitle()</a>
-					</h4>
-					<p class="info">$document.getAuthor() -
-						$document.getPublisher(), $document.getYear()</p>
-					<p>$document.getAbstract_()</p>
-				</li> #end
-				<!-- /.list-group document-list-->
+			<div class="panel-body">
+				<table class="table table-hover">
+					<thead>
+						<tr>
+							<th>#</th>
+							<th>标题</th>
+							<th>上传用户</th>
+							<th>上传时间</th>
+							<th>更新时间</th>
+							<th>编辑</th>
+						</tr>
+					</thead>
+					<tbody>
+						#set($level=0)
+						#foreach($document in $allDocumentList)
+						#set($level=$level+1)
+						<tr>
+							<td>$level</td>
+							<td><a href="show.html?docId=$document.getId()">$document.getTitle()</a></td>
+							<td>$document.getUser().getName()</td>
+							<td>$dateformat.format($document.getCreatedAt())</td>
+							<td>$dateformat.format($document.getUpdatedAt())</td>
+							<td><a class="btn btn-primary btn-sm" href="edit.html?docId=$document.getId()"> 编辑 </a></td>
+						</tr>
+						#end
+					</tbody>
+				</table>
+			</div>
+			<!-- /.panel-body -->
 		</div>
 		<!-- /.panel -->
 

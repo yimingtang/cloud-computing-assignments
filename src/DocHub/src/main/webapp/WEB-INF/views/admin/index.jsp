@@ -3,7 +3,8 @@
 	<nav>
 		<ol class="breadcrumb">
 			<li><a href="../document/index.html"><span
-					class="glyphicon glyphicon-home"></span> 首页</a></li>
+					class="glyphicon glyphicon-home"></span> 首页</a>
+			</li>
 			<li class="active">管理</li>
 		</ol>
 		<!-- /.breadcrumb -->
@@ -18,7 +19,9 @@
 			<!-- /.panel-heading -->
 			<div class="panel-body">
 				<ol class="list-group" style="margin:0px 30px">
-					<li class="list-group-item"><a href="user.html">用户管理</a></li>
+					<li class="list-group-item"><a href="user.html">用户管理</a>
+					</li>
+					<li class="list-group-item"><a href="document.html">文献管理</a>
 					<li class="list-group-item"><a href="detailedcomment.html">详细评价内容</a>
 					</li>
 				</ol>

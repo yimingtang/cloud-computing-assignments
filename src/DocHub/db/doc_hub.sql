@@ -1,4 +1,3 @@
-DROP SCHEMA IF EXISTS `doc_hub` ;
 CREATE DATABASE  IF NOT EXISTS `doc_hub` /*!40100 DEFAULT CHARACTER SET utf8 */;
 USE `doc_hub`;
 -- MySQL dump 10.13  Distrib 5.6.11, for Win32 (x86)
@@ -51,36 +50,30 @@ LOCK TABLES `attachment` WRITE;
 /*!40000 ALTER TABLE `attachment` ENABLE KEYS */;
 UNLOCK TABLES;
 
--- -----------------------------------------------------
--- Table `doc_hub`.`comment`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `doc_hub`.`comment` ;
+--
+-- Table structure for table `comment`
+--
 
-CREATE TABLE IF NOT EXISTS `doc_hub`.`comment` (
-  `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
-  `type` INT NULL DEFAULT 0,
-  `content` TEXT NOT NULL,
-  `rank` TINYINT NULL,
-  `document_id` INT UNSIGNED NOT NULL,
-  `user_id` INT UNSIGNED NOT NULL,
-  `created_at` DATETIME NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` DATETIME NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `published` TINYINT(1) NULL DEFAULT 1,
+DROP TABLE IF EXISTS `comment`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `comment` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `type` int(11) DEFAULT '0',
+  `content` text NOT NULL,
+  `rank` tinyint(4) DEFAULT NULL,
+  `document_id` int(10) unsigned NOT NULL,
+  `user_id` int(10) unsigned NOT NULL,
+  `created_at` datetime DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `published` tinyint(1) DEFAULT '1',
   PRIMARY KEY (`id`),
-  INDEX `fk_comment_document1_idx` (`document_id` ASC),
-  INDEX `fk_comment_user1_idx` (`user_id` ASC),
-  CONSTRAINT `fk_comment_document1`
-    FOREIGN KEY (`document_id`)
-    REFERENCES `doc_hub`.`document` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_comment_user1`
-    FOREIGN KEY (`user_id`)
-    REFERENCES `doc_hub`.`user` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
-
+  KEY `fk_comment_document1_idx` (`document_id`),
+  KEY `fk_comment_user1_idx` (`user_id`),
+  CONSTRAINT `fk_comment_document1` FOREIGN KEY (`document_id`) REFERENCES `document` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_comment_user1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `comment`
@@ -88,6 +81,7 @@ ENGINE = InnoDB;
 
 LOCK TABLES `comment` WRITE;
 /*!40000 ALTER TABLE `comment` DISABLE KEYS */;
+INSERT INTO `comment` VALUES (1,0,'要：安全一直是 Web 应用开发中非常重要的一个方面。从安全的角度来说，需要考虑用户认证和授权两个方面。为 Web 应用增加安全方面的能力并非一件简单的事情，需要考虑不同的认证和授权机制。Spring Security 为使用 Spring 框架的 Web 应用提供了良好的支持。本文将详细',0,3,1,'2013-12-29 19:19:02','2013-12-30 15:13:28',1),(2,0,'ome default panel content here. Nulla vitae elit libero, a pharetra augue. Aenean lacinia bibendum nulla sed consectetur. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Nullam id dolor i',0,3,1,'2013-12-29 19:21:39','2013-12-30 15:13:28',1),(3,1,'',0,3,1,'2013-12-30 15:19:08',NULL,1),(4,1,'',0,3,1,'2013-12-30 15:21:51',NULL,1),(5,1,'',0,3,1,'2013-12-30 15:30:38',NULL,1),(6,1,'',0,3,1,'2013-12-30 15:34:18',NULL,1),(7,0,'测试简要草稿1',0,3,1,'2013-12-30 15:47:50',NULL,0),(8,1,'',0,3,1,'2013-12-30 16:20:29',NULL,0),(9,1,'',0,3,1,'2013-12-30 16:21:23',NULL,0);
 /*!40000 ALTER TABLE `comment` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -106,9 +100,9 @@ CREATE TABLE `comment_property` (
   PRIMARY KEY (`id`),
   KEY `fk_comment_property_comment_property_type1_idx` (`comment_property_type_id`),
   KEY `fk_comment_property_comment1_idx` (`comment_id`),
-  CONSTRAINT `fk_comment_property_comment_property_type1` FOREIGN KEY (`comment_property_type_id`) REFERENCES `comment_property_type` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_comment_property_comment1` FOREIGN KEY (`comment_id`) REFERENCES `comment` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  CONSTRAINT `fk_comment_property_comment1` FOREIGN KEY (`comment_id`) REFERENCES `comment` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_comment_property_comment_property_type1` FOREIGN KEY (`comment_property_type_id`) REFERENCES `comment_property_type` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -117,6 +111,7 @@ CREATE TABLE `comment_property` (
 
 LOCK TABLES `comment_property` WRITE;
 /*!40000 ALTER TABLE `comment_property` DISABLE KEYS */;
+INSERT INTO `comment_property` VALUES (1,'测试',1,3),(2,'测试',5,3),(3,'Some default panel content here. Nulla vitae elit libero, a pharetra augue. Aenean lacinia bibendum nulla sed consectetur. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Nullam id dolor id nibh ultricies vehicula ut id el',1,4),(4,'Some default panel content here. Nulla vitae elit libero, a pharetra augue. Aenean lacinia bibendum nulla sed consectetur. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Nullam id dolor id nibh ultricies vehicula ut id el',2,4),(5,'Some default panel content here. Nulla vitae elit libero, a pharetra augue. Aenean lacinia bibendum nulla sed consectetur. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Nullam id dolor id nibh ultricies vehicula ut id el',3,4),(6,'Some default panel content here. Nulla vitae elit libero, a pharetra augue. Aenean lacinia bibendum nulla sed consectetur. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Nullam id dolor id nibh ultricies vehicula ut id el',4,4),(7,'Some default panel content here. Nulla vitae elit libero, a pharetra augue. Aenean lacinia bibendum nulla sed consectetur. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Nullam id dolor id nibh ultricies vehicula ut id el',5,4),(8,'Some default panel content here. Nulla vitae elit libero, a pharetra augue. Aenean lacinia bibendum nulla sed consectetur. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Nullam id dolor id nibh ultricies vehicula ut id el',6,4),(9,'测认识',1,5),(10,'测试草稿',1,6),(11,'nodes[node]',1,8),(12,'测试详细草稿2',1,9);
 /*!40000 ALTER TABLE `comment_property` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -131,7 +126,7 @@ CREATE TABLE `comment_property_type` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(45) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -140,6 +135,7 @@ CREATE TABLE `comment_property_type` (
 
 LOCK TABLES `comment_property_type` WRITE;
 /*!40000 ALTER TABLE `comment_property_type` DISABLE KEYS */;
+INSERT INTO `comment_property_type` VALUES (1,'内容'),(2,'要解决的问题'),(3,'主要思路'),(4,'实验结果'),(5,'贡献'),(6,'改进');
 /*!40000 ALTER TABLE `comment_property_type` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -179,7 +175,7 @@ CREATE TABLE `document` (
 
 LOCK TABLES `document` WRITE;
 /*!40000 ALTER TABLE `document` DISABLE KEYS */;
-INSERT INTO `document` VALUES (3,'使用 Spring Security 保护 Web 应用的安全','成 富, 软件工程师, IBM 中国软件开发中心','2010-12-24 00:00:00','','安全一直是 Web 应用开发中非常重要的一个方面。从安全的角度来说，需要考虑用户认证和授权两个方面。为 Web 应用增加安全方面的能力并非一件简单的事情，需要考虑不同的认证和授权机制。Spring Security 为使用 Spring 框架的 Web 应用提供了良好的支持。本文将详细介绍如何使用 Spring Security 框架为 Web 应用提供安全支持。','Spring Security','','http://www.ibm.com/developerworks/cn/java/j-lo-springsecurity/',NULL,NULL,8,1,0),(4,'The IP Network Address Translator (NAT)','K. Egevang,P. Francis','1994-12-24 00:00:00','','The two most compelling problems facing the IP Internet are IP\naddress depletion and scaling in routing. Long-term and short-term\nsolutions to these problems are being developed. The short-term\nsolution is CIDR (Classless InterDomain Routing). The long-term\nsolutions consist of various proposals for new internet protocols\nwith larger addresses.\nIt is possible that CIDR will not be adequate to maintain the IP\nInternet until the long-term solutions are in place. This memo\nproposes another short-term solution, address reuse, that complements\nCIDR or even makes it unnecessary. The address reuse solution is to\nplace Network Address Translators (NAT) at the borders of stub\ndomains. Each NAT box has a table consisting of pairs of local IP\naddresses and globally unique addresses. The IP addresses inside the\nstub domain are not globally unique. They are reused in other\ndomains, thus solving the address depletion problem. The globally\nunique IP addresses are assigned according to current CIDR address\nallocation schemes. CIDR solves the scaling problem. The main\nadvantage of NAT is that it can be installed without changes to\nrouters or hosts. This memo presents a preliminary design for NAT,\nand discusses its pros and cons.','NAT','','',NULL,NULL,5,1,0),(5,'统计学-基本概念和方法','吴喜之,程博柳,林旭啤, 全莉萍,钟文瑄，熊怀羽  译','2000-12-24 00:00:00','2~480','这本统叶学敬材在设计和写作「都相当独特。该书是为了满足当代学生时统计日雄增t\n而又尚未满踵的榕在，使他们能够熟鲸地掌擦统计信息的特性。对于希壤他们的学生能愤点\n统计知识的教师们来说，这本书很有梅益。然问，仅凭这一本书，是不可能使学生们变成统叶\n幸事的。\n在过击JL年姐，统HI自且已纷战政府机构积满班尘的档靠中和学*计算中心、照解散出3住\n了n 从阔事关于健康改革和周防的政策到对于预期寿命ω婚姻、堕贿、教育相体育的态度、统计\n俗且在很茹宽阔扮演了囊整角色。统计{商品经常校报纸、翔在、广娥和电视节目中出现，它们\n甚至偶尔会在MTV 和卡通片中做点辙。统叶也曾量遭到了我们的教育课程中。在小学教室略\n和博士生讨论班巾.蜿叶f自息已成沟敏宵的基本将衍。\n理智统计有这么多的应用，但是我们很难说大家对于统计信息革仅接费而且有f 较多的\n了解。2!l人们辑到…个耐f究销播时，他们如何判晰结论是份正确9 他们是份合问逃个研究中\n的变量是如何定义的9 用了什么样的统计方法?什么是\"统叶显著\"的结果?所报告的结果有\n什么样的不足?这艘闷顿正最我们在本将中讨论的一部什内畴。M然，观解了统叶学的1:擦\n概在以后，大事才能够明白那些专门鼓捣数字的人们都干了些付么，井对他们结果进行评价。\n立起本11脱R由于G叫mund R. Jvc:N! en 开设的一门躁的讲义，目的是满Ji!人们时蜿计筒息日\n益增恒的需要。该课是Swarthmo陀学院为使大学文科的学生能够迎接21 世纪的挑战而开设\n的一蕉列课根之币。开设班峡课税的思想是为了使学生们能够开阔眼界，而不是拘崩于某…\n学科的直杂在址。这些课程试图使学生们了解一个领域的主要思想是如何联AI 于现事世界\n的。在许事万丽，统I1 \'学着越来正最迫樊课赖的现想选择尤一。原骨统计学可能是…门令人\n因辈革的、自我膨胀的、神植莫测的学科，但它也能够成为理解许多其它学科的一把钥跑。i躁和\n{统讨学\"统计思想》摘最被设计成产使这种理解力的。事实证明，埠门课非常景就坝，其规\n模每年都在扩大d 随着时间的流逝，这I\'J啤的讲义变得跑祟越精练租车窗，激络构成了本书的屠础。','统计学','Springer','',NULL,NULL,2,1,0);
+INSERT INTO `document` VALUES (3,'使用 Spring Security 保护 Web 应用的安全','成 富, 软件工程师, IBM 中国软件开发中心','2010-12-24 00:00:00','','安全一直是 Web 应用开发中非常重要的一个方面。从安全的角度来说，需要考虑用户认证和授权两个方面。为 Web 应用增加安全方面的能力并非一件简单的事情，需要考虑不同的认证和授权机制。Spring Security 为使用 Spring 框架的 Web 应用提供了良好的支持。本文将详细介绍如何使用 Spring Security 框架为 Web 应用提供安全支持。','Spring Security','','http://www.ibm.com/developerworks/cn/java/j-lo-springsecurity/','2013-12-03 20:31:59','2013-12-03 20:31:59',8,1,0),(4,'The IP Network Address Translator (NAT)','K. Egevang,P. Francis','1994-12-24 00:00:00','','The two most compelling problems facing the IP Internet are IP\naddress depletion and scaling in routing. Long-term and short-term\nsolutions to these problems are being developed. The short-term\nsolution is CIDR (Classless InterDomain Routing). The long-term\nsolutions consist of various proposals for new internet protocols\nwith larger addresses.\nIt is possible that CIDR will not be adequate to maintain the IP\nInternet until the long-term solutions are in place. This memo\nproposes another short-term solution, address reuse, that complements\nCIDR or even makes it unnecessary. The address reuse solution is to\nplace Network Address Translators (NAT) at the borders of stub\ndomains. Each NAT box has a table consisting of pairs of local IP\naddresses and globally unique addresses. The IP addresses inside the\nstub domain are not globally unique. They are reused in other\ndomains, thus solving the address depletion problem. The globally\nunique IP addresses are assigned according to current CIDR address\nallocation schemes. CIDR solves the scaling problem. The main\nadvantage of NAT is that it can be installed without changes to\nrouters or hosts. This memo presents a preliminary design for NAT,\nand discusses its pros and cons.','NAT','','','2013-12-03 20:31:59','2013-12-03 20:31:59',5,1,0),(5,'统计学-基本概念和方法','吴喜之,程博柳,林旭啤, 全莉萍,钟文瑄，熊怀羽  译','2000-12-24 00:00:00','2~480','这本统叶学敬材在设计和写作「都相当独特。该书是为了满足当代学生时统计日雄增t\n而又尚未满踵的榕在，使他们能够熟鲸地掌擦统计信息的特性。对于希壤他们的学生能愤点\n统计知识的教师们来说，这本书很有梅益。然问，仅凭这一本书，是不可能使学生们变成统叶\n幸事的。\n在过击JL年姐，统HI自且已纷战政府机构积满班尘的档靠中和学*计算中心、照解散出3住\n了n 从阔事关于健康改革和周防的政策到对于预期寿命ω婚姻、堕贿、教育相体育的态度、统计\n俗且在很茹宽阔扮演了囊整角色。统计{商品经常校报纸、翔在、广娥和电视节目中出现，它们\n甚至偶尔会在MTV 和卡通片中做点辙。统叶也曾量遭到了我们的教育课程中。在小学教室略\n和博士生讨论班巾.蜿叶f自息已成沟敏宵的基本将衍。\n理智统计有这么多的应用，但是我们很难说大家对于统计信息革仅接费而且有f 较多的\n了解。2!l人们辑到…个耐f究销播时，他们如何判晰结论是份正确9 他们是份合问逃个研究中\n的变量是如何定义的9 用了什么样的统计方法?什么是\"统叶显著\"的结果?所报告的结果有\n什么样的不足?这艘闷顿正最我们在本将中讨论的一部什内畴。M然，观解了统叶学的1:擦\n概在以后，大事才能够明白那些专门鼓捣数字的人们都干了些付么，井对他们结果进行评价。\n立起本11脱R由于G叫mund R. Jvc:N! en 开设的一门躁的讲义，目的是满Ji!人们时蜿计筒息日\n益增恒的需要。该课是Swarthmo陀学院为使大学文科的学生能够迎接21 世纪的挑战而开设\n的一蕉列课根之币。开设班峡课税的思想是为了使学生们能够开阔眼界，而不是拘崩于某…\n学科的直杂在址。这些课程试图使学生们了解一个领域的主要思想是如何联AI 于现事世界\n的。在许事万丽，统I1 \'学着越来正最迫樊课赖的现想选择尤一。原骨统计学可能是…门令人\n因辈革的、自我膨胀的、神植莫测的学科，但它也能够成为理解许多其它学科的一把钥跑。i躁和\n{统讨学\"统计思想》摘最被设计成产使这种理解力的。事实证明，埠门课非常景就坝，其规\n模每年都在扩大d 随着时间的流逝，这I\'J啤的讲义变得跑祟越精练租车窗，激络构成了本书的屠础。','统计学','Springer','','2013-12-03 20:31:59','2013-12-03 20:31:59',2,1,0);
 /*!40000 ALTER TABLE `document` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -298,8 +294,8 @@ CREATE TABLE `document_type_has_document_property_type` (
   PRIMARY KEY (`id`),
   KEY `fk_document_type_has_document_property_type_document_proper_idx` (`document_property_type_id`),
   KEY `fk_document_type_has_document_property_type_document_type1_idx` (`document_type_id`),
-  CONSTRAINT `fk_document_type_has_document_property_type_document_type1` FOREIGN KEY (`document_type_id`) REFERENCES `document_type` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_document_type_has_document_property_type_document_property1` FOREIGN KEY (`document_property_type_id`) REFERENCES `document_property_type` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  CONSTRAINT `fk_document_type_has_document_property_type_document_property1` FOREIGN KEY (`document_property_type_id`) REFERENCES `document_property_type` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_document_type_has_document_property_type_document_type1` FOREIGN KEY (`document_type_id`) REFERENCES `document_type` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -443,7 +439,7 @@ CREATE TABLE `user` (
   `active` tinyint(1) DEFAULT '1',
   PRIMARY KEY (`id`),
   UNIQUE KEY `username_UNIQUE` (`username`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -452,7 +448,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (1,'admin','admin','null','administrator',NULL,0,'2013-12-24 22:36:25','2013-12-24 22:36:25',1);
+INSERT INTO `user` VALUES (1,'admin','admin','null','administrator',NULL,0,'2013-12-24 22:36:25','2013-12-24 22:36:25',1),(2,'mf1332086','123456','123','张磊',NULL,1,NULL,NULL,1),(3,'测试','123456','123','测试',NULL,1,NULL,NULL,0);
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -494,4 +490,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2013-12-24 22:45:46
+-- Dump completed on 2013-12-30 18:43:03

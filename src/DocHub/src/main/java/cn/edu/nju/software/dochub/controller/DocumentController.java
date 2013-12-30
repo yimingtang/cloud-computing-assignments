@@ -53,6 +53,7 @@ public class DocumentController {
 		document.setDocumentType(documentService
 				.findDocTypeByName((String) request.getParameter("DocType")));
 		document.setCreatedAt(Calendar.getInstance().getTime());
+		document.setUpdatedAt(Calendar.getInstance().getTime());
 		document.setTitle(request.getParameter("Title"));
 		document.setAuthor(request.getParameter("Author"));
 		document.setAbstract_(request.getParameter("Abstract"));
@@ -211,6 +212,7 @@ public class DocumentController {
 
 		Comment comment = new Comment();
 		comment.setCreatedAt(Calendar.getInstance().getTime());
+		comment.setUpdatedAt(Calendar.getInstance().getTime());
 		comment.setPublished(true);
 		comment.setType(0);// 0 for simple
 		comment.setContent(content);
@@ -232,6 +234,7 @@ public class DocumentController {
 
 		Comment comment = new Comment();
 		comment.setCreatedAt(Calendar.getInstance().getTime());
+		comment.setUpdatedAt(Calendar.getInstance().getTime());
 		comment.setPublished(false);
 		comment.setType(0);// 0 for simple
 		comment.setContent(content);
@@ -253,6 +256,7 @@ public class DocumentController {
 		Comment comment = new Comment();
 		comment.setType(1);// 1 for detailed
 		comment.setCreatedAt(Calendar.getInstance().getTime());
+		comment.setUpdatedAt(Calendar.getInstance().getTime());
 		comment.setPublished(true);
 		comment.setContent("");
 		comment.setDocument(document);
@@ -295,6 +299,7 @@ public class DocumentController {
 		Comment comment = new Comment();
 		comment.setType(1);// 1 for detailed
 		comment.setCreatedAt(Calendar.getInstance().getTime());
+		comment.setUpdatedAt(Calendar.getInstance().getTime());
 		comment.setPublished(false);
 		comment.setContent("");
 		comment.setDocument(document);
@@ -326,9 +331,56 @@ public class DocumentController {
 	}
 	
 	
+	@RequestMapping(value = "/mydocument.html")
+	public String myDocument(HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) {
+		UserAccessContext uac=(UserAccessContext) request.getSession()
+				.getAttribute("userAccessContext");
+		model.put("userAccessContext",uac );
+		
+		
+		model.put("allDocumentList", documentService.getAllDocumentByUserId(uac.getUserId()));
+		model.put("documentTypeList", documentService.getAllDocumentType());
+		model.put("dateformat",
+				new SimpleDateFormat("yyyy.MM.dd"));
+		return "/document/documents";
+	}
+	
+	@RequestMapping(value = "/alldocument.html")
+	public String allDocument(HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) {
+		model.put("userAccessContext", (UserAccessContext) request.getSession()
+				.getAttribute("userAccessContext"));
+		model.put("allDocumentList", documentService.getAllDocument());
+		model.put("documentTypeList", documentService.getAllDocumentType());
+		model.put("dateformat",
+				new SimpleDateFormat("yyyy.MM.dd"));
+		return "/document/documents";
+	}
 	
 	
+	@RequestMapping(value = "/mycommentdocument.html")
+	public String myCommentDocument(HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) {
+		UserAccessContext uac=(UserAccessContext) request.getSession()
+				.getAttribute("userAccessContext");
+		model.put("userAccessContext",uac );
+		
+		
+		model.put("allDocumentList", documentService.getAllUserCommentedDocumentByUserId(uac.getUserId()));
+		model.put("documentTypeList", documentService.getAllDocumentType());
+		model.put("dateformat",
+				new SimpleDateFormat("yyyy.MM.dd"));
+		return "/document/documents";
+	}
 	
+	@RequestMapping(value = "/deletedocument.aj")
+	public void deleteDocument(HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) {
+		int docid=Integer.parseInt(request.getParameter("docId"));
+		documentService.deleteDocument(docid);
+		responseBuilder.WriteJSONObject(response, new JSONObject(true));
+	}
 	
 	
 	

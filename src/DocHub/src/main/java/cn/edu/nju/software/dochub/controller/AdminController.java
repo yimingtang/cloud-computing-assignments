@@ -1,5 +1,6 @@
 package cn.edu.nju.software.dochub.controller;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 import cn.edu.nju.software.dochub.data.dataobject.CommentPropertyType;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import cn.edu.nju.software.dochub.service.CommentService;
+import cn.edu.nju.software.dochub.service.DocumentService;
 import cn.edu.nju.software.dochub.service.UserService;
 import cn.edu.nju.software.dochub.web.ResponseBuilder;
 import cn.edu.nju.software.dochub.web.UserAccessContext;
@@ -30,6 +32,7 @@ public class AdminController {
 	UserService userService;
 	CommentService commentService;
 	ResponseBuilder responseBuilder;
+	DocumentService documentService;
 
 	@RequestMapping(value = "/index.html")
 	public String Index(HttpServletRequest request,
@@ -45,6 +48,18 @@ public class AdminController {
 		return "admin/tag";
 	}
 
+	@RequestMapping(value = "/document.html")
+	public String Document(HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) {
+		model.put("userAccessContext", (UserAccessContext) request.getSession()
+				.getAttribute("userAccessContext"));
+		model.put("allDocumentList", documentService.getAllDocument());
+		model.put("documentTypeList", documentService.getAllDocumentType());
+		model.put("dateformat",
+				new SimpleDateFormat("yyyy.MM.dd"));
+		return "/admin/document";
+	}
+	
 	@RequestMapping(value = "/user.html")
 	public String User(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
@@ -211,6 +226,10 @@ public class AdminController {
 
 	public void setCommentService(CommentService commentService) {
 		this.commentService = commentService;
+	}
+
+	public void setDocumentService(DocumentService documentService) {
+		this.documentService = documentService;
 	}
 
 }

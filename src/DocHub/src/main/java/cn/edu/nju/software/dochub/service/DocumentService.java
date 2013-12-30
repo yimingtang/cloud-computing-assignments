@@ -80,6 +80,34 @@ public class DocumentService {
 				abstract_, keyword, publisher, url, documenttype);
 	}
 
+	public List<Document> getAllDocumentByUserId(int userId) {
+		// TODO Auto-generated method stub
+		
+		return documentDAO.findByUserId(userId);
+	}
+
+	public List<Document> getAllUserCommentedDocumentByUserId(int userId) {
+		// TODO Auto-generated method stub
+		return documentDAO.findAllUserCommentedDocument(userId);
+	}
+
+	public void deleteDocument(int docid) {
+		// TODO Auto-generated method stub
+		documentDAO.delete(documentDAO.findById(docid));
+	}
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	public void setDocumentTypeDAO(DocumentTypeDAO documentTypeDAO) {
 		this.documentTypeDAO = documentTypeDAO;
 	}
@@ -147,4 +175,7 @@ public class DocumentService {
 	public void setDocumentPropertyDAO(DocumentPropertyDAO documentPropertyDAO) {
 		this.documentPropertyDAO = documentPropertyDAO;
 	}
+
+	
+	
 }

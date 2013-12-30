@@ -2,10 +2,10 @@
 	<div class="panel panel-default">
 		<div class="panel-body">
 			<p>
-				$userAccessContext.getName()<small> ($userAccessContext.getUserName())</small>
+				$userAccessContext.getName()<small>
+					($userAccessContext.getUserName())</small>
 			</p>
-			#set($type=$userAccessContext.getPermissionLevel())
-			#if($type == 0)
+			#set($type=$userAccessContext.getPermissionLevel()) #if($type == 0)
 			<p>管理员</p>
 			#else
 			<p>普通用户</p>
@@ -15,8 +15,9 @@
 	<!-- /.panel -->
 
 	<div class="list-group">
-		<a href="#" class="list-group-item">我导入的文献</a> <a href="#"
-			class="list-group-item">评价过的文献</a> <a href="#"
+		<a href="../document/alldocument.html" class="list-group-item">所有文献</a>
+		<a href="../document/mydocument.html" class="list-group-item">我导入的文献</a>
+		<a href="../document/mycommentdocument.html" class="list-group-item">评价过的文献</a> <a href="#"
 			class="list-group-item"><span class="badge pull-right">3</span>草稿</a>
 	</div>
 	<!-- /.list-group -->

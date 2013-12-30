@@ -136,6 +136,33 @@ public class DocumentDAO extends HibernateDaoSupport {
 		return findByProperty(PUBLISHED, published);
 	}
 
+	public List<Document> findByUserId(int userId) {
+		// TODO Auto-generated method stub
+		log.debug("finding all Document instances By userId");
+		try {
+			String queryString = "from Document as d where d.user.id = "+userId;
+			return getHibernateTemplate().find(queryString);
+		} catch (RuntimeException re) {
+			log.error("find all failed", re);
+			throw re;
+		}
+	}
+	
+	
+
+	public List<Document> findAllUserCommentedDocument(int userId) {
+		// TODO Auto-generated method stub
+		log.debug("finding all User Comment Document instances By userId");
+		try {
+			String queryString = "from Document as d where d.id in (select document.id from Comment as c where c.user.id = "+ userId+")";
+			return getHibernateTemplate().find(queryString);
+		} catch (RuntimeException re) {
+			log.error("find all failed", re);
+			throw re;
+		}
+	}
+
+	
 	public List findAll() {
 		log.debug("finding all Document instances");
 		try {
@@ -297,4 +324,5 @@ public class DocumentDAO extends HibernateDaoSupport {
 	public static DocumentDAO getFromApplicationContext(ApplicationContext ctx) {
 		return (DocumentDAO) ctx.getBean("DocumentDAO");
 	}
+
 }
