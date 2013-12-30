@@ -19,6 +19,8 @@ import cn.edu.nju.software.dochub.data.dao.TaggingDAO;
 import cn.edu.nju.software.dochub.data.dao.UserDAO;
 import cn.edu.nju.software.dochub.data.dao.UserLogDAO;
 import cn.edu.nju.software.dochub.data.dataobject.Comment;
+import cn.edu.nju.software.dochub.data.dataobject.CommentProperty;
+import cn.edu.nju.software.dochub.data.dataobject.CommentPropertyType;
 
 public class CommentService {
 	DocumentTypeDAO documentTypeDAO;
@@ -50,9 +52,23 @@ public class CommentService {
 		return commentDAO.findAllPublishedByDocId(docid);
 	}
 	
+	public List<CommentPropertyType> getAllCommentPropertyTypes(){
+		return commentPropertyTypeDAO.findAll();
+	}
 	
+	public void deleteCommentPropertyType(int id){
+		commentPropertyTypeDAO.delete(commentPropertyTypeDAO.findById(id));
+	}
 	
+	public void addCommentPropertyType(CommentPropertyType commentpropertytype){
+		commentPropertyTypeDAO.save(commentpropertytype);
+	}
 	
+
+	public void addCommentProperty(CommentProperty cp) {
+		// TODO Auto-generated method stub
+		commentPropertyDAO.save(cp);
+	}
 	
 	
 	
@@ -129,4 +145,5 @@ public class CommentService {
 	public void setDocumentPropertyDAO(DocumentPropertyDAO documentPropertyDAO) {
 		this.documentPropertyDAO = documentPropertyDAO;
 	}
+
 }

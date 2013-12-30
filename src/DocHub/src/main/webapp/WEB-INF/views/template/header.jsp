@@ -51,7 +51,7 @@
 					<li><a href="../statistics/index.html"><span
 							class="glyphicon glyphicon-stats"></span> 统计</a></li>
 					#if($userAccessContext.getPermissionLevel()==0)
-					<li><a href="../admin/user.html"><span
+					<li><a href="../admin/index.html"><span
 							class="glyphicon glyphicon-wrench"></span> 管理</a></li>
 					#end
 					<li><a href="#about"><span

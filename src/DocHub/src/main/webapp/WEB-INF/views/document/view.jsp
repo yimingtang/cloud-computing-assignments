@@ -9,14 +9,44 @@
 				docid : docid,
 				content : content
 			},
-			type : post,
+			type : "post",
 			dataType : "json",
 			success : function(data) {
 				new Toast({
 					message : "存草稿成功！"
 				}).show();
-				$("[name='simplecomment-docid']").val("");
 				$("[name='simplecomment-content']").val("");
+			},
+			error : function(data) {
+			}
+		});
+	}
+	
+	function onDetailedDraft(){
+		var docid = $("[name='detailedcomment-docid']").val();
+		var nodes=$("[detailedname='detailedcommentproperty']");
+		console.dir(nodes);
+		console.log(nodes);
+		var array={};
+		array['测试']=1;
+		array['detailedcomment-docid']=docid;
+		for(var node in nodes){
+			console.dir(nodes[node]);
+			array[nodes[node].name]=nodes[node].value;
+		}
+		console.dir(array);
+		$.ajax({
+			url : "detailedcomment.aj",
+			data :array,
+			type : "post",
+			dataType : "json",
+			success : function(data) {
+				new Toast({
+					message : "存草稿成功！"
+				}).show();
+				for(var node in nodes){
+					nodes[node].value="";
+				}
 			},
 			error : function(data) {
 			}
@@ -82,94 +112,29 @@
 					<ul class="list-unstyled comment-list">
 						#foreach($comment in $commentList) 
 						#set($level=$level +1)
+						
 						<li class="panel panel-default">
 							<div class="panel-heading">
-								<label class="comment-title">$userAccessContext.getName()($userAccessContext.getUserName())<span> in $dateformat.format($comment.getCreatedAt())</span> </label> <label style="float:right"> #$level楼</label>
+								<label class="comment-title">$comment.getUser().getName()($comment.getUser().getUsername())<span> in $dateformat.format($comment.getCreatedAt())</span> </label> <label style="float:right"> #$level楼</label>
 							</div>
+						#if($comment.getType()==0)
 							<div class="panel-body">
 								<p>$comment.getContent()</p>
 							</div>
+						#else
+							<div class="panel-body form-horizontal">
+							#foreach($commentProperty in $comment.getCommentProperties())
+								<div class="form-group">
+									<label for="inputContent" style="padding-top:0px" class="col-sm-2 control-label">$commentProperty.getCommentPropertyType().getName()</label>
+									<div class="col-sm-10">
+										<p>$commentProperty.getValue()</p>
+									</div>
+								</div>
+							#end
+							</div>
+						#end
 						</li>
 						 #end
-						<li class="panel panel-default">
-							<div class="panel-heading">
-								<label class="comment-title">王菲(wangfei)<span> in
-										2013-10-9</span> </label> <label style="float:right"> #$level楼</label>
-							</div>
-							<div class="panel-body">
-								<p>Some default panel content here. Nulla vitae elit libero,
-									a pharetra augue. Aenean lacinia bibendum nulla sed
-									consectetur. Aenean eu leo quam. Pellentesque ornare sem
-									lacinia quam venenatis vestibulum. Nullam id dolor id nibh
-									ultricies vehicula ut id elit.</p>
-							</div></li>
-						<li class="panel panel-default">
-							<div class="panel-heading">
-								<label class="comment-title">王菲(wangfei)<span> in
-										2013-10-9</span> </label> <label style="float:right"> #$level楼</label>
-							</div>
-							<div class="panel-body form-horizontal">
-								<div class="form-group">
-									<label for="inputContent" class="col-sm-2 control-label">内容</label>
-									<div class="col-sm-10">
-										<p>Some default panel content here. Nulla vitae elit
-											libero,a pharetra augue. Aenean lacinia bibendum nulla sed
-											consectetur. Aenean eu leo quam. Pellentesque ornare sem
-											lacinia quam venenatis vestibulum. Nullam id dolor id nibh
-											ultricies vehicula ut id elit.</p>
-									</div>
-								</div>
-								<div class="form-group">
-									<label for="inputProblem" class="col-sm-2 control-label">要解决的问题</label>
-									<div class="col-sm-10">
-										<p>Some default panel content here. Nulla vitae elit
-											libero, a pharetra augue. Aenean lacinia bibendum nulla sed
-											consectetur. Aenean eu leo quam. Pellentesque ornare sem
-											lacinia quam venenatis vestibulum. Nullam id dolor id nibh
-											ultricies vehicula ut id elit.</p>
-									</div>
-								</div>
-								<div class="form-group">
-									<label for="inputIdea" class="col-sm-2 control-label">主要思路</label>
-									<div class="col-sm-10">
-										<p>Some default panel content here. Nulla vitae elit
-											libero, a pharetra augue. Aenean lacinia bibendum nulla sed
-											consectetur. Aenean eu leo quam. Pellentesque ornare sem
-											lacinia quam venenatis vestibulum. Nullam id dolor id nibh
-											ultricies vehicula ut id elit.</p>
-									</div>
-								</div>
-								<div class="form-group">
-									<label for="inputExperiment" class="col-sm-2 control-label">实验结果</label>
-									<div class="col-sm-10">
-										<p>Some default panel content here. Nulla vitae elit
-											libero, a pharetra augue. Aenean lacinia bibendum nulla sed
-											consectetur. Aenean eu leo quam. Pellentesque ornare sem
-											lacinia quam venenatis vestibulum. Nullam id dolor id nibh
-											ultricies vehicula ut id elit.</p>
-									</div>
-								</div>
-								<div class="form-group">
-									<label for="inputContribution" class="col-sm-2 control-label">贡献</label>
-									<div class="col-sm-10">
-										<p>Some default panel content here. Nulla vitae elit
-											libero, a pharetra augue. Aenean lacinia bibendum nulla sed
-											consectetur. Aenean eu leo quam. Pellentesque ornare sem
-											lacinia quam venenatis vestibulum. Nullam id dolor id nibh
-											ultricies vehicula ut id elit.</p>
-									</div>
-								</div>
-								<div class="form-group">
-									<label for="inputImprovement" class="col-sm-2 control-label">改进</label>
-									<div class="col-sm-10">
-										<p>Some default panel content here. Nulla vitae elit
-											libero, a pharetra augue. Aenean lacinia bibendum nulla sed
-											consectetur. Aenean eu leo quam. Pellentesque ornare sem
-											lacinia quam venenatis vestibulum. Nullam id dolor id nibh
-											ultricies vehicula ut id elit.</p>
-									</div>
-								</div>
-							</div></li>
 					</ul>
 					<div class="row">
 						<div class="col-sm-2">
@@ -206,44 +171,16 @@
 								<div style="visibility:hidden">
 									<input name="detailedcomment-docid" value="$document.getId()" />
 								</div>
+								#foreach($commentProperty in $commentPropertyList)
 								<div class="form-group">
-									<label for="inputContent" class="col-sm-2 control-label">内容</label>
+									<label for="inputContent" class="col-sm-2 control-label">$commentProperty.getName()</label>
 									<div class="col-sm-10">
-										<textarea class="form-control" id="inputContent"></textarea>
+										<textarea class="form-control" name="$commentProperty.getName()" detailedname="detailedcommentproperty"></textarea>
 									</div>
 								</div>
-								<div class="form-group">
-									<label for="inputProblem" class="col-sm-2 control-label">要解决的问题</label>
-									<div class="col-sm-10">
-										<textarea class="form-control" id="inputProblem"></textarea>
-									</div>
-								</div>
-								<div class="form-group">
-									<label for="inputIdea" class="col-sm-2 control-label">主要思路</label>
-									<div class="col-sm-10">
-										<textarea class="form-control" id="inputIdea"></textarea>
-									</div>
-								</div>
-								<div class="form-group">
-									<label for="inputExperiment" class="col-sm-2 control-label">实验结果</label>
-									<div class="col-sm-10">
-										<textarea class="form-control" id="inputExperiment"></textarea>
-									</div>
-								</div>
-								<div class="form-group">
-									<label for="inputContribution" class="col-sm-2 control-label">贡献</label>
-									<div class="col-sm-10">
-										<textarea class="form-control" id="inputContribution"></textarea>
-									</div>
-								</div>
-								<div class="form-group">
-									<label for="inputImprovement" class="col-sm-2 control-label">改进</label>
-									<div class="col-sm-10">
-										<textarea class="form-control" id="inputImprovement"></textarea>
-									</div>
-								</div>
+								#end
 								<div class="form-group comment-button" style="margin-right: 0px">
-									<button type="button" class="btn btn-success">存草稿</button>
+									<button type="button" class="btn btn-success" onclick=onDetailedDraft()>存草稿</button>
 									<button type="submit" class="btn btn-primary">发表</button>
 								</div>
 							</form>

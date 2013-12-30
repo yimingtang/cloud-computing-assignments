@@ -2,6 +2,7 @@ package cn.edu.nju.software.dochub.controller;
 
 import java.util.Calendar;
 
+import cn.edu.nju.software.dochub.data.dataobject.CommentPropertyType;
 import cn.edu.nju.software.dochub.data.dataobject.User;
 
 import net.sf.json.JSONObject;
@@ -11,6 +12,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import cn.edu.nju.software.dochub.service.CommentService;
 import cn.edu.nju.software.dochub.service.UserService;
 import cn.edu.nju.software.dochub.web.ResponseBuilder;
 import cn.edu.nju.software.dochub.web.UserAccessContext;
@@ -26,13 +28,15 @@ import javax.servlet.http.HttpServletResponse;
 @RequestMapping("/admin")
 public class AdminController {
 	UserService userService;
+	CommentService commentService;
 	ResponseBuilder responseBuilder;
 
 	@RequestMapping(value = "/index.html")
 	public String Index(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
-
-		return "forward:admin/user";
+		model.put("userAccessContext", (UserAccessContext) request.getSession()
+				.getAttribute("userAccessContext"));
+		return "admin/index";
 	}
 
 	@RequestMapping(value = "/tag.html")
@@ -48,6 +52,15 @@ public class AdminController {
 				.getAttribute("userAccessContext"));
 		model.put("userList", userService.getAllUser());
 		return "admin/user";
+	}
+	
+	@RequestMapping(value = "/detailedcomment.html")
+	public String detailedComment(HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) {
+		model.put("userAccessContext", (UserAccessContext) request.getSession()
+				.getAttribute("userAccessContext"));
+		model.put("commentPropertyList", commentService.getAllCommentPropertyTypes());
+		return "admin/detailedcomment";
 	}
 
 	@RequestMapping(value = "/addUser.html")
@@ -143,13 +156,13 @@ public class AdminController {
 		json.put("exist", exist);
 		responseBuilder.WriteJSONObject(response, json);
 	}
-	
+
 	@RequestMapping(value = "/editusernameExist.aj", method = RequestMethod.POST)
 	public void editExistUser(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		User user = userService.getUserByUserName(request
 				.getParameter("username"));
-		int userid=Integer.parseInt(request.getParameter("userid"));
+		int userid = Integer.parseInt(request.getParameter("userid"));
 		boolean exist = true;
 		if (user.getId() == userid) {
 			exist = false;
@@ -158,6 +171,35 @@ public class AdminController {
 		json.put("exist", exist);
 		responseBuilder.WriteJSONObject(response, json);
 	}
+	
+	@RequestMapping(value = "/addcommentproperty.html", method = RequestMethod.POST)
+	public String addCommentProperty(HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) {
+		String commentproperty = request.getParameter("commentproperty");
+		CommentPropertyType cpt=new CommentPropertyType(commentproperty);
+		commentService.addCommentPropertyType(cpt);
+		return "redirect:/admin/detailedcomment.html";
+	}
+	
+	@RequestMapping(value = "/deletecommentproperty.html", method = RequestMethod.GET)
+	public String deleteCommentProperty(HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) {
+		int id=Integer.parseInt(request.getParameter("commentpropetyid"));
+		commentService.deleteCommentPropertyType(id);
+		return "redirect:/admin/detailedcomment.html";
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 	public void setUserService(UserService userService) {
 		this.userService = userService;
@@ -165,6 +207,10 @@ public class AdminController {
 
 	public void setResponseBuilder(ResponseBuilder responseBuilder) {
 		this.responseBuilder = responseBuilder;
+	}
+
+	public void setCommentService(CommentService commentService) {
+		this.commentService = commentService;
 	}
 
 }
