@@ -115,7 +115,7 @@
 						
 						<li class="panel panel-default">
 							<div class="panel-heading">
-								<label class="comment-title">$comment.getUser().getName()($comment.getUser().getUsername())<span> in $dateformat.format($comment.getCreatedAt())</span> </label> <label style="float:right"> #$level楼</label>
+								评论：By <label class="comment-title">$comment.getUser().getName()($comment.getUser().getUsername())<span> in $dateformat.format($comment.getCreatedAt())</span> </label> <label style="float:right"> #$level楼</label>
 							</div>
 						#if($comment.getType()==0)
 							<div class="panel-body">
@@ -124,8 +124,8 @@
 						#else
 							<div class="panel-body form-horizontal">
 							#foreach($commentProperty in $comment.getCommentProperties())
-								<div class="form-group">
-									<label for="inputContent" style="padding-top:0px" class="col-sm-2 control-label">$commentProperty.getCommentPropertyType().getName()</label>
+								<div class="form-group" style="margin-bottom:0px">
+									<label for="inputContent" style="padding-top:0px; font-weight:600" class="col-sm-2 control-label">$commentProperty.getCommentPropertyType().getName()</label>
 									<div class="col-sm-10">
 										<p>$commentProperty.getValue()</p>
 									</div>
