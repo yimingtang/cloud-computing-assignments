@@ -58,5 +58,5 @@
     </div><!-- /#main-content-container -->
 </div><!-- /.col left -->
 
-#parse("./template/right.vm")
+#parse("./admin/right.vm")
 #parse("./template/footer.vm")

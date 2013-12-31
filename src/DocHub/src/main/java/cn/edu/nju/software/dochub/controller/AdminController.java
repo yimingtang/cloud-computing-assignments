@@ -1,26 +1,22 @@
 package cn.edu.nju.software.dochub.controller;
 
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-
 import cn.edu.nju.software.dochub.data.dataobject.CommentPropertyType;
+import cn.edu.nju.software.dochub.data.dataobject.ReferenceType;
+import cn.edu.nju.software.dochub.data.dataobject.Tag;
 import cn.edu.nju.software.dochub.data.dataobject.User;
-
+import cn.edu.nju.software.dochub.service.*;
+import cn.edu.nju.software.dochub.web.ResponseBuilder;
+import cn.edu.nju.software.dochub.web.UserAccessContext;
 import net.sf.json.JSONObject;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import cn.edu.nju.software.dochub.service.CommentService;
-import cn.edu.nju.software.dochub.service.DocumentService;
-import cn.edu.nju.software.dochub.service.UserService;
-import cn.edu.nju.software.dochub.web.ResponseBuilder;
-import cn.edu.nju.software.dochub.web.UserAccessContext;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 /**
  * Created by tym on 13-12-19.
@@ -29,49 +25,82 @@ import javax.servlet.http.HttpServletResponse;
 @Controller
 @RequestMapping("/admin")
 public class AdminController {
+
+    TagService tagService;
     UserService userService;
     CommentService commentService;
-    ResponseBuilder responseBuilder;
     DocumentService documentService;
+    ReferenceTypeService referenceTypeService;
+    ResponseBuilder responseBuilder;
 
     @RequestMapping(value = "/index.html")
-    public String Index(HttpServletRequest request,
-                        HttpServletResponse response, ModelMap model) {
+    public String index(HttpServletRequest request, HttpServletResponse response, ModelMap model) {
         return "redirect: user.html";
     }
 
     @RequestMapping(value = "/tag.html")
-    public String Tag(HttpServletRequest request, HttpServletResponse response,
-                      ModelMap model) {
+    public String tag(HttpServletRequest request, HttpServletResponse response, ModelMap model) {
+        model.put("userAccessContext", (UserAccessContext) request.getSession().getAttribute("userAccessContext"));
+        model.put("tagList", tagService.getAllTags());
         return "admin/tag";
     }
 
+    @RequestMapping(value = "/addTag.html", method = RequestMethod.POST)
+    public String addTag(HttpServletRequest request, HttpServletResponse response, ModelMap model) {
+        String tagName = request.getParameter("name");
+        Tag tag = new Tag(tagName);
+        tagService.addTag(tag);
+        return "redirect: tag.html";
+    }
+
+    @RequestMapping(value = "/deleteTag.html", method = RequestMethod.GET)
+    public String deleteTag(HttpServletRequest request, HttpServletResponse response, ModelMap model) {
+        int id = Integer.parseInt(request.getParameter("id"));
+        tagService.deleteTagById(id);
+        return "redirect: tag.html";
+    }
+
+    @RequestMapping(value = "/referenceType.html")
+    public String referenceType(HttpServletRequest request, HttpServletResponse response, ModelMap model) {
+        model.put("userAccessContext", (UserAccessContext) request.getSession().getAttribute("userAccessContext"));
+        model.put("referenceTypeList", referenceTypeService.getAllReferenceTypes());
+        return "admin/referenceType";
+    }
+
+    @RequestMapping(value = "/addReferenceType.html", method = RequestMethod.POST)
+    public String addReferenceType(HttpServletRequest request, HttpServletResponse response, ModelMap model) {
+        String referenceTypeName = request.getParameter("name");
+        ReferenceType referenceType = new ReferenceType(referenceTypeName);
+        referenceTypeService.addReferenceType(referenceType);
+        return "redirect: referenceType.html";
+    }
+
+    @RequestMapping(value = "/deleteReferenceType.html", method = RequestMethod.GET)
+    public String deleteReferenceType(HttpServletRequest request, HttpServletResponse response, ModelMap model) {
+        int id = Integer.parseInt(request.getParameter("id"));
+        referenceTypeService.deleteReferenceTypeById(id);
+        return "redirect: referenceType.html";
+    }
+
     @RequestMapping(value = "/document.html")
-    public String Document(HttpServletRequest request,
-                           HttpServletResponse response, ModelMap model) {
-        model.put("userAccessContext", (UserAccessContext) request.getSession()
-                .getAttribute("userAccessContext"));
+    public String document(HttpServletRequest request, HttpServletResponse response, ModelMap model) {
+        model.put("userAccessContext", (UserAccessContext) request.getSession().getAttribute("userAccessContext"));
         model.put("allDocumentList", documentService.getAllDocument());
         model.put("documentTypeList", documentService.getAllDocumentType());
-        model.put("dateformat",
-                new SimpleDateFormat("yyyy.MM.dd"));
-        return "/admin/document";
+        model.put("dateformat", new SimpleDateFormat("yyyy.MM.dd"));
+        return "admin/document";
     }
 
     @RequestMapping(value = "/user.html")
-    public String User(HttpServletRequest request,
-                       HttpServletResponse response, ModelMap model) {
-        model.put("userAccessContext", (UserAccessContext) request.getSession()
-                .getAttribute("userAccessContext"));
+    public String user(HttpServletRequest request, HttpServletResponse response, ModelMap model) {
+        model.put("userAccessContext", (UserAccessContext) request.getSession().getAttribute("userAccessContext"));
         model.put("userList", userService.getAllUser());
         return "admin/user";
     }
 
     @RequestMapping(value = "/detailedcomment.html")
-    public String detailedComment(HttpServletRequest request,
-                                  HttpServletResponse response, ModelMap model) {
-        model.put("userAccessContext", (UserAccessContext) request.getSession()
-                .getAttribute("userAccessContext"));
+    public String detailedComment(HttpServletRequest request, HttpServletResponse response, ModelMap model) {
+        model.put("userAccessContext", (UserAccessContext) request.getSession().getAttribute("userAccessContext"));
         model.put("commentPropertyList", commentService.getAllCommentPropertyTypes());
         return "admin/detailedcomment";
     }
@@ -202,7 +231,6 @@ public class AdminController {
         return "redirect:/admin/detailedcomment.html";
     }
 
-
     public void setUserService(UserService userService) {
         this.userService = userService;
     }
@@ -217,6 +245,14 @@ public class AdminController {
 
     public void setDocumentService(DocumentService documentService) {
         this.documentService = documentService;
+    }
+
+    public void setTagService(TagService tagService) {
+        this.tagService = tagService;
+    }
+
+    public void setReferenceTypeService(ReferenceTypeService referenceTypeService) {
+        this.referenceTypeService = referenceTypeService;
     }
 
 }

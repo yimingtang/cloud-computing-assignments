@@ -19,16 +19,14 @@ public class StatisticController {
 
     UserService userService;
 
-    public void setUserService(UserService userService) {
-        this.userService = userService;
-    }
-
-
     @RequestMapping(value = "/index.html")
-    public String Index(HttpServletRequest request,
-                        HttpServletResponse response, ModelMap model) {
+    public String Index(HttpServletRequest request, HttpServletResponse response, ModelMap model) {
         model.put("userAccessContext", (UserAccessContext) request.getSession().getAttribute("userAccessContext"));
         model.put("userList", userService.getAllUser());
         return "statistics/index";
+    }
+
+    public void setUserService(UserService userService) {
+        this.userService = userService;
     }
 }

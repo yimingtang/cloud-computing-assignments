@@ -5,14 +5,14 @@
         <ol class="breadcrumb">
             <li><a href="../document/index.html"><span class="glyphicon glyphicon-home"></span> 首页</a></li>
             <li><a href="../admin/index.html">管理</a></li>
-            <li class="active">标签配置</li>
+            <li class="active">引用关系配置</li>
         </ol><!-- /.breadcrumb -->
     </nav>
 
     <div id="main-content-container">
         <div class="panel panel-default">
             <div class="panel-heading">
-                <h3 标签管理</h3>
+                <h3 class="pull-left">引用关系配置</h3>
             </div><!-- /.panel-heading -->
 
             <div class="panel-body">
@@ -20,32 +20,31 @@
                     <thead>
                     <tr>
                         <th>#</th>
-                        <th>标签名</th>
+                        <th>引用类型</th>
                         <th>操作</th>
                     </tr>
                     </thead>
-
                     <tbody>
-                        #foreach($tag in $tagList)
+                        #foreach($referenceType in $referenceTypeList)
                         <tr>
-                            <td>$tag.getId()</td>
-                            <td>$tag.getName()</td>
+                            <td>$referenceType.getId()</td>
+                            <td>$referenceType.getName()</td>
                             <td>
-                                <a class="btn btn-danger btn-sm" href="deleteTag.html?id=$tag.getId()"><span class="glyphicon glyphicon-minus"></span> 删除</a>
+                                <a class="btn btn-danger btn-sm" href="deleteReferenceType.html?id=$referenceType.getId()"><span class="glyphicon glyphicon-minus"></span> 删除</a>
                             </td>
                         </tr>
                         #end
-                        <tr>
-                            <td></td>
-                            <form action="addTag.html" method="post">
-                                <td>
-                                    <input type="text" class="form-control" name="name" placeholder="标签名">
-                                </td>
-                                <td>
-                                    <button type="submit" class="btn btn-success btn-sm"><span class="glyphicon glyphicon-plus"></span> 添加</button>
-                                </td>
-                            </form>
-                        </tr>
+                    <tr>
+                        <td></td>
+                        <form action="addReferenceType.html" method="post">
+                            <td>
+                                <input type="text" class="form-control" name="name" placeholder="引用类型名称">
+                            </td>
+                            <td>
+                                <button type="submit" class="btn btn-success btn-sm"><span class="glyphicon glyphicon-plus"></span> 添加</button>
+                            </td>
+                        </form>
+                    </tr>
                     </tbody>
                 </table>
             </div><!-- /.panel-body -->
