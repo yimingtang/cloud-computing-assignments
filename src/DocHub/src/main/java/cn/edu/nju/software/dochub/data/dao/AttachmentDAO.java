@@ -119,6 +119,17 @@ public class AttachmentDAO extends HibernateDaoSupport {
 		}
 	}
 
+	public List findAttachmentByDocumentIdAndAttachmentName(
+			int docid, String attachmentname) {
+		log.debug("finding all Attachment instances By document and attachment name");
+		try {
+			String queryString = "from Attachment as a where a.document.id = "+docid+" and a.name = '"+attachmentname +"'";
+			return getHibernateTemplate().find(queryString);
+		} catch (RuntimeException re) {
+			log.error("find all failed", re);
+			throw re;
+		}
+	}
 	public Attachment merge(Attachment detachedInstance) {
 		log.debug("merging Attachment instance");
 		try {
@@ -157,4 +168,6 @@ public class AttachmentDAO extends HibernateDaoSupport {
 	public static AttachmentDAO getFromApplicationContext(ApplicationContext ctx) {
 		return (AttachmentDAO) ctx.getBean("AttachmentDAO");
 	}
+
+
 }

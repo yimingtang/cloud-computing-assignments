@@ -47,3 +47,20 @@
 .comment-button {
     text-align: right;
 }
+
+#attachments {
+	background-color: #f5f5f5;
+	border-color: #ddd;
+	border-radius: 4px;
+}
+
+#attachments li {
+	text-align: left;
+	padding:4px 0px 4px 20px;
+	font-size:1em;
+}
+
+#attachments li span {
+	cursor: pointer;
+	margin-left:15px;
+}
