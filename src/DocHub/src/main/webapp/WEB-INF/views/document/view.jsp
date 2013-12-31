@@ -21,36 +21,45 @@
 			}
 		});
 	}
-	
-	function onDetailedDraft(){
+
+	function onDetailedDraft() {
 		var docid = $("[name='detailedcomment-docid']").val();
-		var nodes=$("[detailedname='detailedcommentproperty']");
+		var nodes = $("[detailedname='detailedcommentproperty']");
 		console.dir(nodes);
 		console.log(nodes);
-		var array={};
-		array['测试']=1;
-		array['detailedcomment-docid']=docid;
-		for(var node in nodes){
+		var array = {};
+		array['测试'] = 1;
+		array['detailedcomment-docid'] = docid;
+		for ( var node in nodes) {
 			console.dir(nodes[node]);
-			array[nodes[node].name]=nodes[node].value;
+			array[nodes[node].name] = nodes[node].value;
 		}
 		console.dir(array);
 		$.ajax({
 			url : "detailedcomment.aj",
-			data :array,
+			data : array,
 			type : "post",
 			dataType : "json",
 			success : function(data) {
 				new Toast({
 					message : "存草稿成功！"
 				}).show();
-				for(var node in nodes){
-					nodes[node].value="";
+				for ( var node in nodes) {
+					nodes[node].value = "";
 				}
 			},
 			error : function(data) {
 			}
 		});
+	}
+	
+	function onDownloadAttachment(node){
+		var url = "./downloadAttachment.aj?attachmentId="+node.parentNode.id;
+		var method='post';
+		jQuery(
+				'<form action="' + url + '" method="' + (method || 'post')
+						+ '"></form>').appendTo('body').submit()
+				.remove();
 	}
 </script>
 <div class="col-xs-12 col-md-9">
@@ -90,10 +99,13 @@
 				</div>
 				<div class="document-info-section">
 					<h4>附件</h4>
-					<ul>
-						<li>附件1</li>
-						<li>附件2</li>
-						<li>附件3</li>
+					<ul id="attachments" class="list-unstyled" style="margin:0 30px">
+						#foreach($attachment in $document.getAttachments())
+						<li id=$attachment.getId()><a href="../$attachment.getUrl()"
+							target="view_window">$attachment.getName()</a> <span
+							class="glyphicon glyphicon-circle-arrow-down"
+							onclick=onDownloadAttachment(this)></span>
+						</li> #end
 					</ul>
 				</div>
 				<div class="document-info-section">
@@ -110,31 +122,29 @@
 					</h3>
 					#set($level=0)
 					<ul class="list-unstyled comment-list">
-						#foreach($comment in $commentList) 
-						#set($level=$level +1)
-						
+						#foreach($comment in $commentList) #set($level=$level +1)
+
 						<li class="panel panel-default">
 							<div class="panel-heading">
-								评论：By <label class="comment-title">$comment.getUser().getName()($comment.getUser().getUsername())<span> in $dateformat.format($comment.getCreatedAt())</span> </label> <label style="float:right"> #$level楼</label>
-							</div>
-						#if($comment.getType()==0)
+								评论：By <label class="comment-title">$comment.getUser().getName()($comment.getUser().getUsername())<span>
+										in $dateformat.format($comment.getCreatedAt())</span> </label> <label
+									style="float:right"> #$level楼</label>
+							</div> #if($comment.getType()==0)
 							<div class="panel-body">
 								<p>$comment.getContent()</p>
-							</div>
-						#else
+							</div> #else
 							<div class="panel-body form-horizontal">
-							#foreach($commentProperty in $comment.getCommentProperties())
+								#foreach($commentProperty in $comment.getCommentProperties())
 								<div class="form-group" style="margin-bottom:0px">
-									<label for="inputContent" style="padding-top:0px; font-weight:600" class="col-sm-2 control-label">$commentProperty.getCommentPropertyType().getName()</label>
+									<label for="inputContent"
+										style="padding-top:0px; font-weight:600"
+										class="col-sm-2 control-label">$commentProperty.getCommentPropertyType().getName()</label>
 									<div class="col-sm-10">
 										<p>$commentProperty.getValue()</p>
 									</div>
 								</div>
-							#end
-							</div>
-						#end
-						</li>
-						 #end
+								#end
+							</div> #end</li> #end
 					</ul>
 					<div class="row">
 						<div class="col-sm-2">
@@ -175,12 +185,15 @@
 								<div class="form-group">
 									<label for="inputContent" class="col-sm-2 control-label">$commentProperty.getName()</label>
 									<div class="col-sm-10">
-										<textarea class="form-control" name="$commentProperty.getName()" detailedname="detailedcommentproperty"></textarea>
+										<textarea class="form-control"
+											name="$commentProperty.getName()"
+											detailedname="detailedcommentproperty"></textarea>
 									</div>
 								</div>
 								#end
 								<div class="form-group comment-button" style="margin-right: 0px">
-									<button type="button" class="btn btn-success" onclick=onDetailedDraft()>存草稿</button>
+									<button type="button" class="btn btn-success"
+										onclick=onDetailedDraft()>存草稿</button>
 									<button type="submit" class="btn btn-primary">发表</button>
 								</div>
 							</form>

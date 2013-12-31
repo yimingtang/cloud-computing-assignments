@@ -1,23 +1,35 @@
 package cn.edu.nju.software.dochub.controller;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
+
 import net.sf.json.JSONObject;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.velocity.tools.generic.DateTool;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import cn.edu.nju.software.dochub.data.dao.DocumentTypeDAO;
+import cn.edu.nju.software.dochub.data.dataobject.Attachment;
 import cn.edu.nju.software.dochub.data.dataobject.Comment;
 import cn.edu.nju.software.dochub.data.dataobject.CommentProperty;
 import cn.edu.nju.software.dochub.data.dataobject.CommentPropertyType;
 import cn.edu.nju.software.dochub.data.dataobject.Document;
 import cn.edu.nju.software.dochub.data.dataobject.DocumentType;
 import cn.edu.nju.software.dochub.data.dataobject.User;
+import cn.edu.nju.software.dochub.service.AttachmentService;
 import cn.edu.nju.software.dochub.service.CommentService;
 import cn.edu.nju.software.dochub.service.DocumentService;
 import cn.edu.nju.software.dochub.service.UserService;
@@ -39,6 +51,7 @@ public class DocumentController {
 	ResponseBuilder responseBuilder;
 	UserService userService;
 	CommentService commentService;
+	AttachmentService attachmentService;
 
 	@RequestMapping(value = "/index.html")
 	public String index(HttpServletRequest request,
@@ -275,7 +288,7 @@ public class DocumentController {
 		if (!allnull) {
 			commentService.addSimpleComment(comment);
 		}
-		
+
 		for (CommentPropertyType cpt : cptlist) {
 			String value = request.getParameter(cpt.getName());
 			System.out.println(">>>>" + cpt.getName() + "=" + value);
@@ -318,7 +331,7 @@ public class DocumentController {
 		if (!allnull) {
 			commentService.addSimpleComment(comment);
 		}
-		
+
 		for (CommentPropertyType cpt : cptlist) {
 			String value = request.getParameter(cpt.getName());
 			System.out.println(">>>>" + cpt.getName() + "=" + value);
@@ -329,23 +342,21 @@ public class DocumentController {
 		}
 		responseBuilder.WriteJSONObject(response, new JSONObject(true));
 	}
-	
-	
+
 	@RequestMapping(value = "/mydocument.html")
 	public String myDocument(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
-		UserAccessContext uac=(UserAccessContext) request.getSession()
+		UserAccessContext uac = (UserAccessContext) request.getSession()
 				.getAttribute("userAccessContext");
-		model.put("userAccessContext",uac );
-		
-		
-		model.put("allDocumentList", documentService.getAllDocumentByUserId(uac.getUserId()));
+		model.put("userAccessContext", uac);
+
+		model.put("allDocumentList",
+				documentService.getAllDocumentByUserId(uac.getUserId()));
 		model.put("documentTypeList", documentService.getAllDocumentType());
-		model.put("dateformat",
-				new SimpleDateFormat("yyyy.MM.dd"));
+		model.put("dateformat", new SimpleDateFormat("yyyy.MM.dd"));
 		return "/document/documents";
 	}
-	
+
 	@RequestMapping(value = "/alldocument.html")
 	public String allDocument(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
@@ -353,35 +364,143 @@ public class DocumentController {
 				.getAttribute("userAccessContext"));
 		model.put("allDocumentList", documentService.getAllDocument());
 		model.put("documentTypeList", documentService.getAllDocumentType());
-		model.put("dateformat",
-				new SimpleDateFormat("yyyy.MM.dd"));
+		model.put("dateformat", new SimpleDateFormat("yyyy.MM.dd"));
 		return "/document/documents";
 	}
-	
-	
+
 	@RequestMapping(value = "/mycommentdocument.html")
 	public String myCommentDocument(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
-		UserAccessContext uac=(UserAccessContext) request.getSession()
+		UserAccessContext uac = (UserAccessContext) request.getSession()
 				.getAttribute("userAccessContext");
-		model.put("userAccessContext",uac );
-		
-		
-		model.put("allDocumentList", documentService.getAllUserCommentedDocumentByUserId(uac.getUserId()));
+		model.put("userAccessContext", uac);
+
+		model.put("allDocumentList", documentService
+				.getAllUserCommentedDocumentByUserId(uac.getUserId()));
 		model.put("documentTypeList", documentService.getAllDocumentType());
-		model.put("dateformat",
-				new SimpleDateFormat("yyyy.MM.dd"));
+		model.put("dateformat", new SimpleDateFormat("yyyy.MM.dd"));
 		return "/document/documents";
 	}
-	
+
 	@RequestMapping(value = "/deletedocument.aj")
 	public void deleteDocument(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
-		int docid=Integer.parseInt(request.getParameter("docId"));
+		int docid = Integer.parseInt(request.getParameter("docId"));
 		documentService.deleteDocument(docid);
 		responseBuilder.WriteJSONObject(response, new JSONObject(true));
 	}
+
+	@RequestMapping(value = "/addattachment.aj")
+	public void addAttachment(HttpServletRequest request,
+			HttpServletResponse response, ModelMap model)
+			throws UnsupportedEncodingException {
+		MultipartHttpServletRequest mphsrequest = (MultipartHttpServletRequest) request;
+		int docid = Integer.parseInt(mphsrequest.getParameter("docId"));
+		UserAccessContext uac = (UserAccessContext) request.getSession()
+				.getAttribute("userAccessContext");
+		MultipartFile mpfile = mphsrequest.getFile("inputfileupload");
+		String flag="error";
+		Attachment attachment = attachmentService
+				.findAttachmentByDocumentIdAndAttachmentName(docid,
+						mpfile.getOriginalFilename());
+
+		if (attachment==null) {
+			String originFileName=mpfile.getOriginalFilename();
+			String ext = originFileName.substring(originFileName.lastIndexOf(".") + 1,  
+					originFileName.length()); 
+			String absoluteDirectoryString = DocumentService.absoluteAttachmentDir
+					+ docid;
+			String relativeDirectoryString = DocumentService.relativeAttachmentDir
+					+ docid;
+			String randomfilename=String.valueOf(new Random(Calendar.getInstance().getTimeInMillis()).nextLong())+"."+ext;
+			String filepath = absoluteDirectoryString + File.separator
+					+ randomfilename;
+			String relativefilepath = relativeDirectoryString + File.separator
+					+ randomfilename;
+			File file = new File(filepath);
+			File directory = new File(absoluteDirectoryString);
+			directory.mkdirs();
+			try {
+				file.createNewFile();
+				mpfile.transferTo(file);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+			attachment = new Attachment();
+			attachment.setCreatedAt(Calendar.getInstance().getTime());
+			attachment.setUpdatedAt(Calendar.getInstance().getTime());
+			attachment.setName(mpfile.getOriginalFilename());
+			attachment.setUrl(relativefilepath);
+			attachment.setType((short) 1);// 1 default
+			attachment.setDocument(documentService.findDocumentById(docid));
+			attachment.setUser(userService.getUserById(uac.getUserId()));
+
+			attachmentService.addAttachment(attachment);
+			flag="new";
+
+		} else {
+			String absolutefilepath=System.getProperty("project.root")+attachment.getUrl();
+			File file=new File(absolutefilepath);
+			try {
+				mpfile.transferTo(file);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			attachment.setUpdatedAt(Calendar.getInstance().getTime());
+			attachment.setUser(userService.getUserById(uac.getUserId()));
+
+			attachmentService.updateAttachment(attachment);
+			flag="update";
+		}
+
+		Attachment lastAttachment = attachmentService
+				.findAttachmentByDocumentIdAndAttachmentName(docid,
+						mpfile.getOriginalFilename());
+		JSONObject json = new JSONObject();
+		json.put("flag", flag);
+		json.put("attachmentid", lastAttachment.getId());
+		json.put("name", lastAttachment.getName());
+		json.put("url", lastAttachment.getUrl());
+		responseBuilder.WriteJSONObject(response, json);
+	}
+
+	@RequestMapping(value = "/deleteAttachment.aj")
+	public void deleteAttachment(HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) {
+		int attachmentid = Integer.parseInt(request
+				.getParameter("attachmentId"));
+		Attachment attachment =attachmentService.findAttachmentById(attachmentid);
+		String url=attachment.getUrl();
+		attachmentService.deleteAttachmentById(attachmentid);
+		
+		String filepath=System.getProperty("project.root")+url;
+		File file=new File(filepath);
+		file.delete();
+		responseBuilder.WriteJSONObject(response, new JSONObject(true));
+	}
 	
+	@RequestMapping(value = "/downloadAttachment.aj")
+	public void downloadAttachment(HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) throws IOException {
+		int attachmentid = Integer.parseInt(request
+				.getParameter("attachmentId"));
+		Attachment attachment =attachmentService.findAttachmentById(attachmentid);
+		String url=attachment.getUrl();
+		String filepath=System.getProperty("project.root")+url;
+		
+		OutputStream os = response.getOutputStream();
+		response.reset();
+		response.setContentType("application/octet-stream; charset=utf-8");
+		response.setHeader("Content-Disposition", "attachment; filename="+ URLEncoder.encode(attachment.getName(), "UTF-8"));
+		System.out.println("file>>>>>>>>>>>>>>>>>>>>"+attachment.getName());
+		File pfile = new File(filepath);
+		os.write(FileUtils.readFileToByteArray(pfile));
+		
+		responseBuilder.WriteJSONObject(response, new JSONObject(true));
+	}
 	
 	
 	
@@ -406,5 +525,9 @@ public class DocumentController {
 
 	public void setCommentService(CommentService commentService) {
 		this.commentService = commentService;
+	}
+
+	public void setAttachmentService(AttachmentService attachmentService) {
+		this.attachmentService = attachmentService;
 	}
 }

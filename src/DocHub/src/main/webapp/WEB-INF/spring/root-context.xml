@@ -68,6 +68,7 @@
 	<bean id="userService" class="cn.edu.nju.software.dochub.service.UserService"></bean>
 	<bean id="documentService" class="cn.edu.nju.software.dochub.service.DocumentService"></bean>
 	<bean id="commentService" class="cn.edu.nju.software.dochub.service.CommentService"></bean>
+	<bean id="attachmentService" class="cn.edu.nju.software.dochub.service.AttachmentService"></bean>
 
 	<!-- DAO 注入 -->
 	<bean id="documentTypeDAO" class="cn.edu.nju.software.dochub.data.dao.DocumentTypeDAO">
@@ -161,5 +162,11 @@
 	<bean id="transactionManager"
 		class="org.springframework.orm.hibernate3.HibernateTransactionManager">
 		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+
+	<bean id="multipartResolver"
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<!-- one of the properties available; the maximum file size in bytes 100M -->
+		<property name="maxUploadSize" value="104857600" />
 	</bean>
 </beans>
