@@ -1,0 +1,6 @@
+<div class="list-group">
+    <a href="../document/alldocument.html" class="list-group-item">所有文献</a>
+    <a href="../document/mydocument.html" class="list-group-item">我导入的文献</a>
+    <a href="../document/mycommentdocument.html" class="list-group-item">评价过的文献</a>
+    <a href="#" class="list-group-item"><span class="badge pull-right">3</span>草稿</a>
+</div><!-- /.list-group -->

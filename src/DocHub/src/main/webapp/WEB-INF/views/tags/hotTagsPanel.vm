@@ -1,0 +1,14 @@
+<div class="panel panel-default">
+    <div class="panel-heading">热门标签</div>
+    <div class="list-group">
+        <a href="#" class="list-group-item">#云计算</a>
+        <a href="#" class="list-group-item">#分布式</a>
+        <a href="#" class="list-group-item">#大数据</a>
+        <a href="#" class="list-group-item">#扯淡</a>
+        <a href="#" class="list-group-item">#被过度炒作的概念</a>
+        <a href="#" class="list-group-item">#NoSQL</a>
+        <a href="#" class="list-group-item">#高大上</a>
+        <a href="#" class="list-group-item">#屌炸天</a>
+        <a href="#" class="list-group-item">#福利</a>
+    </div><!-- /.list-group -->
+</div><!-- /.panel -->

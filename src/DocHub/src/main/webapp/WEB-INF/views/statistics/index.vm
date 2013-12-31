@@ -1,4 +1,4 @@
-#parse("./template/header.jsp")
+#parse("./template/header.vm")
 
 <div class="col-xs-12 col-md-9">
     <nav>
@@ -15,6 +15,7 @@
             <div class="panel-heading">
                 <h3>统计</h3>
             </div><!-- /.panel-heading -->
+
             <div class="panel-body">
                 <table class="table table-hover">
                     <thead>
@@ -38,7 +39,7 @@
                     #end
                     </tbody>
                 </table>
-            </div>
+            </div><!-- /.panel-body -->
         </div><!-- /.panel -->
 
         <ul class="pagination">
@@ -56,5 +57,5 @@
     </div><!-- /#main-content-container -->
 </div><!-- /.col left -->
 
-#parse("./template/right.jsp")
-#parse("./template/footer.jsp")
+#parse("./template/right.vm")
+#parse("./template/footer.vm")

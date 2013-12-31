@@ -1,0 +1,7 @@
+<div class="col-xs-12 col-md-3">
+
+    #parse("./template/userPanel.vm")
+    #parse("./template/docMenuPanel.vm")
+    #parse("./tags/hotTagsPanel.vm")
+
+</div><!-- /.col right -->

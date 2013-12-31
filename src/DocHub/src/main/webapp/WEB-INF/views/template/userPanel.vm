@@ -1,0 +1,11 @@
+<div class="panel panel-default">
+    <div class="panel-body">
+        <p>$userAccessContext.getName()<small>$userAccessContext.getUserName()</small></p>
+        #set($type = $userAccessContext.getPermissionLevel())
+        #if($type == 0)
+            <p>管理员</p>
+        #else
+            <p>普通用户</p>
+        #end
+    </div>
+</div><!-- /.panel -->
