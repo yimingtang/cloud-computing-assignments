@@ -1,13 +1,11 @@
-</div>
-<!-- /.row -->
+</div><!-- /.row -->
 <hr>
 
 <footer>
 	<p>&copy; DocHub 2013</p>
 </footer>
 
-</div>
-<!-- /.container -->
+</div><!-- /.container -->
 
 <script src="../resources/js/vendor/bootstrap.min.js"></script>
 

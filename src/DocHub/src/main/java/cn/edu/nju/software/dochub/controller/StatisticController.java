@@ -1,5 +1,7 @@
 package cn.edu.nju.software.dochub.controller;
 
+import cn.edu.nju.software.dochub.service.UserService;
+import cn.edu.nju.software.dochub.web.UserAccessContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,9 +17,18 @@ import javax.servlet.http.HttpServletResponse;
 @RequestMapping("/statistics")
 public class StatisticController {
 
+    UserService userService;
+
+    public void setUserService(UserService userService) {
+        this.userService = userService;
+    }
+
+
     @RequestMapping(value = "/index.html")
     public String Index(HttpServletRequest request,
                         HttpServletResponse response, ModelMap model) {
-        return "statistics/statistics";
+        model.put("userAccessContext", (UserAccessContext) request.getSession().getAttribute("userAccessContext"));
+        model.put("userList", userService.getAllUser());
+        return "statistics/index";
     }
 }
