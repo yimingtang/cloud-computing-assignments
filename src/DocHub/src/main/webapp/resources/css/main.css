@@ -31,7 +31,7 @@
 }
 
 .comment-list li {
-    margin-bottom: 0px;
+    margin-bottom: -1px;
     border-radius: 4px;
 }
 
