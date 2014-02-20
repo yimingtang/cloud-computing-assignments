@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * Created by tym on 13-12-31.
  */
-public class ReferenceTypeService {
+public class ReferenceService {
 
     private ReferenceTypeDAO referenceTypeDAO;
 

@@ -70,7 +70,7 @@
 	<bean id="commentService" class="cn.edu.nju.software.dochub.service.CommentService"></bean>
 	<bean id="attachmentService" class="cn.edu.nju.software.dochub.service.AttachmentService"></bean>
     <bean id="tagService" class="cn.edu.nju.software.dochub.service.TagService"></bean>
-    <bean id="referenceTypeService" class="cn.edu.nju.software.dochub.service.ReferenceTypeService"></bean>
+    <bean id="referenceService" class="cn.edu.nju.software.dochub.service.ReferenceService"></bean>
 
 	<!-- DAO 注入 -->
 	<bean id="documentTypeDAO" class="cn.edu.nju.software.dochub.data.dao.DocumentTypeDAO">

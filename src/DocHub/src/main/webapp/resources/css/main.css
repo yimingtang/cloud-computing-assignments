@@ -1,51 +1,54 @@
 /* ==========================================================================
    Author's custom styles
    ========================================================================== */
-
 .search-area {
-    margin-bottom: 20px;
+	margin-bottom: 20px;
 }
 
 #main-content-container .panel-heading {
-    background-color: #fff;
+	background-color: #fff;
 }
 
 #main-content-container .panel-heading h3 {
-    margin-top: 2px;
-    margin-bottom: 0;
+	margin-top: 2px;
+	margin-bottom: 0;
 }
 
 .document-list-item h4 {
-    font-size: 1.1em;
-    margin-top: 5px;
-    margin-bottom: 5px;
+	font-size: 1.1em;
+	margin-top: 5px;
+	margin-bottom: 5px;
 }
 
 .document-list-item p {
-    font-size: 0.9em;
-    margin-bottom: 5px;
+	font-size: 0.9em;
+	margin-bottom: 5px;
 }
 
 .document-list-item .info {
-    color: #999;
+	color: #999;
 }
 
 .comment-list li {
-    margin-bottom: -1px;
-    border-radius: 4px;
+	margin-bottom: -1px;
+	border-radius: 4px;
 }
 
 .comment-title span {
-    font-size: 0.7em;
-    font-weight: 300;
+	font-size: 0.7em;
+	font-weight: 300;
 }
 
-#simplecomment, #detailedcomment {
-    padding: 20px 20px 0px 20px;
+.single-comment {
+	border-color: #6e6e6e;
+}
+
+#simplecomment,#detailedcomment {
+	padding: 20px 20px 0px 20px;
 }
 
 .comment-button {
-    text-align: right;
+	text-align: right;
 }
 
 #attachments {
@@ -56,11 +59,11 @@
 
 #attachments li {
 	text-align: left;
-	padding:4px 0px 4px 20px;
-	font-size:1em;
+	padding: 4px 0px 4px 20px;
+	font-size: 1em;
 }
 
 #attachments li span {
 	cursor: pointer;
-	margin-left:15px;
+	margin-left: 15px;
 }

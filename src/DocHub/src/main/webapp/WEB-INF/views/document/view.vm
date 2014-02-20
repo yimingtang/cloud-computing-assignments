@@ -126,7 +126,7 @@
                     <ul class="list-unstyled comment-list">
                         #foreach($comment in $commentList)
                             #set($level=$level +1)
-                            <li class="panel panel-default">
+                            <li class="panel panel-default single-comment">
                                 <div class="panel-heading">
                                     评论：By <label class="comment-title">$comment.getUser().getName()
                                     ($comment.getUser().getUsername())<span> in $dateformat.format($comment.getCreatedAt())</span> </label> <label
