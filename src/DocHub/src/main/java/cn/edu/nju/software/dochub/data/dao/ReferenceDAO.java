@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
+import cn.edu.nju.software.dochub.data.dataobject.Document;
 import cn.edu.nju.software.dochub.data.dataobject.Reference;
 
 /**
@@ -86,6 +87,16 @@ public class ReferenceDAO extends HibernateDaoSupport {
 			String queryString = "from Reference as model where model."
 					+ propertyName + "= ?";
 			return getHibernateTemplate().find(queryString, value);
+		} catch (RuntimeException re) {
+			log.error("find by property name failed", re);
+			throw re;
+		}
+	}
+	
+	public List findByDocs(Document src,Document dest){
+		try {
+			String queryString = "from Reference as r where r.documentBySource.id = "+src.getId() +" and r.documentByDestination.id = "+dest.getId();
+			return getHibernateTemplate().find(queryString);
 		} catch (RuntimeException re) {
 			log.error("find by property name failed", re);
 			throw re;

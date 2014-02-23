@@ -28,10 +28,13 @@ import cn.edu.nju.software.dochub.data.dataobject.CommentProperty;
 import cn.edu.nju.software.dochub.data.dataobject.CommentPropertyType;
 import cn.edu.nju.software.dochub.data.dataobject.Document;
 import cn.edu.nju.software.dochub.data.dataobject.DocumentType;
+import cn.edu.nju.software.dochub.data.dataobject.Reference;
+import cn.edu.nju.software.dochub.data.dataobject.ReferenceType;
 import cn.edu.nju.software.dochub.data.dataobject.User;
 import cn.edu.nju.software.dochub.service.AttachmentService;
 import cn.edu.nju.software.dochub.service.CommentService;
 import cn.edu.nju.software.dochub.service.DocumentService;
+import cn.edu.nju.software.dochub.service.ReferenceService;
 import cn.edu.nju.software.dochub.service.UserService;
 import cn.edu.nju.software.dochub.web.ResponseBuilder;
 import cn.edu.nju.software.dochub.web.UserAccessContext;
@@ -52,7 +55,8 @@ public class DocumentController {
 	UserService userService;
 	CommentService commentService;
 	AttachmentService attachmentService;
-
+	ReferenceService referenceService;
+	
 	@RequestMapping(value = "/index.html")
 	public String index(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
@@ -170,6 +174,58 @@ public class DocumentController {
 		model.put("allDocumentList", documentService.findDocByFuzzy(fuzzyword));
 		model.put("documentTypeList", documentService.getAllDocumentType());
 		return "home";
+	}
+	
+	@RequestMapping(value = "/fuzzysearch.aj")
+	public void fuzzysearchAj(HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) {
+		String fuzzyword = request.getParameter("fuzzyword");
+		int docid=Integer.parseInt(request.getParameter("docId"));
+		
+		if (fuzzyword == null || fuzzyword.equals("")) {
+			
+		}
+		
+		JSONObject json=new JSONObject();
+		List<Document> docList=documentService.findDocByFuzzy(fuzzyword);
+		int size=docList.size();
+		int docsize=size;
+		int index=0;
+		for(int i=0;i<docsize;i++){
+			Document document =docList.get(i);
+			if(document.getId()==docid){
+				size--;
+				continue;
+			}
+			
+			JSONObject jsontmp=new JSONObject();
+			jsontmp.put("id", document.getId());
+			jsontmp.put("name", document.getTitle());
+			ReferenceType referenceType=referenceService.getReferenceTypeByDocs(documentService.findDocumentById(docid), document);
+			
+			if(referenceType!=null){
+				jsontmp.put("type",referenceType.getName());
+			}else{
+				jsontmp.put("type", "没有关系");
+			}
+			
+			json.put(index,jsontmp);
+			index++;
+		}
+		json.put("size",size);
+		
+		List<ReferenceType> referenceList=referenceService.getAllReferenceTypes();
+		int rsize=referenceList.size();
+		JSONObject rJson=new JSONObject();
+		rJson.put("size", rsize+1);
+		rJson.put(0, "没有关系");
+		for(int i= 1;i<=rsize;i++){
+			rJson.put(i, referenceList.get(i-1).getName());
+		}
+		json.put("type",rJson);
+		
+		
+		responseBuilder.WriteJSONObject(response, json);
 	}
 
 	@RequestMapping(value = "/accuratesearch.html")
@@ -502,9 +558,54 @@ public class DocumentController {
 		responseBuilder.WriteJSONObject(response, new JSONObject(true));
 	}
 	
+	@RequestMapping(value = "/changereference.aj")
+	public void changeReference(HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) {
+		int sourceid = Integer.parseInt(request.getParameter("sourceId"));
+		int destid = Integer.parseInt(request.getParameter("destId"));
+		String referenceName = request.getParameter("referenceType");
+		String flag="null";
+		JSONObject json=new JSONObject();
+		System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>"+destid);
+		Document srcDoc=documentService.findDocumentById(sourceid);
+		Document destDoc=documentService.findDocumentById(destid);
+		
+		if(referenceName.equals("没有关系")){
+			referenceService.deleteReference(srcDoc, destDoc);
+			flag="delete";
+		}else{
+			Reference reference=referenceService.getReferenceByDocs(srcDoc, destDoc);
+			ReferenceType referenceType=referenceService.getReferenceTypeByName(referenceName);
+			if(reference==null){
+				referenceService.addReference(srcDoc, destDoc, referenceType);
+				flag="add";
+				reference=referenceService.getReferenceByDocs(srcDoc, destDoc);
+			}else{
+				reference.setReferenceType(referenceType);
+				referenceService.updateReference(reference);
+				flag="update";
+			}
+			
+			json.put("referenceName", referenceType.getName());
+			json.put("referencId", reference.getId());
+		}
+		
+		
+		json.put("flag", flag);
+		json.put("destId", destid);
+		json.put("title", destDoc.getTitle());
+		
+		responseBuilder.WriteJSONObject(response, json);
+	}
 	
-	
-	
+	@RequestMapping(value = "/deletereference.aj")
+	public void deleteReference(HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) {
+		int referenceid = Integer.parseInt(request.getParameter("referenceId"));
+		referenceService.deleteReferenceById(referenceid);
+		
+		responseBuilder.WriteJSONObject(response, new JSONObject(true));
+	}
 	
 	
 	
@@ -529,5 +630,9 @@ public class DocumentController {
 
 	public void setAttachmentService(AttachmentService attachmentService) {
 		this.attachmentService = attachmentService;
+	}
+
+	public void setReferenceService(ReferenceService referenceService) {
+		this.referenceService = referenceService;
 	}
 }

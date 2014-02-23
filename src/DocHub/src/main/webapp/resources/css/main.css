@@ -51,19 +51,35 @@
 	text-align: right;
 }
 
-#attachments {
+#attachments,#references{
 	background-color: #f5f5f5;
 	border-color: #ddd;
 	border-radius: 4px;
 }
 
-#attachments li {
+#attachments,#references li {
 	text-align: left;
 	padding: 4px 0px 4px 20px;
 	font-size: 1em;
 }
 
-#attachments li span {
+#attachments,#references li span {
 	cursor: pointer;
-	margin-left: 15px;
+}
+
+#reference-searchlist {
+	padding: 10px 30px;
+}
+
+#reference-searchlist li{
+	margin-bottom:5px;
+}
+
+#reference-searchlist span{
+	padding-left: 20px;
+}
+
+.reference-select{
+	display: inline-block;
+	width:auto;
 }

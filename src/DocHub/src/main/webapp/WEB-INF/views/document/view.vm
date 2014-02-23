@@ -111,11 +111,13 @@
                 </div>
                 <div class="document-info-section">
                     <h4>引用</h4>
-                    <ul>
-                        <li>引用1</li>
-                        <li>引用2</li>
-                        <li>引用3</li>
-                    </ul>
+                    <ul id="references" class="list-unstyled" style="margin:0 30px">
+						#foreach ($reference in $document.getReferencesForSource())
+						<li id='reference$reference.getDocumentByDestination().getId()'><span>[$reference.getReferenceType().getName()]</span><a href="show.html?docId=$reference.getDocumentByDestination().getId()"
+																  target="view_window">$reference.getDocumentByDestination().getTitle()</a>
+						</li>
+						#end
+					</ul>
                 </div>
                 <div class="document-info-section">
                     <h3>
