@@ -1,17 +1,10 @@
 package cn.edu.nju.software.dochub.data.dataobject;
 
+import org.hibernate.annotations.GenericGenerator;
+
+import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
-import org.hibernate.annotations.GenericGenerator;
 
 /**
  * Tag entity. @author MyEclipse Persistence Tools
@@ -20,58 +13,64 @@ import org.hibernate.annotations.GenericGenerator;
 @Table(name = "tag", catalog = "doc_hub", uniqueConstraints = @UniqueConstraint(columnNames = "name"))
 public class Tag implements java.io.Serializable {
 
-	// Fields
+    // Fields
 
-	private Integer id;
-	private String name;
-	private Set<Tagging> taggings = new HashSet<Tagging>(0);
+    private Integer id;
+    private String name;
+    private Set<Tagging> taggings = new HashSet<Tagging>(0);
 
-	// Constructors
+    // Constructors
 
-	/** default constructor */
-	public Tag() {
-	}
+    /**
+     * default constructor
+     */
+    public Tag() {
+    }
 
-	/** minimal constructor */
-	public Tag(String name) {
-		this.name = name;
-	}
+    /**
+     * minimal constructor
+     */
+    public Tag(String name) {
+        this.name = name;
+    }
 
-	/** full constructor */
-	public Tag(String name, Set<Tagging> taggings) {
-		this.name = name;
-		this.taggings = taggings;
-	}
+    /**
+     * full constructor
+     */
+    public Tag(String name, Set<Tagging> taggings) {
+        this.name = name;
+        this.taggings = taggings;
+    }
 
-	// Property accessors
-	@GenericGenerator(name = "generator", strategy = "increment")
-	@Id
-	@GeneratedValue(generator = "generator")
-	@Column(name = "id", unique = true, nullable = false)
-	public Integer getId() {
-		return this.id;
-	}
+    // Property accessors
+    @GenericGenerator(name = "generator", strategy = "increment")
+    @Id
+    @GeneratedValue(generator = "generator")
+    @Column(name = "id", unique = true, nullable = false)
+    public Integer getId() {
+        return this.id;
+    }
 
-	public void setId(Integer id) {
-		this.id = id;
-	}
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
-	@Column(name = "name", unique = true, nullable = false, length = 45)
-	public String getName() {
-		return this.name;
-	}
+    @Column(name = "name", unique = true, nullable = false, length = 45)
+    public String getName() {
+        return this.name;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "tag")
-	public Set<Tagging> getTaggings() {
-		return this.taggings;
-	}
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "tag")
+    public Set<Tagging> getTaggings() {
+        return this.taggings;
+    }
 
-	public void setTaggings(Set<Tagging> taggings) {
-		this.taggings = taggings;
-	}
+    public void setTaggings(Set<Tagging> taggings) {
+        this.taggings = taggings;
+    }
 
 }

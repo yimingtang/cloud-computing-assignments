@@ -26,45 +26,45 @@ public class ReferenceService {
         }
     }
 
-    public ReferenceType getReferenceTypeByDocs(Document src,Document dest){
-    	List<Reference> referenceList=referenceDAO.findByDocs(src,dest);
-    	if(referenceList.size()==0){
-    		return null;
-    	}else{
-    		return referenceList.get(0).getReferenceType();
-    	}
+    public ReferenceType getReferenceTypeByDocs(Document src, Document dest) {
+        List<Reference> referenceList = referenceDAO.findByDocs(src, dest);
+        if (referenceList.size() == 0) {
+            return null;
+        } else {
+            return referenceList.get(0).getReferenceType();
+        }
     }
-    
-    public ReferenceType getReferenceTypeByName(String name){
-    	return referenceTypeDAO.findByName(name).get(0);
+
+    public ReferenceType getReferenceTypeByName(String name) {
+        return referenceTypeDAO.findByName(name).get(0);
     }
-    
-    public Reference getReferenceByDocs(Document src,Document dest){
-    	List<Reference> referenceList=referenceDAO.findByDocs(src, dest);
-    	if(referenceList.size()==0){
-    		return null;
-    	}else{
-    		return referenceList.get(0);
-    	}
+
+    public Reference getReferenceByDocs(Document src, Document dest) {
+        List<Reference> referenceList = referenceDAO.findByDocs(src, dest);
+        if (referenceList.size() == 0) {
+            return null;
+        } else {
+            return referenceList.get(0);
+        }
     }
-    
-    public void updateReference(Reference reference){
-    	referenceDAO.merge(reference);
+
+    public void updateReference(Reference reference) {
+        referenceDAO.merge(reference);
     }
-    
-    public void addReference(Document source,Document dest,ReferenceType referenceType){
-    	Reference reference=new Reference();
-    	reference.setDocumentBySource(source);
-    	reference.setDocumentByDestination(dest);
-    	reference.setReferenceType(referenceType);
-    	referenceDAO.save(reference);
+
+    public void addReference(Document source, Document dest, ReferenceType referenceType) {
+        Reference reference = new Reference();
+        reference.setDocumentBySource(source);
+        reference.setDocumentByDestination(dest);
+        reference.setReferenceType(referenceType);
+        referenceDAO.save(reference);
     }
-    
-    public void deleteReference(Document source,Document dest){
-    	Reference reference=getReferenceByDocs(source, dest);
-    	referenceDAO.delete(reference);
+
+    public void deleteReference(Document source, Document dest) {
+        Reference reference = getReferenceByDocs(source, dest);
+        referenceDAO.delete(reference);
     }
-    
+
     public void deleteReferenceType(ReferenceType referenceType) {
         referenceTypeDAO.delete(referenceType);
     }
@@ -73,18 +73,18 @@ public class ReferenceService {
         ReferenceType referenceType = referenceTypeDAO.findById(id);
         deleteReferenceType(referenceType);
     }
-    
-    public void deleteReferenceById(int id){
-    	Reference reference=referenceDAO.findById(id);
-    	referenceDAO.delete(reference);
+
+    public void deleteReferenceById(int id) {
+        Reference reference = referenceDAO.findById(id);
+        referenceDAO.delete(reference);
     }
-    
+
 
     public void setReferenceTypeDAO(ReferenceTypeDAO referenceTypeDAO) {
         this.referenceTypeDAO = referenceTypeDAO;
     }
 
-	public void setReferenceDAO(ReferenceDAO referenceDAO) {
-		this.referenceDAO = referenceDAO;
-	}
+    public void setReferenceDAO(ReferenceDAO referenceDAO) {
+        this.referenceDAO = referenceDAO;
+    }
 }

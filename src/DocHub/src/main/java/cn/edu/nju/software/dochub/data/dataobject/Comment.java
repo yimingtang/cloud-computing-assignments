@@ -1,19 +1,11 @@
 package cn.edu.nju.software.dochub.data.dataobject;
 
+import org.hibernate.annotations.GenericGenerator;
+
+import javax.persistence.*;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import org.hibernate.annotations.GenericGenerator;
 
 /**
  * Comment entity. @author MyEclipse Persistence Tools
@@ -22,142 +14,148 @@ import org.hibernate.annotations.GenericGenerator;
 @Table(name = "comment", catalog = "doc_hub")
 public class Comment implements java.io.Serializable {
 
-	// Fields
+    // Fields
 
-	private Integer id;
-	private User user;
-	private Document document;
-	private Integer type;
-	private String content;
-	private short rank;
-	private Date createdAt;
-	private Date updatedAt;
-	private boolean published;
-	private Set<CommentProperty> commentProperties = new HashSet<CommentProperty>(
-			0);
+    private Integer id;
+    private User user;
+    private Document document;
+    private Integer type;
+    private String content;
+    private short rank;
+    private Date createdAt;
+    private Date updatedAt;
+    private boolean published;
+    private Set<CommentProperty> commentProperties = new HashSet<CommentProperty>(
+            0);
 
-	// Constructors
+    // Constructors
 
-	/** default constructor */
-	public Comment() {
-	}
+    /**
+     * default constructor
+     */
+    public Comment() {
+    }
 
-	/** minimal constructor */
-	public Comment(User user, Document document, String content) {
-		this.user = user;
-		this.document = document;
-		this.content = content;
-	}
+    /**
+     * minimal constructor
+     */
+    public Comment(User user, Document document, String content) {
+        this.user = user;
+        this.document = document;
+        this.content = content;
+    }
 
-	/** full constructor */
-	public Comment(User user, Document document, Integer type, String content,
-			short rank, Date createdAt, Date updatedAt, boolean published,
-			Set<CommentProperty> commentProperties) {
-		this.user = user;
-		this.document = document;
-		this.type = type;
-		this.content = content;
-		this.rank = rank;
-		this.createdAt = createdAt;
-		this.updatedAt = updatedAt;
-		this.published = published;
-		this.commentProperties = commentProperties;
-	}
+    /**
+     * full constructor
+     */
+    public Comment(User user, Document document, Integer type, String content,
+                   short rank, Date createdAt, Date updatedAt, boolean published,
+                   Set<CommentProperty> commentProperties) {
+        this.user = user;
+        this.document = document;
+        this.type = type;
+        this.content = content;
+        this.rank = rank;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+        this.published = published;
+        this.commentProperties = commentProperties;
+    }
 
-	// Property accessors
-	@GenericGenerator(name = "generator", strategy = "increment")
-	@Id
-	@GeneratedValue(generator = "generator")
-	@Column(name = "id", unique = true, nullable = false)
-	public Integer getId() {
-		return this.id;
-	}
+    // Property accessors
+    @GenericGenerator(name = "generator", strategy = "increment")
+    @Id
+    @GeneratedValue(generator = "generator")
+    @Column(name = "id", unique = true, nullable = false)
+    public Integer getId() {
+        return this.id;
+    }
 
-	public void setId(Integer id) {
-		this.id = id;
-	}
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "user_id", nullable = false)
-	public User getUser() {
-		return this.user;
-	}
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "user_id", nullable = false)
+    public User getUser() {
+        return this.user;
+    }
 
-	public void setUser(User user) {
-		this.user = user;
-	}
+    public void setUser(User user) {
+        this.user = user;
+    }
 
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "document_id", nullable = false)
-	public Document getDocument() {
-		return this.document;
-	}
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "document_id", nullable = false)
+    public Document getDocument() {
+        return this.document;
+    }
 
-	public void setDocument(Document document) {
-		this.document = document;
-	}
+    public void setDocument(Document document) {
+        this.document = document;
+    }
 
-	@Column(name = "type")
-	public Integer getType() {
-		return this.type;
-	}
+    @Column(name = "type")
+    public Integer getType() {
+        return this.type;
+    }
 
-	public void setType(Integer type) {
-		this.type = type;
-	}
+    public void setType(Integer type) {
+        this.type = type;
+    }
 
-	@Column(name = "content", nullable = false, length = 65535)
-	public String getContent() {
-		return this.content;
-	}
+    @Column(name = "content", nullable = false, length = 65535)
+    public String getContent() {
+        return this.content;
+    }
 
-	public void setContent(String content) {
-		this.content = content;
-	}
+    public void setContent(String content) {
+        this.content = content;
+    }
 
-	@Column(name = "rank")
-	public short getRank() {
-		return this.rank;
-	}
+    @Column(name = "rank")
+    public short getRank() {
+        return this.rank;
+    }
 
-	public void setRank(short rank) {
-		this.rank = rank;
-	}
+    public void setRank(short rank) {
+        this.rank = rank;
+    }
 
-	@Column(name = "created_at", length = 19)
-	public Date getCreatedAt() {
-		return this.createdAt;
-	}
+    @Column(name = "created_at", length = 19)
+    public Date getCreatedAt() {
+        return this.createdAt;
+    }
 
-	public void setCreatedAt(Date createdAt) {
-		this.createdAt = createdAt;
-	}
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
+    }
 
-	@Column(name = "updated_at", length = 19)
-	public Date getUpdatedAt() {
-		return this.updatedAt;
-	}
+    @Column(name = "updated_at", length = 19)
+    public Date getUpdatedAt() {
+        return this.updatedAt;
+    }
 
-	public void setUpdatedAt(Date updatedAt) {
-		this.updatedAt = updatedAt;
-	}
+    public void setUpdatedAt(Date updatedAt) {
+        this.updatedAt = updatedAt;
+    }
 
-	@Column(name = "published")
-	public boolean getPublished() {
-		return this.published;
-	}
+    @Column(name = "published")
+    public boolean getPublished() {
+        return this.published;
+    }
 
-	public void setPublished(boolean published) {
-		this.published = published;
-	}
+    public void setPublished(boolean published) {
+        this.published = published;
+    }
 
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "comment")
-	public Set<CommentProperty> getCommentProperties() {
-		return this.commentProperties;
-	}
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "comment")
+    public Set<CommentProperty> getCommentProperties() {
+        return this.commentProperties;
+    }
 
-	public void setCommentProperties(Set<CommentProperty> commentProperties) {
-		this.commentProperties = commentProperties;
-	}
+    public void setCommentProperties(Set<CommentProperty> commentProperties) {
+        this.commentProperties = commentProperties;
+    }
 
 }
